@@ -1,0 +1,76 @@
+<nav aria-label="Page navigation example" class="navegacion">
+  <div class="d-flex align-items-center gap-2">
+    <div *ngIf="loading" class="pulse">
+      <div
+        style="
+          background: #ccc;
+          border-radius: 4px;
+          height: 15px;
+          min-width: 15px;
+        "
+      ></div>
+    </div>
+    <div
+      *ngIf="
+        !loading && metadata?.pagination && metadata?.pagination.total! > 10
+      "
+    >
+      {{
+        metadata?.pagination
+          ? metadata.pagination?.currentPage * 10 -
+            9 +
+            " - " +
+            metadata.pagination?.currentPage * 10 +
+            " de " +
+            metadata.pagination?.total +
+            " items"
+          : "---"
+      }}
+    </div>
+    <!-- +", Pag. " +metadata.pagination?.currentPage -->
+    <div *ngIf="!loading && metadata?.pagination?.total <= 10">
+      {{
+        metadata?.pagination
+          ? metadata.pagination?.total + " resultados "
+          : "---"
+      }}
+    </div>
+  </div>
+
+  <ul class="pagination justify-content-end gap-2">
+    <li class="page-item">
+      <button
+        class="page-link btn btn-h"
+        title="Pagina anterior"
+        [disabled]="currentPage <= 1"
+        tabindex="-1"
+        (click)="nextPageDir(-1)"
+        style="color: #000; padding: 6px 16px"
+      >
+        <span aria-hidden="true">Anterior</span>
+      </button>
+    </li>
+    <li class="page-item">
+      <div
+        class="page-link btn"
+        title="Pagina anterior"
+        style="color: rgb(122, 122, 122); padding: 6px 16px"
+      >
+        <span aria-hidden="true"
+          >Pag. {{ metadata?.pagination?.currentPage }}</span
+        >
+      </div>
+    </li>
+    <li class="page-item">
+      <button
+        title="Next page"
+        class="page-link btn btn-h"
+        [disabled]="!metadata?.pagination?.nextPage"
+        (click)="nextPageDir(1)"
+        style="color: #000; padding: 6px 16px"
+      >
+        <span aria-hidden="true">Siguiente</span>
+      </button>
+    </li>
+  </ul>
+</nav>

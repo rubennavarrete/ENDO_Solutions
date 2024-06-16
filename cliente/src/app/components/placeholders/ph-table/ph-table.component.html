@@ -1,0 +1,224 @@
+<div
+  *ngIf="loading"
+  class="d-flex justify-content-between contenedor-filtrado pulse"
+>
+  <div class="d-flex content-filtros">
+    <div *ngFor="let itemFiltros of [0, 0]">
+      <button
+        class="tabs"
+        style="height: 27.5px px; width: 75px; background: #ccc; border: none"
+      ></button>
+    </div>
+  </div>
+  <div class="limpiar-filtros">
+    <button
+      class="tabs"
+      style="height: 27.5px px; width: 75px; background: #ccc; border: none"
+    ></button>
+  </div>
+</div>
+<div *ngIf="loading" class="placeholder_table">
+  <div class="contenedor-tabla mostrarPoliza table-responsive">
+    <div>
+      <div class="tabla-cuerpo">
+        <table
+          class="table table-striped tabla-estilos"
+          style="animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+        >
+          <thead>
+            <tr>
+              <th scope="col" style="text-align: center">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 15px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 50px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 20px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </th>
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </th>
+
+              <th scope="col">
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="tchecks">
+            <tr class="polizas-vencer" *ngFor="let itemFiltros of [0, 1, 2]">
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 15px;
+                  "
+                ></div>
+              </td>
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 50px;
+                  "
+                ></div>
+              </td>
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </td>
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </td>
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 20px;
+                  "
+                ></div>
+              </td>
+              <td>
+                <div>
+                  <p>
+                    <b
+                      ><div
+                        style="
+                          background: #ccc;
+                          border-radius: 4px;
+                          height: 15px;
+                          min-width: 100px;
+                        "
+                      ></div
+                    ></b>
+                  </p>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <p>
+                    <b
+                      ><div
+                        style="
+                          background: #ccc;
+                          border-radius: 4px;
+                          height: 15px;
+                          min-width: 100px;
+                        "
+                      ></div
+                    ></b>
+                  </p>
+                  <small
+                    ><div
+                      style="
+                        background: #ccc;
+                        border-radius: 4px;
+                        height: 15px;
+                        min-width: 100px;
+                        margin-top: 4px;
+                      "
+                    ></div
+                  ></small>
+                </div>
+              </td>
+              <td>
+                <div
+                  style="
+                    background: #ccc;
+                    border-radius: 4px;
+                    height: 15px;
+                    min-width: 100px;
+                  "
+                ></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

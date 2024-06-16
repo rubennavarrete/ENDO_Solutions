@@ -1,0 +1,37 @@
+<div class="modal fade" id="modalGeneral">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header no-print">
+        <h5 class="modal-title" id="modalAgregarPLazo">{{ titleModal }}</h5>
+        <button
+          #closeModal
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="modalClose"
+          (click)="cerrarModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <container-element [ngSwitch]="tipoFormulario">
+          <!-- the same view can be shown in more than one case -->
+          <div *ngSwitchCase="'nuevoEstadoContratacion'">
+            <!-- <app-agregar-e-contratacion></app-agregar-e-contratacion> -->
+          </div>
+
+          <div *ngSwitchCase="'clear'"></div>
+        </container-element>
+      </div>
+      <div class="modal-footer no-print">
+        <button
+          class="btn btn-cancelar"
+          data-bs-dismiss="modal"
+          (click)="cerrarModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,248 @@
+<!-- Filtros -->
+<div
+  *ngIf="!loading"
+  class="d-flex justify-content-between contenedor-filtrado"
+>
+  <div class="d-flex content-filtros">
+    <div *ngFor="let itemFiltros of arrFiltros; let i = index">
+      <button
+        class="tabs"
+        [ngStyle]="{
+          border: itemFiltros.filter ? '1px solid #ccc' : '1px dashed #ccc'
+        }"
+      >
+        <i
+          *ngIf="itemFiltros.filter"
+          class="material-icons filters-icons"
+          [ngStyle]="{ transform: 'rotate(45deg)' }"
+          (click)="eliminarFiltro(i)"
+          >add_circle</i
+        >
+
+        <div
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          data-bs-offset="-4,16"
+          class="contendor-estado d-flex align-items-center"
+        >
+          <i
+            *ngIf="!itemFiltros.filter"
+            class="material-icons filters-icons"
+            style="margin-right: 4px"
+            >add_circle</i
+          >
+          <small style="margin-right: 4px">{{ itemFiltros.name }}</small>
+          <div
+            *ngIf="itemFiltros.filter"
+            style="
+              height: 14px;
+              width: 0.5px;
+              background-color: #ccc;
+              margin: 0 4px;
+            "
+          ></div>
+          <small *ngIf="itemFiltros.filter" class="sub-filtro mx-1">{{
+            arrFiltros[i].description
+          }}</small>
+          <i
+            *ngIf="itemFiltros.filter"
+            class="material-icons filters-icons"
+            style="transform: rotate(90deg)"
+            >chevron_right</i
+          >
+        </div>
+        <div
+          class="dropdown-menu"
+          [ngSwitch]="itemFiltros.type"
+          style="padding: 16px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="18"
+            width="18"
+            viewBox="0 0 48 48"
+            fill="#fff"
+            style="
+              position: absolute;
+              top: -20px;
+              left: 15px;
+              transform: scaleX(1.5);
+            "
+          >
+            <path
+              stroke="rgba(0, 0, 0, 0.2)"
+              stroke-width="1"
+              d="M6.7 40q-.9 0-1.325-.775-.425-.775.075-1.525L22.8 10.05q.45-.7 1.25-.7t1.25.7L42.55 37.7q.45.75.05 1.525-.4.775-1.3.775Z"
+            />
+          </svg>
+
+          <div *ngSwitchCase="'date'">
+            <div>
+              <p class="fw-bold">Filtrar por Fecha</p>
+              <small
+                >Podemos realizar una busqueda por fechas de las polizas
+                vencidas.</small
+              >
+            </div>
+            <hr />
+            <select
+              id="selectTypeOfSearchDate"
+              class="form-select"
+              aria-label="Default select example"
+              (change)="onChangeSelectFecha($event)"
+            >
+              <option selected value="0">En los proximos</option>
+              <option value="1">Igual a</option>
+              <option value="2">Mes</option>
+              <option value="3">Entre</option>
+            </select>
+            <div [ngSwitch]="selectTypeOfSearchDate">
+              <div class="d-flex mt-2 gap-2" *ngSwitchCase="0">
+                <i
+                  class="material-icons filters-icons"
+                  style="
+                    transform: rotateX(180deg);
+                    height: fit-content;
+                    margin-top: 8px;
+                    margin-right: 16px;
+                    margin-left: 8px;
+                  "
+                  >shortcut</i
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  (keyup.enter)="setDateFilter()"
+                  id="inputNumberDMToFilter"
+                  placeholder="0"
+                />
+                <select
+                  id="selectTypeDM"
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option selected value="DAYS">Dias</option>
+                  <option value="MONTHS">Meses</option>
+                </select>
+              </div>
+              <div *ngSwitchCase="1">
+                <input
+                  type="date"
+                  class="form-control mt-2"
+                  id="daySelectedFilter"
+                  title="datePicker"
+                />
+              </div>
+              <div class="input-group mb-3 mt-3" *ngSwitchCase="2">
+                <input
+                  id="monthSelectedFilter"
+                  type="month"
+                  datetime-local="es"
+                  class="form-control"
+                  placeholder="0/0/0"
+                  aria-label="0/0/0"
+                />
+              </div>
+              <div class="input-group mb-3 mt-3" *ngSwitchCase="3">
+                <input
+                  id="betweenSelectedFilterStart"
+                  type="date"
+                  class="form-control"
+                  placeholder="0/0/0"
+                  aria-label="0/0/0"
+                />
+                <span class="input-group-text">hasta</span>
+                <input
+                  id="betweenSelectedFilterEnd"
+                  type="date"
+                  class="form-control"
+                  placeholder="0/0/0"
+                  aria-label="0/0/0"
+                />
+              </div>
+            </div>
+            <button
+              class="btn btn-h btn-continuar mt-2"
+              style="margin-left: auto"
+              (click)="setDateFilter()"
+            >
+              Aplicar
+            </button>
+          </div>
+          <div *ngSwitchCase="'status'">
+            <div>
+              <p class="fw-bold">Estados</p>
+              <small>Selecciona el ESTADO que deseas visualizar</small>
+            </div>
+            <hr />
+            <div
+              class="form-check"
+              *ngFor="let itemTypeStatus of itemFiltros.kind; let i = index"
+              style="display: flex; gap: 8px; align-items: center"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="radioItemFilter"
+                id="radioItem{{ itemTypeStatus.parameter }}"
+                value="{{ itemTypeStatus.parameter }}"
+                [checked]="itemTypeStatus.status && itemFiltros.filter"
+                (change)="onItemChange($event.target)"
+              />
+              <label
+                class="form-check-label"
+                for="radioItem{{ itemTypeStatus.parameter }}"
+              >
+                {{ itemTypeStatus.name }}
+              </label>
+            </div>
+          </div>
+          <div *ngSwitchCase="'search'">
+            <div>
+              <p class="fw-bold">Buscar</p>
+              <small
+                >Podemos realizar una busqueda por palabras o numeros.</small
+              >
+            </div>
+            <hr />
+            <select
+              id="selectTypeOfSearchText"
+              class="form-select mb-2"
+              aria-label="Default select example"
+              (change)="onChangeSelectFecha($event)"
+            >
+              <option
+                *ngFor="let selectSearch of arrFiltros[i].kind; let j = index"
+                value="{{ j }}"
+              >
+                {{ selectSearch.name }}
+              </option>
+            </select>
+            <input
+              type="text"
+              class="form-control"
+              id="inputSearch"
+              placeholder="Buscar..."
+            />
+            <button
+              class="btn btn-h btn-continuar mt-2"
+              style="margin-left: auto"
+              (click)="setSearchFilter()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <button
+    class="limpiar-filtros"
+    (click)="limpiarFiltros()"
+    [disabled]="!hasFilters"
+  >
+    <i class="material-icons filters-icons"> clear </i>
+    <small>Limpiar Filtros</small>
+  </button>
+</div>
+<!-- Filtros -->

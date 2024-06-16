@@ -1,0 +1,40 @@
+.btn {
+  padding: 8px 15px;
+  box-shadow: 0 2px 5px #0000001a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn:hover {
+  box-shadow: 0px 0px 3px #00000025;
+  opacity: 0.75;
+}
+
+.btn i {
+  padding-right: 8px;
+  font-size: 18px;
+}
+
+.btn-prim {
+  border: none;
+}
+
+.cuadrado {
+  aspect-ratio: 1/1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  width: 100%;
+}
+
+.cuadrado i {
+  font-size: 30px;
+}
+
+.dark-mode {
+  color: black;
+  background-color: var(--color-bg) !important;
+  border: solid 0.5px #ccc;
+}

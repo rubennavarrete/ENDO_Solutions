@@ -1,0 +1,7 @@
+<!-- <div *ngIf="showLoading">Cargando...</div> -->
+<ng-container [ngSwitch]="layout">
+  <app-full-layout *ngSwitchCase="Layouts.Full"></app-full-layout>
+  <app-simple-layout *ngSwitchCase="Layouts.Simple"></app-simple-layout>
+  <app-simple-layout *ngSwitchDefault> </app-simple-layout>
+</ng-container>
+<app-add-edit-modal></app-add-edit-modal>

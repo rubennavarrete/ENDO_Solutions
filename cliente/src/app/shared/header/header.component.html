@@ -1,0 +1,177 @@
+<header class="header">
+  <a routerLink="/" class="header__logo">
+    <div class="img__logo img__logo_full">
+      <img src="../../../assets/svg/diente.svg" alt="logo_diente" />
+    </div>
+    <h6>Endo Solution</h6>
+  </a>
+  <div id="primary_nav_wrap" class="header__menu">
+    <section
+      *ngIf="rolActive?.listaRoles"
+      class="d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="dropdown custom-dropdown status_dropdown"
+        data-color="created-status"
+      >
+        <button
+          class="btn-dropdown btn w-100 d-flex align-items-center justify-content-between status__btn"
+          type="button"
+          id="dropdownMenuButtonRoles"
+          data-bs-toggle="dropdown"
+        >
+          {{
+            rolActive.rolEstablecido === null
+              ? "Cargando..."
+              : roles[rolActive.rolEstablecido?.rol] || "NOP"
+          }}
+          <i id="arrow-created" class="arrow material-icons">arrow_drop_down</i>
+        </button>
+        <ul
+          class="dropdown-menu status_change"
+          aria-labelledby="dropdownMenuButtonRoles"
+          style="min-width: 100%"
+        >
+          <li *ngFor="let item of rolActive.listaRoles; let i = index">
+            <button
+              (click)="cambiarRol(i)"
+              class="dropdown-item"
+              data-class="created"
+            >
+              {{ roles[item.rol] || "NOP" }}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="d-flex align-items-center justify-content-center">
+      <div
+        class="dropdown custom-dropdown status_dropdown"
+        data-color="created-status"
+      >
+        <button
+          id="btn-correo"
+          class="btn-dropdown btn w-100 d-flex align-items-center justify-content-between status__btn"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          {{ userData }}
+          <i id="arrowCorreo" class="arrow material-icons">arrow_drop_down</i>
+        </button>
+        <ul class="dropdown-menu" style="width: 100%">
+          <li>
+            <a
+              class="dropdown-item"
+              target="_blank"
+              href="https://servicios.espoch.edu.ec/"
+              >Servicios ESPOCH</a
+            >
+            <a
+              class="dropdown-item"
+              target="_blank"
+              href="https://login.microsoftonline.com/?whr=espoch.edu.ec"
+              >Correo Institucional</a
+            >
+            <a class="dropdown-item" [routerLink]="'/' + baseUrl + '/ajustes'"
+              >Ajsutes</a
+            >
+            <div class="dropdown-divider"></div>
+            <button
+              class="dropdown-item"
+              (click)="cerrarSeccion()"
+              style="display: flex; gap: 4px; align-items: center"
+            >
+              <i class="material-icons filters-icons">last_page</i> Cerrar
+              Session
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="header__menu__mobile">
+    <i
+      (click)="clickMobileMenuProfile()"
+      class="material-icons"
+      style="cursor: pointer"
+      >account_circle</i
+    >
+    <i
+      class="material-icons"
+      (click)="clickMobileMenu()"
+      style="cursor: pointer"
+      >menu</i
+    >
+  </div>
+  <div class="bottom_menu__mobile__complete_screen">
+    <div
+      (click)="clickMobileMenuProfile()"
+      style="background: #0000009e; height: 100%; width: 100%"
+    ></div>
+    <div class="bg_menu__mobile">
+      <section class="d-flex align-items-center justify-content-center">
+        <div
+          class="dropdown custom-dropdown status_dropdown"
+          data-color="created-status"
+        >
+          <button
+            class="btn-dropdown btn w-100 d-flex align-items-center justify-content-between status__btn"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-offset="0,12"
+          >
+            ADMIN
+            <i id="arrow-created" class="arrow material-icons"
+              >arrow_drop_down</i
+            >
+          </button>
+          <ul
+            class="dropdown-menu status_change"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            <li *ngFor="let item of rolActive?.listaRoles">
+              <a class="dropdown-item" data-class="created" href="#">{{
+                item.rol
+              }}</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="d-flex align-items-center justify-content-center">
+        <div
+          class="dropdown custom-dropdown status_dropdown"
+          data-color="created-status"
+        >
+          <button
+            id="btn-correo"
+            class="btn-dropdown btn w-100 d-flex align-items-center justify-content-between status__btn"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            {{ userData }}
+            <i id="arrowCorreo" class="arrow material-icons">arrow_drop_down</i>
+          </button>
+          <ul class="dropdown-menu" style="width: 100%">
+            <li>
+              <a class="dropdown-item" href="#">Pagina principal ESPOCH</a>
+              <a
+                class="dropdown-item"
+                href="https://login.microsoftonline.com/?whr=espoch.edu.ec"
+                >Ir a correo Institucional</a
+              >
+              <a class="dropdown-item" href="#">Ajsutes</a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" (click)="cerrarSeccion()">
+                Cerrar Session
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</header>
