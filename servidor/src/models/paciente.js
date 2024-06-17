@@ -30,7 +30,7 @@ export const Paciente = sequelize.define('tb_paciente', {
     },
     str_pac_estado: {
         type: DataTypes.STRING(20),
-        allowNull: false
+        defaultValue: 'ACTIVO'
     },
     str_pac_telefono: {
         type: DataTypes.STRING(10),

@@ -8,7 +8,7 @@ import {
 import { ModalService } from 'src/app/core/services/modal.service';
 
 @Component({
-  selector: 'app-button-modal',
+  selector: 'button-modal',
   templateUrl: './button-modal.component.html',
   styleUrls: ['./button-modal.component.css'],
 })

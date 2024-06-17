@@ -1,7 +1,22 @@
 <div class="pacientes-contenedor mt-3">
-  <div class="titulo">
-    <h5>Lista de <span>Pacientes</span></h5>
-    <!-- <h6 class="my-4">Listado de Procesos Precontractual Vigentes</h6> -->
+  <!-- HEADER / TITULO Y BOTONES -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr">
+    <div class="btnAgregar d-flex justify-content-between mb-4">
+      <div class="titulo">
+        <h5>Lista de <span>Pacientes </span></h5>
+      </div>
+    </div>
+    <div class="contenedor-botones d-flex justify-content-end">
+      <button-modal
+        [tipoModal]="'nuevoPaciente'"
+        [titleModal]="'Nuevo Paciente'"
+        [contenido]="'Nuevo Paciente'"
+        [conIcono]="true"
+        [icono]="'add'"
+        [color]="'#1c1917'"
+      >
+      </button-modal>
+    </div>
   </div>
   <hr />
   <!-- tabla mostrar plazos-->
@@ -69,7 +84,7 @@
                     class="btnDefault editar btn btn-warning"
                     (click)="
                       seleccionarInput(
-                        'editarpaciente',
+                        'editarPaciente',
                         pacientes,
                         'Editar Paciente'
                       )

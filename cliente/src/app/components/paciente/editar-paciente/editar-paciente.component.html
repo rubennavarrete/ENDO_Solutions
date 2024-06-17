@@ -1,0 +1,265 @@
+<app-ph-table [loading]="loading || request"></app-ph-table>
+
+<form
+  autocomplete="off"
+  [formGroup]="myForm"
+  novalidate
+  *ngIf="!loading && !request"
+>
+  <div class="row">
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Nombre del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          placeholder="Paciente"
+          formControlName="str_pac_nombre"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_nombre')!.hasError('required') &&
+            myForm.get('str_pac_nombre')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Apellido del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="apellido"
+          placeholder="Apellido"
+          formControlName="str_pac_apellido"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_apellido')!.hasError('required') &&
+            myForm.get('str_pac_apellido')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Cédula del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="cedula"
+          placeholder="Cédula"
+          formControlName="str_pac_cedula"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_cedula')!.hasError('required') &&
+            myForm.get('str_pac_cedula')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Correo del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="correo"
+          placeholder="Correo"
+          formControlName="str_pac_correo"
+        />
+
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_correo')!.hasError('required') &&
+            myForm.get('str_pac_correo')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Sexo del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="sexo"
+          placeholder="Sexo"
+          formControlName="str_pac_sexo"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_sexo')!.hasError('required') &&
+            myForm.get('str_pac_sexo')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Teléfono del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="telefono"
+          placeholder="Teléfono"
+          formControlName="str_pac_telefono"
+        />
+
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_telefono')!.hasError('required') &&
+            myForm.get('str_pac_telefono')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Nombre del familiar </label>
+        <input
+          type="text"
+          class="form-control"
+          id="sexo"
+          placeholder="Nombre familiar"
+          formControlName="str_pac_nombre_familia"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_nombre_familia')!.hasError('required') &&
+            myForm.get('str_pac_nombre_familia')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Teléfono del Familiar </label>
+        <input
+          type="text"
+          class="form-control"
+          id="telefono"
+          placeholder="Teléfono Familiar"
+          formControlName="str_pac_telefono_familia"
+        />
+
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_telefono_familia')!.hasError('required') &&
+            myForm.get('str_pac_telefono_familia')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Relacion con el Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="relacion"
+          placeholder="Relacion"
+          formControlName="str_pac_relacion_familia"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_relacion_familia')!.hasError('required') &&
+            myForm.get('str_pac_relacion_familia')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Fecha de nacimiento del Paciente </label>
+        <input
+          type="date"
+          class="form-control"
+          id="nacimiento"
+          placeholder="Fecha de nacimiento"
+          formControlName="dt_pac_fecha_nacimiento"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('dt_pac_fecha_nacimiento')!.hasError('required') &&
+            myForm.get('dt_pac_fecha_nacimiento')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Dirección del Paciente </label>
+        <input
+          type="text"
+          class="form-control"
+          id="direccion"
+          placeholder="Dirección"
+          formControlName="str_pac_direccion"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_direccion')!.hasError('required') &&
+            myForm.get('str_pac_direccion')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center contendor-botones">
+      <button
+        class="btn-continuar btn btn-h"
+        [disabled]="!myForm.valid"
+        (click)="actualizarPaciente()"
+      >
+        Actualizar Informacion
+      </button>
+    </div>
+  </div>
+</form>

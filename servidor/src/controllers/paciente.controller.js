@@ -12,7 +12,6 @@ export const createPaciente = async (req, res) => {
         const { str_pac_nombre, str_pac_apellido, str_pac_cedula,
             str_pac_correo,
             str_pac_sexo,
-            str_pac_estado,
             str_pac_telefono,
             str_pac_nombre_familia,
             str_pac_telefono_familia,
@@ -26,7 +25,6 @@ export const createPaciente = async (req, res) => {
             str_pac_cedula,
             str_pac_correo,
             str_pac_sexo,
-            str_pac_estado,
             str_pac_telefono,
             str_pac_nombre_familia,
             str_pac_telefono_familia,
@@ -129,13 +127,13 @@ export async function getPacientes(req, res) {
             pageToMeta.page,
             pageToMeta.limit,
             count
-          )
-          res.json({
+        )
+        res.json({
             status: true,
             message: "Pacientes obtenidos exitosamente",
             body: result,
             ...paginationMetaResult,
-          })
+        })
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando los pacientes'
@@ -205,8 +203,8 @@ export async function deletePaciente(req, res) {
             });
         }
         else {
-            if (paciente.str_pac_estado == 'Activo') {
-                await paciente.update({ str_pac_estado: 'Inactivo' });
+            if (paciente.str_pac_estado === 'ACTIVO') {
+                await paciente.update({ str_pac_estado: 'INACTIVO' });
                 await paciente.save();
                 return res.json({
                     status: true,
@@ -214,7 +212,7 @@ export async function deletePaciente(req, res) {
                     body: paciente
                 });
             } else {
-                await paciente.update({ str_pac_estado: 'Activo' });
+                await paciente.update({ str_pac_estado: 'ACTIVO' });
                 await paciente.save();
                 return res.json({
                     status: true,

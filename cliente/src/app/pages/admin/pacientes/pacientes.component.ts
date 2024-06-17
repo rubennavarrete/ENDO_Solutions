@@ -27,15 +27,14 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   paciente: DataTypePacientes[] = [];
 
-  menuTabsSelected = 0;
   arrFiltros: any = [
-    // {
-    //   name: 'Fecha de Nacimiento',
-    //   type: 'date',
-    //   filter: false,
-    //   description: 'Activo',
-    //   kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
-    // },
+    {
+      name: 'Fecha de Nacimiento',
+      type: 'date',
+      filter: false,
+      description: 'Activo',
+      kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
+    },
 
     {
       type: 'search',
@@ -57,7 +56,6 @@ export class PacientesComponent implements OnInit, OnDestroy {
           parameter: 'str_pac_correo',
         },
         { name: 'Número de Teléfono', parameter: 'str_pac_telefono' },
-        
       ],
     },
     {
@@ -107,10 +105,86 @@ export class PacientesComponent implements OnInit, OnDestroy {
       });
   }
 
-  cambiarEstado(id: number, estado: string) {}
+  cambiarEstado(id: number, estado: string) {
+    Swal.fire({
+      title: `Está seguro que desea ${
+        estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
+      } El Estado del Paciente?`,
+      text: 'Este cambio puede ser revertido en cualquier momento',
+      showDenyButton: true,
+      confirmButtonText: `${
+        estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
+      } Estado Paciente`,
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Cambiando estado del Paciente...',
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        this.request = true;
+        this.srvPacientes
+          .deletePaciente(id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (resp: any) => {
+              if (resp.status) {
+                Swal.close();
+                Swal.fire({
+                  icon: 'success',
+                  title: `Sector ${
+                    estado === 'ACTIVO' ? 'Desactivado' : 'Activado'
+                  } correctamente`,
+                  showDenyButton: false,
+                  confirmButtonText: 'Aceptar',
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: resp.message,
+                  text: 'Algo salió mal',
+                });
+              }
+
+              this.srvPacientes.obtenerPaciente({
+                order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
+              });
+            },
+            error: (err) => {
+              console.log('ERROR CREATE RESPONSABLE', err);
+              this.request = false;
+              Swal.fire({
+                title: 'Error al cambiar el estado del Responsable',
+                text: 'Por favor comuníquese con el servicio técnico',
+                icon: 'error',
+                footer:
+                  err.error.message +
+                  '\n' +
+                  (err.error.errores ? JSON.stringify(err.error.errores) : ''),
+                showDenyButton: false,
+                confirmButtonText: 'Aceptar',
+              });
+            },
+            complete: () => {
+              this.request = false;
+            },
+          });
+      } else if (result.isDenied) {
+        Swal.fire(
+          `No se ${
+            estado === 'ACTIVO' ? 'Desactivo' : 'Activo'
+          } el estado del Sector!`,
+          '',
+          'info'
+        );
+      }
+    });
+  }
 
   setFilters(filter: any) {
-    // console.log(filter);
+    console.log(filter);
     this.request = true;
     this.srvPacientes.obtenerPaciente(filter);
   }

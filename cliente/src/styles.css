@@ -132,6 +132,8 @@
   --fs-6: 1.8rem;
   --fs-7: 1.6rem;
   --fs-8: 1.4rem;
+  --fs-9: 1.2rem;
+  --fs-10: 1rem;
 
   --fw-800: 800;
   --fw-700: 700;
@@ -215,13 +217,13 @@
 .swal2-title {
   font-family: "Roboto", Arial, sans-serif !important;
   padding-top: 32px !important;
-  font-size: 1.25rem !important;
+  font-size: var(--fs-3) !important;
 }
 
 /* descripcion de la swal  */
-.swal2-html-container {
+.swal2-popup {
   font-family: "Roboto", Arial, sans-serif !important;
-  font-size: 1rem !important;
+  font-size: var(--fs-7) !important;
 }
 
 .loading-home {
@@ -444,16 +446,36 @@ h5 span {
   color: var(--color-primary);
 }
 
+h5 {
+  font-size: var(--fs-5);
+}
+
+h6 {
+  font-size: var(--fs-8);
+}
+
 p {
   font-family: "Roboto", Arial, sans-serif;
-  font-size: 1em;
+  font-size: var(--fs-7);
   margin: 0 !important;
   /* font-weight: lighter;  */
   /* aumente el lighnet por q parece en negrita */
 }
 
+.small {
+  font-size: var(--fs-8) !important;
+}
+
+.form-select {
+  font-size: var(--fs-8);
+}
+
 hr {
   opacity: 0.1;
+}
+
+.form-control {
+  font-size: var(--fs-8);
 }
 /* badges  */
 .bg-warning {

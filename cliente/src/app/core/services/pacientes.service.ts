@@ -79,6 +79,24 @@ export class PacientesService {
     });
   }
 
+  agregarPaciente(paciente: nuevoPaciente) {
+    return this.http.post(this.URL_API, paciente, {
+      withCredentials: true,
+    });
+  }
+
+  putPaciente(id: number, paciente: nuevoPaciente) {
+    return this.http.put(`${this.URL_API}/${id}`, paciente, {
+      withCredentials: true,
+    });
+  }
+
+  deletePaciente(id: number) {
+    return this.http.delete(this.URL_API + '/' + id, {
+      withCredentials: true,
+    });
+  }
+
   obtenerPaciente(filter: any) {
     // console.log('Filter en serviico', filter);
     this.getPacientes(filter)
