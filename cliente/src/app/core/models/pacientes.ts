@@ -22,7 +22,6 @@ export interface nuevoPaciente {
   str_pac_cedula: string;
   str_pac_correo: string;
   str_pac_sexo: string;
-  str_pac_estado: string;
   str_pac_telefono: string;
   str_pac_nombre_familia: string;
   str_pac_telefono_familia: string;

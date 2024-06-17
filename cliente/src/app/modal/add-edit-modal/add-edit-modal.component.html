@@ -16,8 +16,12 @@
       <div class="modal-body">
         <container-element [ngSwitch]="tipoFormulario">
           <!-- the same view can be shown in more than one case -->
-          <div *ngSwitchCase="'nuevoEstadoContratacion'">
-            <!-- <app-agregar-e-contratacion></app-agregar-e-contratacion> -->
+          <div *ngSwitchCase="'nuevoPaciente'">
+            <app-agregar-paciente></app-agregar-paciente>
+          </div>
+
+          <div *ngSwitchCase="'editarPaciente'">
+            <app-editar-paciente></app-editar-paciente>
           </div>
 
           <div *ngSwitchCase="'clear'"></div>

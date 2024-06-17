@@ -8,8 +8,8 @@ const app = express();
 
 app.use(express.json());
 const whiteList = [
-  "http://localhost:4200",
-  "https://localhost:4200",
+  "http://localhost:4400",
+  "https://localhost:4400",
 ];
 
 app.use(
