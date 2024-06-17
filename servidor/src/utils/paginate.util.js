@@ -26,7 +26,7 @@ export async function paginate(
       options.attributes = atributos
     } else {
       options.attributes = {
-        exclude: ["dt_fecha_creacion", "dt_fecha_actualizacion"],
+        exclude: ["updatedAt", "createdAt"],
       }
     }
     const { count, rows } = await model.findAndCountAll(options)

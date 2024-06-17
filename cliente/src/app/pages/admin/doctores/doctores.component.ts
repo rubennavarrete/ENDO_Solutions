@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { DataMetadata } from 'src/app/core/models/metadata';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-doctores',

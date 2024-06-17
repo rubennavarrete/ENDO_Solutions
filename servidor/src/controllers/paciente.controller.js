@@ -112,10 +112,8 @@ export async function getPacientes(req, res) {
     //con paginacion nueva
     try {
         const { pagination } = req.query;
-        // console.log('pagination: ', pagination);
         const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_pacientes");
-        // console.log('query: ', query);
-        // console.log('parameters: ', parameters);
+        
         const result = await Paciente.sequelize.query(query, {
             replacements: parameters,
             type: QueryTypes.SELECT,
