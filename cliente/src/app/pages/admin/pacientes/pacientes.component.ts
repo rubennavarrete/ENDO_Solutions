@@ -29,13 +29,13 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   menuTabsSelected = 0;
   arrFiltros: any = [
-    {
-      name: 'Fecha de Adjudicación',
-      type: 'date',
-      filter: false,
-      description: 'Activo',
-      kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
-    },
+    // {
+    //   name: 'Fecha de Nacimiento',
+    //   type: 'date',
+    //   filter: false,
+    //   description: 'Activo',
+    //   kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
+    // },
 
     {
       type: 'search',
@@ -43,27 +43,28 @@ export class PacientesComponent implements OnInit, OnDestroy {
       filter: false,
       description: 'Activo',
       kind: [
-        { name: 'Código', parameter: 'str_proceso_precontractual_codigo' },
+        { name: 'Nombre', parameter: 'str_pac_nombre' },
         {
-          name: 'Estado de la contratación ',
-          parameter: 'str_estado_contratacion_nombre',
+          name: 'Apellido',
+          parameter: 'str_pac_apellido',
         },
         {
-          name: 'Tipo de Contratación',
-          parameter: 'str_tipo_contratacion_nombre',
+          name: 'Número de Cédula ',
+          parameter: 'str_pac_cedula',
         },
-        { name: 'Tipo de Obra', parameter: 'str_tipo_obra_nombre' },
         {
-          name: 'Objeto del Proceso',
-          parameter: 'str_proceso_precontractual_objeto_proceso',
+          name: 'Correo Electrónico',
+          parameter: 'str_pac_correo',
         },
+        { name: 'Número de Teléfono', parameter: 'str_pac_telefono' },
+        
       ],
     },
     {
       name: 'Estado',
       type: 'status',
       filter: false,
-      parameter: 'str_proceso_precontractual_estado',
+      parameter: 'str_pac_estado',
       kind: [
         { name: 'Activo', parameter: 'ACTIVO' },
         { name: 'Inactivo', parameter: 'INACTIVO' },
@@ -109,6 +110,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
   cambiarEstado(id: number, estado: string) {}
 
   setFilters(filter: any) {
+    // console.log(filter);
     this.request = true;
     this.srvPacientes.obtenerPaciente(filter);
   }

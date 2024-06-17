@@ -1,6 +1,9 @@
 //import { Persona } from "../models/persona.js";
 import { paginarDatos } from "../utils/paginacion.utils.js";
 import { Paciente } from "../models/paciente.js";
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
+
 
 export const createPaciente = async (req, res) => {
     // const { str_pac_nombre,  } = req.body;
@@ -14,8 +17,8 @@ export const createPaciente = async (req, res) => {
             str_pac_nombre_familia,
             str_pac_telefono_familia,
             str_pac_relacion_familia,
-            dt_pac_fecha_nacimiento,  
-            str_pac_direccion   } = req.body;
+            dt_pac_fecha_nacimiento,
+            str_pac_direccion } = req.body;
 
         const paciente = await Paciente.create({
             str_pac_nombre,
@@ -32,13 +35,13 @@ export const createPaciente = async (req, res) => {
             str_pac_direccion
         });
 
-        if(paciente){
+        if (paciente) {
             return res.json({
                 status: true,
                 message: 'Paciente creado exitosamente',
                 body: paciente
             });
-        }else{
+        } else {
             return res.json({
                 status: false,
                 message: 'No se pudo crear el paciente',
@@ -70,6 +73,8 @@ export const createPaciente = async (req, res) => {
 // }
 
 export async function getPacientes(req, res) {
+    //con paginaciion antigua
+    /*
     try {
         const paginationDatos = req.query;
         if (paginationDatos.page == "undefined") {
@@ -97,6 +102,40 @@ export async function getPacientes(req, res) {
                 total,
             });
         }
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || 'Algo salio mal recuperando los pacientes'
+        });
+    }
+        */
+
+    //con paginacion nueva
+    try {
+        const { pagination } = req.query;
+        // console.log('pagination: ', pagination);
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_pacientes");
+        // console.log('query: ', query);
+        // console.log('parameters: ', parameters);
+        const result = await Paciente.sequelize.query(query, {
+            replacements: parameters,
+            type: QueryTypes.SELECT,
+        })
+        const count = await Paciente.count();
+        let pageToMeta = {};
+        if (pagination) {
+            pageToMeta = JSON.parse(pagination);
+        }
+        const paginationMetaResult = Utils.pagination.paginate(
+            pageToMeta.page,
+            pageToMeta.limit,
+            count
+          )
+          res.json({
+            status: true,
+            message: "Pacientes obtenidos exitosamente",
+            body: result,
+            ...paginationMetaResult,
+          })
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando los pacientes'

@@ -80,6 +80,7 @@ export class PacientesService {
   }
 
   obtenerPaciente(filter: any) {
+    // console.log('Filter en serviico', filter);
     this.getPacientes(filter)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
