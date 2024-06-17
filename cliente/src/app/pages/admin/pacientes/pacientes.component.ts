@@ -77,7 +77,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     Swal.fire({
-      title: 'Cargando Datos Pasientes...',
+      title: 'Cargando Datos Pacientes...',
       didOpen: () => {
         Swal.showLoading();
       },

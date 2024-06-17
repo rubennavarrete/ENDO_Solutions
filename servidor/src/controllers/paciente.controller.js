@@ -71,6 +71,7 @@ export const createPaciente = async (req, res) => {
 // }
 
 export async function getPacientes(req, res) {
+    console.log('req.query obgtener pacientes back :', req.query);
     //con paginaciion antigua
     /*
     try {
@@ -165,6 +166,7 @@ export async function getPacienteById(req, res) {
 }
 
 export async function updatePaciente(req, res) {
+    console.log("Actualizar paciente", req.body)
     try {
         const paciente = await Paciente.findByPk(req.params.id);
         if (paciente) {
