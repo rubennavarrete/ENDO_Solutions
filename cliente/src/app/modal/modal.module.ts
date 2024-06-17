@@ -4,7 +4,7 @@ import { AddEditModalComponent } from './add-edit-modal/add-edit-modal.component
 import { RouterModule } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { PacienteModule } from '../components/paciente/paciente.module';
-// import { DoctorModule } from '../components/doctor/doctor.module';
+import { DoctorModule } from '../components/doctor/doctor.module';
 
 @NgModule({
   declarations: [AddEditModalComponent],
@@ -13,7 +13,7 @@ import { PacienteModule } from '../components/paciente/paciente.module';
     RouterModule.forChild([]),
     SweetAlert2Module,
     PacienteModule,
-    // DoctorModule,
+    DoctorModule,
   ],
   exports: [AddEditModalComponent],
 })
