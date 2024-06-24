@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { DataMetadata } from 'src/app/core/models/metadata';
-import { DataTypePacientes } from 'src/app/core/models/pacientes';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import config from 'config/config';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ModalService } from 'src/app/core/services/modal.service';
-import { PacientesService } from 'src/app/core/services/pacientes.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pacientes',
@@ -12,203 +12,66 @@ import Swal from 'sweetalert2';
   styleUrls: ['./pacientes.component.css'],
 })
 export class PacientesComponent implements OnInit, OnDestroy {
+  baseUrl = config.URL_BASE_PATH;
   private destroy$ = new Subject<any>();
-
-  request = true;
-  loading = true;
-
-  currentPage: number = 0;
-  metadata!: DataMetadata;
-
-  elementForm: {
-    formulario: string;
-    title: string;
-  } = { formulario: '', title: '' };
-
-  paciente: DataTypePacientes[] = [];
-
-  arrFiltros: any = [
-    {
-      name: 'Fecha de Nacimiento',
-      type: 'date',
-      filter: false,
-      description: 'Activo',
-      kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
-    },
-
-    {
-      type: 'search',
-      name: 'Buscar',
-      filter: false,
-      description: 'Activo',
-      kind: [
-        { name: 'Nombre', parameter: 'str_pac_nombre' },
-        {
-          name: 'Apellido',
-          parameter: 'str_pac_apellido',
-        },
-        {
-          name: 'Número de Cédula ',
-          parameter: 'str_pac_cedula',
-        },
-        {
-          name: 'Correo Electrónico',
-          parameter: 'str_pac_correo',
-        },
-        { name: 'Número de Teléfono', parameter: 'str_pac_telefono' },
-      ],
-    },
-    {
-      name: 'Estado',
-      type: 'status',
-      filter: false,
-      parameter: 'str_pac_estado',
-      kind: [
-        { name: 'Activo', parameter: 'ACTIVO' },
-        { name: 'Inactivo', parameter: 'INACTIVO' },
-      ],
-    },
-  ];
+  menuTabsSelected: number = 0;
 
   constructor(
     private srvModal: ModalService,
-    public srvPacientes: PacientesService
+    private router: Router,
+    private location: Location,
+    private cdr: ChangeDetectorRef
   ) {}
 
+  public titleModal: string = '';
+  public tipoFormulario: string = '';
+
+  vista!: boolean;
+  menus: any[] = [{}, {}];
+  loading: boolean = false;
+  request: boolean = false;
+  arrFiltros: any = [];
+
+  tipoVista: string = 'uno';
+
+  listaViews: any = {
+    INFO_PERSONAL: 0,
+    INFO_MEDICA: 1,
+    HISTORIAL_CONSULTA: 2,
+  };
+
   ngOnInit(): void {
-    Swal.fire({
-      title: 'Cargando Datos Pacientes...',
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    setTimeout(() => {
-      this.loading = false;
-    }, 400);
+    const path: string = window.location.pathname.split('/').pop() || '';
+    this.menuTabsSelected = this.listaViews[path.toUpperCase()] || 0;
 
-    this.srvPacientes.obtenerPaciente({
-      order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
-    });
-
-    this.srvPacientes.selectedPaciente$
+    this.srvModal.selectFormModal$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.paciente = data;
-        this.request = false;
-        Swal.close();
-      });
-
-    this.srvPacientes.selectedMetadata$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.metadata = data;
+      .subscribe((data: any) => {
+        console.log('Entro a editar data => ', data);
+        console.log('menuTabsSelected => ', this.menuTabsSelected);
+        this.titleModal = data.title;
+        this.tipoFormulario = data.formulario;
+        if (this.titleModal !== '') {
+          this.tipoVista = 'dos';
+        }
       });
   }
 
-  cambiarEstado(id: number, estado: string) {
-    Swal.fire({
-      title: `Está seguro que desea ${
-        estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } El Estado del Paciente?`,
-      text: 'Este cambio puede ser revertido en cualquier momento',
-      showDenyButton: true,
-      confirmButtonText: `${
-        estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } Estado Paciente`,
-      denyButtonText: `Cancelar`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Cambiando estado del Paciente...',
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        this.request = true;
-        this.srvPacientes
-          .deletePaciente(id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe({
-            next: (resp: any) => {
-              if (resp.status) {
-                Swal.close();
-                Swal.fire({
-                  icon: 'success',
-                  title: `Sector ${
-                    estado === 'ACTIVO' ? 'Desactivado' : 'Activado'
-                  } correctamente`,
-                  showDenyButton: false,
-                  confirmButtonText: 'Aceptar',
-                });
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: resp.message,
-                  text: 'Algo salió mal',
-                });
-              }
-
-              this.srvPacientes.obtenerPaciente({
-                order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
-              });
-            },
-            error: (err) => {
-              console.log('ERROR CREATE RESPONSABLE', err);
-              this.request = false;
-              Swal.fire({
-                title: 'Error al cambiar el estado del Responsable',
-                text: 'Por favor comuníquese con el servicio técnico',
-                icon: 'error',
-                footer:
-                  err.error.message +
-                  '\n' +
-                  (err.error.errores ? JSON.stringify(err.error.errores) : ''),
-                showDenyButton: false,
-                confirmButtonText: 'Aceptar',
-              });
-            },
-            complete: () => {
-              this.request = false;
-            },
-          });
-      } else if (result.isDenied) {
-        Swal.fire(
-          `No se ${
-            estado === 'ACTIVO' ? 'Desactivo' : 'Activo'
-          } el estado del Sector!`,
-          '',
-          'info'
-        );
-      }
-    });
+  seleccionarVista(vista: string) {
+    this.tipoVista = vista;
+    this.location.replaceState(`${this.baseUrl}/pacientes`);
+    this.cdr.detectChanges();
+    this.cdr.detectChanges();
   }
 
-  setFilters(filter: any) {
-    console.log(filter);
-    this.request = true;
-    this.srvPacientes.obtenerPaciente(filter);
-  }
+  agregarPaciente() {
+    this.router.navigate([`/${this.baseUrl}/pacientes/info_personal`]);
+    this.menuTabsSelected = 0;
+    this.tipoVista = 'dos';
+    this.tipoFormulario = 'nuevoPaciente';
 
-  cleanFilters() {
-    this.request = true;
-    this.srvPacientes.obtenerPaciente({
-      order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
-    });
-  }
-
-  seleccionarInput(tipo: string, data: DataTypePacientes, title: string) {
-    this.elementForm = { formulario: tipo, title };
-    this.srvModal.setFormModal(this.elementForm);
-    this.srvPacientes.setUpdatePaciente(data);
-    this.srvModal.openModal();
-  }
-
-  nextPage(page: number) {
-    this.request = true;
-    this.srvPacientes.obtenerPaciente({
-      pagination: { limit: 10, page },
-      order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
-    });
+    this.cdr.detectChanges();
+    this.titleModal = '';
   }
 
   ngOnDestroy(): void {

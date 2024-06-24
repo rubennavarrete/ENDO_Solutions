@@ -412,12 +412,7 @@ body {
   background: rgb(235, 235, 235);
   color: #555;
   font-family: "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif;
-  /* -webkit-transition: width 0.5s;
-  -moz-transition: width 0.5s;
-  -ms-transition: width 0.5s;
-  -o-transition: width 0.5s;
-  transition: width 0.5s;
-  overflow: hidden; */
+  overflow: hidden;
 }
 
 h1 {
@@ -746,6 +741,11 @@ label {
   border: 1px dashed #ccc;
 }
 /* ----------------------------- NAVBAR TABS -----------------------------*/
+
+.titulo h5 {
+  display: flex;
+  gap: 5px;
+}
 
 .content-filtros .tabs {
   background-color: white;
@@ -2006,6 +2006,12 @@ label {
   display: flex;
   align-items: center;
   color: #fff;
+}
+
+.btn-continuar:hover {
+  color: var(--color-bg) !important;
+  background-color: var(--color-primary) !important;
+  border-color: var(--bs-btn-hover-border-color) !important;
 }
 
 /* btn cancelar */
