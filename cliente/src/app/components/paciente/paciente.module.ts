@@ -7,9 +7,14 @@ import { BotonesModule } from '../botones/botones.module';
 import { PlaceholdersModule } from '../placeholders/placeholders.module';
 import { PaginacionModule } from 'src/app/shared/paginacion/paginacion.module';
 import { AgregarPacienteComponent } from './agregar-paciente/agregar-paciente.component';
+import { MostrarPacienteComponent } from './mostrar-paciente/mostrar-paciente.component';
 
 @NgModule({
-  declarations: [AgregarPacienteComponent, EditarPacienteComponent],
+  declarations: [
+    AgregarPacienteComponent,
+    EditarPacienteComponent,
+    MostrarPacienteComponent,
+  ],
   imports: [
     CommonModule,
     SweetAlert2Module.forRoot(),
@@ -19,6 +24,10 @@ import { AgregarPacienteComponent } from './agregar-paciente/agregar-paciente.co
     PlaceholdersModule,
     PaginacionModule,
   ],
-  exports: [AgregarPacienteComponent, EditarPacienteComponent],
+  exports: [
+    AgregarPacienteComponent,
+    EditarPacienteComponent,
+    MostrarPacienteComponent,
+  ],
 })
 export class PacienteModule {}
