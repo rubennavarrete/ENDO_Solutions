@@ -10,7 +10,7 @@ const variableConfig = {
     dbPassword: process.env.DB_PASSWORD,
     dbDialect: process.env.DB_DIALECT,
     dbName: process.env.DB_NAME,
-    // dbPort: process.env.DB_PORT,
+    dbPort: process.env.DB_PORT,
 
 }
 
