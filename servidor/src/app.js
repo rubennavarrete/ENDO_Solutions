@@ -11,6 +11,7 @@ const whiteList = [
   "http://localhost:4400",
   "http://localhost:4200",
   "http://localhost:4020",
+  "https://endo-solution.rubenvn.com",
 
 ];
 
