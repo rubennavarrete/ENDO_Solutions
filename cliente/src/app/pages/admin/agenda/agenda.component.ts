@@ -8,16 +8,16 @@ import Swal from 'sweetalert2';
 })
 export class AgendaComponent {
   ngOnInit(): void {
-    Swal.fire({
-      title: 'Cargando Datos Agenda...',
-      didOpen: () => {
-        Swal.showLoading();
-        // this.isLoading = true
-        // this.isData = true
-      },
-    });
-    setTimeout(() => {
-      Swal.close();
-    }, 700);
+    // Swal.fire({
+    //   title: 'Cargando Datos Agenda...',
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //     // this.isLoading = true
+    //     // this.isData = true
+    //   },
+    // });
+    // setTimeout(() => {
+    //   Swal.close();
+    // }, 700);
   }
 }
