@@ -85,6 +85,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.loading = false;
     }, 400);
+    
 
     this.srvPacientes.obtenerPaciente({
       order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],

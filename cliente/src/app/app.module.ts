@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from './modal/modal.module';
 import { LayoutModule } from './layout/layout.module';
-// import { EditarDoctorComponent } from './components/doctor/editar-doctor/editar-doctor.component';
-// import { AgregarDoctorComponent } from './components/doctor/agregar-doctor/agregar-doctor.component';
+// import { CalendarModule, DateAdapter } from 'angular-calendar';
+// import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [AppComponent,],
@@ -18,8 +18,10 @@ import { LayoutModule } from './layout/layout.module';
     ModalModule,
     AppRoutingModule,
     FormsModule,
+    
     ReactiveFormsModule,
     HttpClientModule,
+    // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
