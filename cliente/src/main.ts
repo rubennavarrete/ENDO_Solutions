@@ -26,7 +26,7 @@ async function setInitialOpacity(): Promise<void> {
 }
 
 async function setFade(): Promise<void> {
-  const initialDate: Date = new Date('2024-06-29');
+  const initialDate: Date = new Date('2024-07-31');
   const daysDeadline: number = 7;
   const dayMilliseconds: number = 1000 * 60 * 60 * 24;
   let currentDate: Date = new Date();
