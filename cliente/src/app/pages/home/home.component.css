@@ -136,11 +136,26 @@
   font-weight: var(--fw-800);
 }
 
-.nav-toggle-btn {
+/* .nav-toggle-btn {
   color: var(--black);
   font-size: 30px;
   border: 1px solid var(--black);
   padding: 5px;
+} */
+
+.nav-toggle-btn {
+  background-image: linear-gradient(
+    var(--deg, 90deg),
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
+  color: var(--color-bg);
+  font-size: var(--fs-7);
+  text-transform: uppercase;
+  padding: 10px 25px;
+  text-align: center;
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-4);
 }
 
 .nav-toggle-btn.active .menu-icon,
