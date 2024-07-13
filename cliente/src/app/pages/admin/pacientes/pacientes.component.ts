@@ -41,7 +41,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    const path: string = window.location.pathname.split('/').pop() || '';
+    const path: string = window.location.pathname.split('/').pop() ?? '';
     this.menuTabsSelected = this.listaViews[path.toUpperCase()] || 0;
 
     this.srvModal.selectFormModal$
@@ -53,6 +53,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
         this.tipoFormulario = data.formulario;
         if (this.titleModal !== '') {
           this.tipoVista = 'dos';
+          console.log('tipoVista => ', this.tipoVista);
         }
       });
   }
@@ -61,11 +62,10 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.tipoVista = vista;
     this.location.replaceState(`${this.baseUrl}/pacientes`);
     this.cdr.detectChanges();
-    this.cdr.detectChanges();
   }
 
   agregarPaciente() {
-    this.router.navigate([`/${this.baseUrl}/pacientes/info_personal`]);
+    // this.router.navigate([`/${this.baseUrl}/pacientes/info_personal`]);
     this.menuTabsSelected = 0;
     this.tipoVista = 'dos';
     this.tipoFormulario = 'nuevoPaciente';
