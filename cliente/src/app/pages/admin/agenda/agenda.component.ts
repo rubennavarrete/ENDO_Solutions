@@ -96,6 +96,21 @@ export class AgendaComponent {
       actions: this.actions,
     },
     {
+      start: startOfDay(new Date()),
+      title: 'Un evento con fecha de inicio',
+      color: { primary: '#e3ff08', secondary: '#FDF1BA'},
+      actions: this.actions,
+    },
+    {
+      start: new Date('2024-07-10T10:00:00'),
+      end: new Date('2024-07-10T12:00:00'),
+      title: 'Evento de prueba',
+      color: {
+        primary: '#1e90ff',
+        secondary: '#D1E8FF'
+      }
+    },
+    {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',

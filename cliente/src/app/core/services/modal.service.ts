@@ -16,6 +16,7 @@ export class ModalService {
 
   // Funciones para emitir los cambios Contratacion
   setFormModal(data: any) {
+    console.log('data en serviced => ', data);
     this.FormModal$.next(data);
   }
 

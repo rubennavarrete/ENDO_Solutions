@@ -135,7 +135,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
                 Swal.close();
                 Swal.fire({
                   icon: 'success',
-                  title: `Sector ${
+                  title: `Paciente ${
                     estado === 'ACTIVO' ? 'Desactivado' : 'Activado'
                   } correctamente`,
                   showDenyButton: false,
@@ -157,7 +157,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
               console.log('ERROR CREATE RESPONSABLE', err);
               this.request = false;
               Swal.fire({
-                title: 'Error al cambiar el estado del Responsable',
+                title: 'Error al cambiar el estado del Paciente',
                 text: 'Por favor comuníquese con el servicio técnico',
                 icon: 'error',
                 footer:
@@ -174,9 +174,10 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
           });
       } else if (result.isDenied) {
         Swal.fire(
+          
           `No se ${
             estado === 'ACTIVO' ? 'Desactivo' : 'Activo'
-          } el estado del Sector!`,
+          } el estado del Paciente!`,
           '',
           'info'
         );
@@ -185,6 +186,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
   }
 
   setFilters(filter: any) {
+    // console.time('BuscarPaciente');
     console.log(filter);
     this.request = true;
     this.srvPacientes.obtenerPaciente(filter);

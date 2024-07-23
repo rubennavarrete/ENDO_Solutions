@@ -44,6 +44,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
   }
 
   agregarPaciente() {
+    console.time('agregarPaciente');
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Estás a punto de agregar un nuevo paciente',
@@ -83,8 +84,10 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
             this.srvPacientes.obtenerPaciente({
               order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
             });
-            this.myForm.reset();
-            this.srvModal.closeModal();
+            // this.myForm.reset();
+            // this.srvModal.closeModal();
+            console.timeEnd('agregarPaciente');
+
           },
           error: (err) => {
             console.log('ERROR AL CREAR EL PACIENTE', err);
@@ -100,6 +103,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
               showDenyButton: false,
               confirmButtonText: 'Aceptar',
             });
+            console.timeEnd('agregarPaciente');
           },
           complete: () => {
             this.request = false;
@@ -107,6 +111,8 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
         });
       } else if (result.isDenied) {
         Swal.fire('Los cambios no se guardaron', '', 'info');
+        console.timeEnd('agregarPaciente');
+
       }
     });
   }

@@ -55,14 +55,14 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
 
   actualizarPaciente() {
     Swal.fire({
-      title: 'Está seguro que desea modificar la Informacion del Paciente?',
+      title: 'Está seguro que desea modificar la Información del Paciente?',
       showDenyButton: true,
       confirmButtonText: 'Modificar',
       denyButtonText: `Cancelar`,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Modificando Informacion...',
+          title: 'Modificando Información...',
           didOpen: () => {
             Swal.showLoading();
           },
@@ -77,7 +77,7 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
                 Swal.close();
                 Swal.fire({
                   icon: 'success',
-                  title: 'Informacion del Paciente Modificada Correctamente',
+                  title: 'Información del Paciente Modificada Correctamente',
                   showDenyButton: false,
                   confirmButtonText: 'Aceptar',
                 });
@@ -95,8 +95,8 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
               this.srvPacientes.obtenerPaciente({
                 order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
               });
-              this.myForm.reset();
-              this.srvModal.closeModal();
+              // this.myForm.reset();
+              // this.srvModal.closeModal();
             },
             error: (err: any) => {
               Swal.close();
@@ -115,9 +115,11 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
               });
             },
             complete: () => {
-              this.srvModal.closeModal();
-              this.myForm.reset();
+              // this.srvModal.closeModal();
+              // this.myForm.reset();
+              this.ngOnInit
               this.request = false;
+
             },
           });
       } else if (result.isDenied) {
