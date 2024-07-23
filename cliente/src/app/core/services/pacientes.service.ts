@@ -61,6 +61,7 @@ export class PacientesService {
   }
 
   setUpdatePaciente(data: DataTypePacientes) {
+    // console.log('Data en servicio', data);
     this.updatePaciente.next(data);
   }
 

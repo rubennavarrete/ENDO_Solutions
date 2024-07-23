@@ -70,6 +70,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Cerrar sesión
   cerrarSeccion() {
     // this.casclient.Logout();
+    //me redirige a la pagina de login
+    
   }
 
   cambiarRol(idRol: number) {

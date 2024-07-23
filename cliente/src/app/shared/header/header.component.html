@@ -61,22 +61,16 @@
         </button>
         <ul class="dropdown-menu" style="width: 100%">
           <li>
-            <a
-              class="dropdown-item"
-              target="_blank"
-              href="https://servicios.espoch.edu.ec/"
-              >Servicios ESPOCH</a
-            >
-            <a
-              class="dropdown-item"
-              target="_blank"
-              href="https://login.microsoftonline.com/?whr=espoch.edu.ec"
-              >Correo Institucional</a
-            >
+            
             <a class="dropdown-item" [routerLink]="'/' + baseUrl + '/ajustes'"
               >Ajsutes</a
             >
             <div class="dropdown-divider"></div>
+            <!-- <button
+              class="dropdown-item"
+              (click)="cerrarSeccion()"
+              style="display: flex; gap: 4px; align-items: center"
+            > -->
             <button
               class="dropdown-item"
               (click)="cerrarSeccion()"
@@ -111,7 +105,7 @@
       style="background: #0000009e; height: 100%; width: 100%"
     ></div>
     <div class="bg_menu__mobile">
-      <section class="d-flex align-items-center justify-content-center">
+      <!-- <section class="d-flex align-items-center justify-content-center">
         <div
           class="dropdown custom-dropdown status_dropdown"
           data-color="created-status"
@@ -140,7 +134,7 @@
             </li>
           </ul>
         </div>
-      </section>
+      </section> -->
       <section class="d-flex align-items-center justify-content-center">
         <div
           class="dropdown custom-dropdown status_dropdown"
@@ -157,12 +151,12 @@
           </button>
           <ul class="dropdown-menu" style="width: 100%">
             <li>
-              <a class="dropdown-item" href="#">Pagina principal ESPOCH</a>
+              <!-- <a class="dropdown-item" href="#">Pagina principal ESPOCH</a>
               <a
                 class="dropdown-item"
                 href="https://login.microsoftonline.com/?whr=espoch.edu.ec"
                 >Ir a correo Institucional</a
-              >
+              > -->
               <a class="dropdown-item" href="#">Ajsutes</a>
               <div class="dropdown-divider"></div>
               <button class="dropdown-item" (click)="cerrarSeccion()">

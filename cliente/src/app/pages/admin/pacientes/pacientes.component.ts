@@ -15,6 +15,10 @@ export class PacientesComponent implements OnInit, OnDestroy {
   baseUrl = config.URL_BASE_PATH;
   private destroy$ = new Subject<any>();
   menuTabsSelected: number = 0;
+  elementForm: {
+    formulario: string;
+    title: string;
+  } = { formulario: '', title: '' };
 
   constructor(
     private srvModal: ModalService,
@@ -44,23 +48,33 @@ export class PacientesComponent implements OnInit, OnDestroy {
     const path: string = window.location.pathname.split('/').pop() ?? '';
     this.menuTabsSelected = this.listaViews[path.toUpperCase()] || 0;
 
-    this.srvModal.selectFormModal$
+      this.srvModal.selectFormModal$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log('Entro a editar data => ', data);
         console.log('menuTabsSelected => ', this.menuTabsSelected);
         this.titleModal = data.title;
         this.tipoFormulario = data.formulario;
+        console.log('this.titleModal => ', this.titleModal);
         if (this.titleModal !== '') {
           this.tipoVista = 'dos';
           console.log('tipoVista => ', this.tipoVista);
         }
+        // this.srvModal.selectFormModal$
+        // .pipe(takeUntil(this.destroy$))
+
+
       });
+    
+    
   }
 
   seleccionarVista(vista: string) {
     this.tipoVista = vista;
     this.location.replaceState(`${this.baseUrl}/pacientes`);
+    // this.srvModal.setFormModal('uno');
+    this.srvModal.setFormModal(this.elementForm);
+
     this.cdr.detectChanges();
   }
 
@@ -69,7 +83,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.menuTabsSelected = 0;
     this.tipoVista = 'dos';
     this.tipoFormulario = 'nuevoPaciente';
-
+    this.srvModal.setFormModal('uno');
     this.cdr.detectChanges();
     this.titleModal = '';
   }
