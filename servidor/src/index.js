@@ -10,7 +10,8 @@ import './models/persona.js';
 import './models/especialidad.js';
 import './models/medico.js';
 import './models/paciente.js';
-// import './models/references.js';
+import './models/info_medica.js';
+import './models/references.js';
 
 async function main(port) {
     try {

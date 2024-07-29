@@ -35,6 +35,10 @@ export const Agenda = sequelize.define('tb_agenda', {
         type: DataTypes.TIME,
         allowNull: false
     },
+    str_age_color: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+    },
     str_age_estado: {
         type: DataTypes.STRING(20),
         allowNull: false

@@ -9,6 +9,22 @@ export const createPaciente = async (req, res) => {
     // const { str_pac_nombre,  } = req.body;
     try {
         // const paciente = await Paciente.create(req.body);
+
+        //validar si existe el paciente
+        const pacienteExistente = await Paciente.findOne({
+            where: {
+                str_pac_cedula: req.body.str_pac_cedula
+            }
+        });
+
+        if (pacienteExistente) {
+            return res.json({
+                status: false,
+                message: 'Ya existe un paciente con la cédula ingresada',
+                body: {}
+            });
+        }
+
         const { str_pac_nombre, str_pac_apellido, str_pac_cedula,
             str_pac_correo,
             str_pac_sexo,
