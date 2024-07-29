@@ -41,9 +41,9 @@ function getFilterAndPaginationQuery(params, from, id_con_paciente = null) {
 
   let whereAdded = false;
 
-  if (from === "public.tb_consultas" && id_con_paciente) {
-    query += " WHERE id_con_paciente = :id_con_paciente";
-    queryToParse += " WHERE id_con_paciente = :id_con_paciente";
+  if (from === "public.tb_consulta" && id_con_paciente) {
+    query += " WHERE id_con_paciente =" + id_con_paciente;
+    queryToParse += " WHERE id_con_paciente ="+ id_con_paciente;
     parameters.id_con_paciente = id_con_paciente;
     whereAdded = true;
   }
