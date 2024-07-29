@@ -36,6 +36,7 @@ export class HistorialConsultaService {
 
   private destroy$ = new Subject<any>();
   private URL_API = config.URL_API_BASE + '/consulta';
+  private URL_API_MEDICOS = config.URL_API_BASE + '/medico';
 
   historialConsulta!: DataTypeHistorialConsulta[];
   metadata!: DataMetadata;
@@ -94,6 +95,12 @@ export class HistorialConsultaService {
     });
   }
 
+  getByIdHistorialConsulta(id: number) {
+    return this.http.get<HistorialConsultaModel>(this.URL_API + '/' + id, {
+      withCredentials: true,
+    });
+  }
+
   deleteHistorialConsulta(id: number) {
     return this.http.delete<HistorialConsultaModel>(this.URL_API + '/' + id, {
       withCredentials: true,
@@ -115,6 +122,12 @@ export class HistorialConsultaService {
       error: (err) => {
         console.log("Error -> ",err);
     }});
+  }
+
+  getMedicos() {
+    return this.http.get(this.URL_API_MEDICOS, {
+      withCredentials: true,
+    });
   }
 
   ngOnDestroy() {

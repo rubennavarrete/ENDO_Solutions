@@ -33,7 +33,8 @@
         <div class="btnAgregar d-flex justify-content-between mb-4">
           <div class="titulo">
             <h5>Gestión de <span>Pacientes</span></h5>
-            <h6>{{ titleModal }}</h6>
+            <!-- <h6>{{ titleModal }}</h6> -->
+            <h6>{{ srvModal.selectNombrePaciente$ | async }}</h6>
           </div>
         </div>
         <div

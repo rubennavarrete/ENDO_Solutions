@@ -77,6 +77,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
             if (resp.status) {
               // console.log('Id del paciente recien creado', resp.body.id_pac_paciente);
               this.srvModal.setId(resp.body.id_pac_paciente);
+              this.srvModal.setNombrePaciente(resp.body.str_pac_nombre + ' ' + resp.body.str_pac_apellido);
               Swal.close();
               Swal.fire({
                 icon: 'success',

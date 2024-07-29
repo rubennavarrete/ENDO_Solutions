@@ -21,6 +21,14 @@
             <app-agregar-doctor></app-agregar-doctor>
           </div>
 
+          <div *ngSwitchCase="'nuevoHistorial'">
+            <app-agregar-hc></app-agregar-hc>
+          </div>
+
+          <div *ngSwitchCase="'editarHistorial'">
+            <app-editar-hc></app-editar-hc> 
+          </div>
+
           <!-- <div *ngSwitchCase="'editarDoctor'">
             <app-editar-doctor></app-editar-doctor>
           </div> -->

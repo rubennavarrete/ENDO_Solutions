@@ -200,6 +200,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
   }
 
   seleccionarInput(tipo: string, data: DataTypePacientes, title: any) {
+    this.srvModal.setNombrePaciente(data.str_pac_nombre+' '+data.str_pac_apellido);
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
     this.srvModal.setId(data.id_pac_paciente);

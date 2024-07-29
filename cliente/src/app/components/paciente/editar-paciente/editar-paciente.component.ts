@@ -52,6 +52,7 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.myForm.patchValue(data);
         this.idPaciente = data.id_pac_paciente;
+        this.srvModal.setNombrePaciente(data.str_pac_nombre + ' ' + data.str_pac_apellido);
       });
   }
 
@@ -93,6 +94,8 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
                   showDenyButton: false,
                   confirmButtonText: 'Aceptar',
                 });
+                this.srvModal.setNombrePaciente(resp.body.str_pac_nombre + ' ' + resp.body.str_pac_apellido);
+
               } else {
                 Swal.close();
                 Swal.fire({

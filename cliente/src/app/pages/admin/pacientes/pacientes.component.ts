@@ -15,13 +15,14 @@ export class PacientesComponent implements OnInit, OnDestroy {
   baseUrl = config.URL_BASE_PATH;
   private destroy$ = new Subject<any>();
   menuTabsSelected: number = 0;
+  // descripcion: string = '';
   elementForm: {
     formulario: string;
     title: string;
   } = { formulario: '', title: '' };
 
   constructor(
-    private srvModal: ModalService,
+    public srvModal: ModalService,
     private router: Router,
     private location: Location,
     private cdr: ChangeDetectorRef
@@ -47,6 +48,14 @@ export class PacientesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const path: string = window.location.pathname.split('/').pop() ?? '';
     this.menuTabsSelected = this.listaViews[path.toUpperCase()] || 0;
+
+    // this.srvModal.selectNombrePaciente$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((data: any) => {
+    //     this.descripcion = data;
+    //     console.log('nombrePaciente', this.descripcion);
+    //   });
+    //   this.cdr.detectChanges();
 
       this.srvModal.selectFormModal$
       .pipe(takeUntil(this.destroy$))
@@ -75,11 +84,13 @@ export class PacientesComponent implements OnInit, OnDestroy {
     };
     this.srvModal.setFormModal(this.elementForm);
     this.srvModal.setId(-1);
+    this.srvModal.setNombrePaciente('');
     this.cdr.detectChanges();
   }
 
   agregarPaciente() {
     // this.router.navigate([`/${this.baseUrl}/pacientes/info_personal`]);
+    this.srvModal.setNombrePaciente(this.titleModal);
     this.menuTabsSelected = 0;
     this.tipoVista = 'dos';
     this.tipoFormulario = 'nuevoPaciente';

@@ -159,6 +159,7 @@ export class MostrarHCComponent implements OnInit, OnDestroy {
               }
 
               this.srvHistorialConsulta.getHConsulta({
+                id_con_paciente: this.idPaciente,
                 order: [{ parameter: 'id_con_consulta', direction: 'DESC' }],
               });
             },
@@ -216,6 +217,8 @@ export class MostrarHCComponent implements OnInit, OnDestroy {
     //id de consulta  es el id para editar
     this.srvModal.setId(data.id_con_consulta);
     this.srvHistorialConsulta.setUpdateHC(data);
+    this.srvModal.openModal();
+
   }
 
   nextPage(page: number) {
