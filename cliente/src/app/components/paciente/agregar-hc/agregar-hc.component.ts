@@ -180,7 +180,7 @@ export class AgregarHCComponent implements OnInit, OnDestroy{
             });
           },
           complete: () => {
-            this.srvModal.setId(-1);
+            // this.srvModal.setId(-1);
             //cambiar el titulo del modal
             this.request = false;
 

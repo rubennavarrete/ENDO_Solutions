@@ -215,7 +215,7 @@ export class MostrarHCComponent implements OnInit, OnDestroy {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
     //id de consulta  es el id para editar
-    this.srvModal.setId(data.id_con_consulta);
+    this.srvModal.setId(data.id_con_paciente);
     this.srvHistorialConsulta.setUpdateHC(data);
     this.srvModal.openModal();
 

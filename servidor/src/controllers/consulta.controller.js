@@ -130,8 +130,8 @@ export async function deleteConsulta(req, res) {
             });
         }
         else{
-            if(consulta.str_con_estado === 'Activo'){
-                await consulta.update({str_con_estado: 'Inactivo'});
+            if(consulta.str_con_estado === 'ACTIVO'){
+                await consulta.update({str_con_estado: 'INACTIVO'});
                 await consulta.save();
                 return res.json({
                     status: true,
@@ -140,7 +140,7 @@ export async function deleteConsulta(req, res) {
                 });
             }
             else{
-                await consulta.update({str_con_estado: 'Activo'});
+                await consulta.update({str_con_estado: 'ACTIVO'});
                 await consulta.save();
                 return res.json({
                     status: true,

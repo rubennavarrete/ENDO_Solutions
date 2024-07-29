@@ -1,4 +1,6 @@
-<!-- <form autocomplete="off" [formGroup]="myForm" novalidate>
+<!-- <app-ph-table [loading]="loading || request"></app-ph-table> -->
+
+<form autocomplete="off" [formGroup]="myForm" novalidate >
     <div class="row">
         <div class="col-6 pe-2 mt-4 contentenedor-control">
             <div class="form-group col">
@@ -191,9 +193,9 @@
                  
 
         <div class="d-flex justify-content-center contendor-botones">
-            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="agregarHC()">
-                Agregar Consulta
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="editarHC()">
+                Actualizar Consulta
             </button>
         </div>
     </div>
-</form> -->
+</form>

@@ -69,41 +69,55 @@ export async function getMedicoById(req, res) {
 
 export async function getMedicos(req, res) {
   try {
-    const { pagination } = req.query;
-    const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_medicos");
-    const medicos = await Medico.sequelize.query(query, {
-      replacements: parameters,
-      type: QueryTypes.SELECT,
-      include: [
-        {
-          model: Persona,
-          attributes: ['str_per_nombre', 'str_per_apellido', 'str_per_cedula', 'str_per_correo', 'str_per_telefono', 'str_per_direccion', 'str_per_estado', 'str_per_tipo']
-        },
-        {
-          model: Especialidad,
-          attributes: ['nombre']
-        }
-      ]
+    // const { pagination } = req.query;
+    // const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_medicos");
+    // const medicos = await Medico.sequelize.query(query, {
+    //   replacements: parameters,
+    //   type: QueryTypes.SELECT,
+    //   include: [
+    //     {
+    //       model: Persona,
+    //       attributes: ['str_per_nombre', 'str_per_apellido', 'str_per_cedula', 'str_per_correo', 'str_per_telefono', 'str_per_direccion', 'str_per_estado', 'str_per_tipo']
+    //     },
+    //     {
+    //       model: Especialidad,
+    //       attributes: ['nombre']
+    //     }
+    //   ]
+    // });
+
+    // console.log("medicos: ", medicos);  
+
+    // const count = await Medico.count();
+    // let pageToMeta = {};
+    // if (pagination) {
+    //   pageToMeta = JSON.parse(pagination);
+    // }
+    // const paginationMetaResult = Utils.pagination.paginate(
+    //   pageToMeta.page,
+    //   pageToMeta.limit,
+    //   count
+    // );
+
+    // return res.json({
+    //   status: true,
+    //   message: "Médicos obtenidos exitosamente",
+    //   body: medicos,
+    //   ...paginationMetaResult
+    // });
+
+    //obtener los id y nombres de los médicos
+    const medicos = await Persona.findAll({
+      where: {
+        str_per_tipo: 'Médico'
+      },
+      attributes: ['id_per_persona', 'str_per_nombre', 'str_per_apellido']
     });
 
-    console.log("medicos: ", medicos);  
-
-    const count = await Medico.count();
-    let pageToMeta = {};
-    if (pagination) {
-      pageToMeta = JSON.parse(pagination);
-    }
-    const paginationMetaResult = Utils.pagination.paginate(
-      pageToMeta.page,
-      pageToMeta.limit,
-      count
-    );
-
-    return res.json({
+    res.json({
       status: true,
       message: "Médicos obtenidos exitosamente",
-      body: medicos,
-      ...paginationMetaResult
+      body: medicos
     });
   } catch (error) {
     return res.status(500).json({
