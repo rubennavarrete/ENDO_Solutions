@@ -1,34 +1,34 @@
 import { Consulta } from "../models/consulta.js";
-import { paginarDatos } from "../utils/paginacion.utils.js";
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
 
 export async function getConsultas(req, res) {
     try {
-        const paginationDatos = req.query;
-        if(paginationDatos.page == "undefined"){
-            const {datos, total} = await paginarDatos(1, 10, Consulta, '', '');
-            return res.json({
-                status: true,
-                message: 'Consultas obtenidas exitosamente',
-                body: datos,
-                total,
-            });
+    
+        const { pagination, id_con_paciente } = req.query;
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_consultas", id_con_paciente);
+    
+        const result = await Consulta.sequelize.query(query, {
+            replacements: parameters,
+            type: QueryTypes.SELECT,
+        })
+        const count = await Consulta.count();
+        let pageToMeta = {};
+        if (pagination) {
+            pageToMeta = JSON.parse(pagination);
         }
-        const consultas = await Consulta.findAll({limit:5});
-        if(consultas.lenght === 0 || !consultas){
-            return res.json({
-                status: false,
-                message: 'No se encontraron consultas',
-                body: []
-            });
-        }else{
-            const {datos, total} = await paginarDatos(paginationDatos.page, paginationDatos.size, Consulta, paginationDatos.parameter, paginationDatos.data);
-            return res.json({
-                status: true,
-                message: 'Consultas obtenidas exitosamente',
-                body: datos,
-                total,
-            });
-        }
+        const paginationMetaResult = Utils.pagination.paginate(
+            pageToMeta.page,
+            pageToMeta.limit,
+            count
+        )
+        res.json({
+            status: true,
+            message: "Consultas obtenidas exitosamente",
+            body: result,
+            ...paginationMetaResult
+        })
+
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando las consultas'

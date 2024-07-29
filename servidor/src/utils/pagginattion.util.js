@@ -33,16 +33,31 @@ const getPreviousPage = (page) => {
   return page - 1
 }
 
-function getFilterAndPaginationQuery(params, from) {
+function getFilterAndPaginationQuery(params, from, id_con_paciente = null) {
   const { filter, order, pagination } = params
   let query = "SELECT * FROM " + from
   let queryToParse = query
   const parameters = {}
 
+  let whereAdded = false;
+
+  if (from === "public.tb_consultas" && id_con_paciente) {
+    query += " WHERE id_con_paciente = :id_con_paciente";
+    queryToParse += " WHERE id_con_paciente = :id_con_paciente";
+    parameters.id_con_paciente = id_con_paciente;
+    whereAdded = true;
+  }
+
   if (filter) {
-    const joinFilter = JSON.parse(filter)
-    query = query + " WHERE "
-    queryToParse = queryToParse + " WHERE "
+    // const joinFilter = JSON.parse(filter)
+    // query = query + " WHERE "
+    // queryToParse = queryToParse + " WHERE "
+
+    const joinFilter = JSON.parse(filter);
+    query += whereAdded ? " AND " : " WHERE ";
+    queryToParse += whereAdded ? " AND " : " WHERE ";
+    whereAdded = true;
+    
     if (joinFilter.date) {
       query =
         query +

@@ -133,6 +133,7 @@ export async function getPacientes(req, res) {
             replacements: parameters,
             type: QueryTypes.SELECT,
         })
+        console.log('query: -------------', query);
         const count = await Paciente.count();
         let pageToMeta = {};
         if (pagination) {
