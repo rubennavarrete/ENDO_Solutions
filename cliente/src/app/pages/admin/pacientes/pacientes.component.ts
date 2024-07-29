@@ -51,14 +51,10 @@ export class PacientesComponent implements OnInit, OnDestroy {
       this.srvModal.selectFormModal$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log('Entro a editar data => ', data);
-        console.log('menuTabsSelected => ', this.menuTabsSelected);
         this.titleModal = data.title;
         this.tipoFormulario = data.formulario;
-        console.log('this.titleModal => ', this.titleModal);
         if (this.titleModal !== '') {
           this.tipoVista = 'dos';
-          console.log('tipoVista => ', this.tipoVista);
         }
         // this.srvModal.selectFormModal$
         // .pipe(takeUntil(this.destroy$))
@@ -73,8 +69,12 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.tipoVista = vista;
     this.location.replaceState(`${this.baseUrl}/pacientes`);
     // this.srvModal.setFormModal('uno');
+    this.elementForm = {
+      formulario: '',
+      title: '',
+    };
     this.srvModal.setFormModal(this.elementForm);
-
+    this.srvModal.setId(-1);
     this.cdr.detectChanges();
   }
 
@@ -83,7 +83,12 @@ export class PacientesComponent implements OnInit, OnDestroy {
     this.menuTabsSelected = 0;
     this.tipoVista = 'dos';
     this.tipoFormulario = 'nuevoPaciente';
-    this.srvModal.setFormModal('uno');
+    this.elementForm = {
+      formulario: 'nuevoPaciente',
+      title: 'Agregar Paciente',
+    };
+    this.srvModal.setFormModal(this.elementForm);
+    // this.srvModal.setFormModal('uno');
     this.cdr.detectChanges();
     this.titleModal = '';
   }

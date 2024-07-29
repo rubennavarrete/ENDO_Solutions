@@ -1,0 +1,153 @@
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+      <div class="col-6 pe-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Alergías </label>
+          <input
+            type="text"
+            class="form-control"
+            id="alegias"
+            placeholder="Alergías"
+            formControlName="str_inf_alergias"
+          />
+        </div>
+      </div>
+  
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Enfermedades </label>
+          <input
+            type="text"
+            class="form-control"
+            id="enfermedades"
+            placeholder="Enfermedades"
+            formControlName="str_inf_enfermedades"
+          />
+        </div>
+      </div>
+  
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Medicamentos </label>
+          <input
+            type="text"
+            class="form-control"
+            id="medicamentos"
+            placeholder="Medicamentos"
+            formControlName="str_inf_medicamentos"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Operaciones </label>
+          <input
+            type="text"
+            class="form-control"
+            id="operaciones"
+            placeholder="Operaciones"
+            formControlName="str_inf_operaciones"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 pe-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Tipo de Sangre </label>
+          <select
+            class="form-control"
+            id="sangre"
+            formControlName="str_inf_tipo_sangre"
+          >
+          <option value="default" selected hidden>Seleccione una Opción</option>
+          <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Limitaciones </label>
+          <input
+            type="text"
+            class="form-control"
+            id="limitaciones"
+            placeholder="Limitaciones"
+            formControlName="str_inf_limitaciones"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Hábitos Negativos </label>
+          <input
+            type="text"
+            class="form-control"
+            id="habitosnegativos"
+            placeholder="Hábitos Negativos"
+            formControlName="str_inf_habitos_negativos"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Antecedentes Familiares </label>
+          <input
+            type="text"
+            class="form-control"
+            id="antfamiliares"
+            placeholder="Antecedentes Familiares"
+            formControlName="str_inf_antecedentes_familiares"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Antecedentes Odontológicos </label>
+          <input
+            type="text"
+            class="form-control"
+            id="antodontologicos"
+            placeholder="Antecedentes Odontológicos"
+            formControlName="str_inf_antecedentes_odontologicos"
+          />
+        </div>
+      </div>
+
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Antecedentes Personales </label>
+          <input
+            type="text"
+            class="form-control"
+            id="antpersonales"
+            placeholder="Antecedentes Personales"
+            formControlName="str_inf_antecedentes_personales"
+          />
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-center contendor-botones">
+        <button
+          class="btn-continuar btn btn-h"
+          [disabled]="!myForm.valid"
+
+          (click)="agregarIM()"
+        >
+          Enviar Información Médica
+        </button>
+      </div>
+    </div>
+  </form>
+  

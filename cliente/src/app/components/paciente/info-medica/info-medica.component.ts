@@ -1,64 +1,70 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ModalService } from 'src/app/core/services/modal.service';
-import { PacientesService } from 'src/app/core/services/pacientes.service';
+import { InfoMedicaService } from 'src/app/core/services/info-medica.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-agregar-paciente',
-  templateUrl: './agregar-paciente.component.html',
-  styleUrls: ['./agregar-paciente.component.css'],
+  selector: 'app-info-medica',
+  templateUrl: './info-medica.component.html',
+  styleUrls: ['./info-medica.component.css']
 })
-export class AgregarPacienteComponent implements OnInit, OnDestroy {
+export class InfoMedicaComponent implements OnInit, OnDestroy {
   loading = false;
   request = false;
   myForm!: FormGroup;
-  today: string = new Date().toISOString().split('T')[0];
+  id: number = -1;
 
   private destroy$ = new Subject<any>();
 
+
   constructor(
-    public srvPacientes: PacientesService,
     public srvModal: ModalService,
+    public svrInfoMedica: InfoMedicaService,
     public fb: FormBuilder
-  ) {
+  ) { 
+    console.log('Entro a info medica');
+    srvModal.selectId$.pipe().subscribe((id) => {
+      this.id = id;
+      console.log('ID', this.id);
+    }
+    );
     this.myForm = this.fb.group({
-      str_pac_nombre: [null, Validators.required],
-      str_pac_apellido: [null, Validators.required],
-      str_pac_cedula: [null, Validators.required],
-      str_pac_correo: [null, Validators.required],
-      str_pac_sexo: [null, Validators.required],
-      str_pac_telefono: [null, Validators.required],
-      str_pac_nombre_familia: [null, Validators.required],
-      str_pac_telefono_familia: [null, Validators.required],
-      str_pac_relacion_familia: [null, Validators.required],
-      dt_pac_fecha_nacimiento: ['', [Validators.required, this.futureDateValidator]],
-      str_pac_direccion: [null, Validators.required],
+      // id_inf_info_medica
+      id_inf_paciente: [this.id, Validators.required],
+      str_inf_alergias: [ 'Ninguno',Validators.required],
+      str_inf_enfermedades: ['Ninguno',Validators.required],
+      str_inf_medicamentos: ['Ninguno',Validators.required],
+      str_inf_operaciones: [ 'Ninguno',Validators.required],
+      str_inf_tipo_sangre: ['Ninguno',Validators.required],
+      str_inf_limitaciones: ['Ninguno',Validators.required],
+      str_inf_habitos_negativos: ['Ninguno',Validators.required],
+      str_inf_antecedentes_familiares: ['Ninguno',Validators.required],
+      str_inf_antecedentes_odontologicos: ['Ninguno', Validators.required],
+      str_inf_antecedentes_personales: ['Ninguno',Validators.required],
     });
   }
 
   ngOnInit(): void {
-    console.log('Entro a agregar paciente');
     setTimeout(() => {
       this.loading = false;
     }, 400);
+
+    this.svrInfoMedica.getOneInfoMedica(this.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((resp: any) => {
+              console.log('RESPUESTA', resp);
+              if(resp.status)
+                this.myForm.patchValue(resp.body);
+
+    });
   }
 
-  // Validador personalizado para fechas futuras
-  futureDateValidator(control: AbstractControl): ValidationErrors | null {
-    const inputDate = new Date(control.value);
-    const currentDate = new Date();
-    if (inputDate > currentDate) {
-      return { futureDate: true };
-    }
-    return null;
-  }
-
-  agregarPaciente() {
+  agregarIM() {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Estás a punto de agregar un nuevo paciente',
+      text: 'Estás a punto de agregar una nueva información médica',
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sí, agregar',
@@ -66,17 +72,15 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Creando Paciente...',
+          title: 'Creando Información Médica...',
           didOpen: () => {
             Swal.showLoading();
           },
         });
         this.request = true;
-        this.srvPacientes.agregarPaciente(this.myForm.value).subscribe({
+        this.svrInfoMedica.agregarInfoMedica(this.myForm.value).subscribe({
           next: (resp: any) => {
             if (resp.status) {
-              // console.log('Id del paciente recien creado', resp.body.id_pac_paciente);
-              this.srvModal.setId(resp.body.id_pac_paciente);
               Swal.close();
               Swal.fire({
                 icon: 'success',
@@ -94,18 +98,22 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
               this.request = false;
             }
 
-            this.srvPacientes.obtenerPaciente({
-              order: [{ parameter: 'id_pac_paciente', direction: 'DESC' }],
+            this.svrInfoMedica.getOneInfoMedica(this.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((resp: any) => {
+              this.myForm.patchValue(resp.data);
+              console.log('RESPUESTA', resp);
             });
+
             // this.myForm.reset();
             // this.srvModal.closeModal();
 
           },
           error: (err) => {
-            console.log('ERROR AL CREAR EL PACIENTE', err);
+            console.log('ERROR AL CREAR LA INFORMACIÓN MÉDICA', err);
             this.request = false;
             Swal.fire({
-              title: 'ERROR: al crear el paciente',
+              title: 'ERROR: al crear la información médica',
               text: 'Por favor comuníquese con el servicio técnico',
               icon: 'error',
               footer:
@@ -117,7 +125,9 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
             });
           },
           complete: () => {
+            // this.srvModal.setId(-1);
             this.request = false;
+
           },
         });
       } else if (result.isDenied) {

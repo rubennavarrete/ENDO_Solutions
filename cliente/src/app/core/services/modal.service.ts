@@ -13,6 +13,7 @@ export class ModalService {
   //Behaviors Subjects
 
   private FormModal$ = new BehaviorSubject<any>(initModal);
+  private id$ = new BehaviorSubject<number>(0);
 
   // Funciones para emitir los cambios Contratacion
   setFormModal(data: any) {
@@ -23,6 +24,15 @@ export class ModalService {
   // Funciones para recibir los cambios Contratacion
   get selectFormModal$(): Observable<any> {
     return this.FormModal$.asObservable();
+  }
+
+  setId( id: number) {
+    console.log('id en serviced => ', id);
+    this.id$.next(id);
+  }
+
+  get selectId$(): Observable<number> {
+    return this.id$.asObservable();
   }
 
   //Funciones Modal

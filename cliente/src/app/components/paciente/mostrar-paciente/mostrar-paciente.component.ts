@@ -202,6 +202,7 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
   seleccionarInput(tipo: string, data: DataTypePacientes, title: any) {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
+    this.srvModal.setId(data.id_pac_paciente);
     this.srvPacientes.setUpdatePaciente(data);
   }
 
