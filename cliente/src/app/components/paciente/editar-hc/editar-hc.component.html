@@ -16,7 +16,6 @@
                 <select class="form-control" id="doctor" formControlName="id_con_medico">
                     <option [selected]="true" placeholder="Seleccione una Opción" select disabled >Seleccione una Opción</option>
                 
-                    <!-- <option let doctor of doctores [value]="doctor.id_per_persona">{{doctor.str_per_nombre}}</option> -->
                      <option *ngFor="let doctor of doctores" [value]="doctor.id_per_persona">{{doctor.str_per_nombre}} {{doctor.str_per_apellido}}</option>
                 </select>
             </div>
