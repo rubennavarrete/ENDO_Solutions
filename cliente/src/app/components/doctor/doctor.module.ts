@@ -6,11 +6,13 @@ import { BotonesModule } from '../botones/botones.module';
 import { PlaceholdersModule } from '../placeholders/placeholders.module';
 import { PaginacionModule } from 'src/app/shared/paginacion/paginacion.module';
 import { AgregarDoctorComponent } from './agregar-doctor/agregar-doctor.component';
+import { EditarDoctorComponent } from './editar-doctor/editar-doctor.component';
 
 
 @NgModule({
   declarations: [
-    AgregarDoctorComponent
+    AgregarDoctorComponent,
+    EditarDoctorComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,6 @@ import { AgregarDoctorComponent } from './agregar-doctor/agregar-doctor.componen
     PlaceholdersModule,
     PaginacionModule,
   ],
-  exports: [AgregarDoctorComponent],
+  exports: [AgregarDoctorComponent, EditarDoctorComponent],
 })
 export class DoctorModule { }

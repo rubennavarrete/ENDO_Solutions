@@ -119,6 +119,7 @@ export class DoctoresComponent {
   seleccionarInput(tipo: string, data: DataTypeDoctores, title: string) {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
+    this.srvModal.setId(data.id_per_persona);
     this.srvDoctores.setUpdateDoctor(data);
     this.srvModal.openModal();
   }
