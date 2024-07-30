@@ -6,6 +6,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { PacienteModule } from '../components/paciente/paciente.module';
 import { DoctorModule } from '../components/doctor/doctor.module';
 import { UbicacionModule } from '../components/ubicacion/ubicacion.module';
+import { ProcesosModule } from '../components/procesos/procesos.module';
 
 @NgModule({
   declarations: [AddEditModalComponent],
@@ -16,6 +17,7 @@ import { UbicacionModule } from '../components/ubicacion/ubicacion.module';
     PacienteModule,
     DoctorModule,
     UbicacionModule,
+    ProcesosModule,
   ],
   exports: [AddEditModalComponent],
 })

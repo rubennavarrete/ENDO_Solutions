@@ -1,34 +1,33 @@
 import { Proceso } from '../models/proceso.js';
-import { paginarDatos } from "../utils/paginacion.utils.js";
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
 
 export async function getProcesos(req, res) {
     try {
-        const paginationDatos = req.query;
-        if(paginationDatos.page == "undefined"){
-            const {datos, total} = await paginarDatos(1, 10, Proceso, '', '');
-            return res.json({
-                status: true,
-                message: 'Procesos obtenidos exitosamente',
-                body: datos,
-                total,
-            });
+        const { pagination } = req.query;
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_procesos");
+
+        const result = await Proceso.sequelize.query(query, {
+            replacements: parameters,
+            type: QueryTypes.SELECT,
+        })
+        const count = await Proceso.count();
+        let pageToMeta = {};
+        if (pagination) {
+            pageToMeta = JSON.parse(pagination);
         }
-        const procesos = await Proceso.findAll({limit:5});
-        if(procesos.lenght === 0 || !procesos){
-            return res.json({
-                status: false,
-                message: 'No se encontraron procesos',
-                body: []
-            });
-        }else{
-            const {datos, total} = await paginarDatos(paginationDatos.page, paginationDatos.size, Proceso, paginationDatos.parameter, paginationDatos.data);
-            return res.json({
-                status: true,
-                message: 'Procesos obtenidos exitosamente',
-                body: datos,
-                total,
-            });
-        }
+        const paginationMetaResult = Utils.pagination.paginate(
+            pageToMeta.page,
+            pageToMeta.limit,
+            count
+        )
+
+        res.json({
+            status: true,
+            message: "Procesos obtenidos exitosamente",
+            body: result,
+            ...paginationMetaResult
+        })
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando los procesos'
@@ -122,8 +121,8 @@ export async function deleteProceso(req, res) {
             });
         }
         else{
-            if(proceso.str_proc_estado === 'Activo'){
-                await proceso.update({str_proc_estado: 'Inactivo'});
+            if(proceso.str_proc_estado === 'ACTIVO'){
+                await proceso.update({str_proc_estado: 'INACTIVO'});
                 await proceso.save();
                 return res.json({
                     status: true,
@@ -132,7 +131,7 @@ export async function deleteProceso(req, res) {
                 });
             }else{
 
-                await proceso.update({str_proc_estado: 'Activo'});
+                await proceso.update({str_proc_estado: 'ACTIVO'});
                 await proceso.save();
                 return res.json({
                     status: true,

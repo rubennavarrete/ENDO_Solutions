@@ -41,6 +41,14 @@
             <app-editar-ubicacion></app-editar-ubicacion>
           </div>
 
+          <div *ngSwitchCase="'nuevoProceso'">
+            <app-agregar-proceso></app-agregar-proceso> 
+          </div>
+
+          <div *ngSwitchCase="'editarProceso'">
+            <app-editar-proceso></app-editar-proceso>
+          </div>
+
           <div *ngSwitchCase="'clear'"></div>
         </container-element>
       </div>

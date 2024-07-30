@@ -3,15 +3,15 @@ import { Subject, takeUntil } from 'rxjs';
 import { DataMetadata } from 'src/app/core/models/metadata';
 import Swal from 'sweetalert2';
 import { ModalService } from 'src/app/core/services/modal.service';
-import { UbicacionService } from 'src/app/core/services/ubicacion.service';
-import { DataTypeUbicacion } from 'src/app/core/models/ubicacion';
+import { ProcesosService } from 'src/app/core/services/procesos.service';
+import { DataTypeProcesos } from 'src/app/core/models/procesos';
 
 @Component({
-  selector: 'app-ubicacion',
-  templateUrl: './ubicacion.component.html',
-  styleUrls: ['./ubicacion.component.css']
+  selector: 'app-procesos',
+  templateUrl: './procesos.component.html',
+  styleUrls: ['./procesos.component.css']
 })
-export class UbicacionComponent {
+export class ProcesosComponent {
 
   private destroy$ = new Subject<any>();
 
@@ -26,19 +26,18 @@ export class UbicacionComponent {
     title: string;
   } = { formulario: '', title: '' };
 
-  ubicacion: DataTypeUbicacion[] = [];
+  proceso: DataTypeProcesos[] = [];
   arrFiltros: any = [
-  
     {
       type: 'search',
       name: 'Buscar',
       filter: false,
       description: 'Activo',
       kind: [
-        { name: 'Nombre', parameter: 'str_ubi_nombre' },
+        { name: 'Nombre', parameter: 'str_proc_nombre' },
         {
           name: 'Descripción',
-          parameter: 'str_ubi_descripcion',
+          parameter: 'str_proc_descripcion',
         }
       ],
     },
@@ -46,7 +45,7 @@ export class UbicacionComponent {
       name: 'Estado',
       type: 'status',
       filter: false,
-      parameter: 'str_ubi_estado',
+      parameter: 'str_proc_estado',
       kind: [
         { name: 'Activo', parameter: 'ACTIVO' },
         { name: 'Inactivo', parameter: 'INACTIVO' },
@@ -55,13 +54,12 @@ export class UbicacionComponent {
   ];
 
   constructor(
-    public srvUbicacion: UbicacionService,
+    public srvProcesos: ProcesosService,
     private srvModal: ModalService
   ) {
-    
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     Swal.fire({
       title: 'Cargando Datos...',
       didOpen: () => {
@@ -72,51 +70,51 @@ export class UbicacionComponent {
       this.loading = false;
     }, 400);
 
-    this.srvUbicacion.obternerUbicaciones({
-      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
-    });
+    this.srvProcesos.obtenerProceso({
+      order: [{ parameter: 'id_proc_proceso', order: 'DESC' }],
+    })
 
-    this.srvUbicacion.selectedUbicacion$
+    this.srvProcesos.selectedProceso$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.ubicacion = data;
+        this.proceso = data;
         this.request = false;
         Swal.close();
       });
 
-    this.srvUbicacion.selectedMetadata$
+    this.srvProcesos.selectedMetadata$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.metadata = data;
-        // this.loading = false;
       });
+
   }
 
   setFilters(filter: any) {
     console.log(filter);
     this.request = true;
-    this.srvUbicacion.obternerUbicaciones(filter);
+    this.srvProcesos.obtenerProceso(filter);
   }
 
   cleanFilters() {
     this.request = true;
-    this.srvUbicacion.obternerUbicaciones({
-      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
+    this.srvProcesos.obtenerProceso({
+      order: [{ parameter: 'id_proc_proceso', order: 'DESC' }],
     });
   }
 
-  seleccionarInput(tipo: string, data: DataTypeUbicacion, title: string) {
+  seleccionarInput(tipo: string, data: DataTypeProcesos, title: string) {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
-    this.srvModal.setId(data.id_ubi_ubicacion);
-    this.srvUbicacion.setUpdateUbicacion(data);
+    this.srvModal.setId(data.id_proc_proceso);
+    this.srvProcesos.setUpdateProceso(data);
     this.srvModal.openModal();
   }
 
   nextPage(page: number) {
     this.request = true;
-    this.srvUbicacion.obternerUbicaciones({
-      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
+    this.srvProcesos.obtenerProceso({
+      order: [{ parameter: 'id_proc_proceso', order: 'DESC' }],
     });
   }
 
@@ -124,23 +122,23 @@ export class UbicacionComponent {
     Swal.fire({
       title: `Está seguro que desea ${
         estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } El Estado de la Ubicación?`,
+      } El Estado del Proceso?`,
       text: 'Este cambio puede ser revertido en cualquier momento',
       showDenyButton: true,
       confirmButtonText: `${
         estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } Estado de Ubicación`,
+      } Estado del Proceso`,
       denyButtonText: `Cancelar`,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Cambiando estado de la Ubicación...',
+          title: 'Cambiando estado del Proceso...',
           didOpen: () => {
             Swal.showLoading();
           },
         });
         this.request = true;
-        this.srvUbicacion.deleteUbicacion(id)
+        this.srvProcesos.deleteProceso(id)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (resp: any) => {
@@ -162,14 +160,14 @@ export class UbicacionComponent {
                 });
               }
 
-              this.srvUbicacion.obternerUbicaciones({
-                order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
+              this.srvProcesos.obtenerProceso({
+                order: [{ parameter: 'id_proc_proceso', order: 'DESC' }],
               });
             },
             error: (err) => {
               this.request = false;
               Swal.fire({
-                title: 'Error al cambiar el estado de la Ubicación',
+                title: 'Error al cambiar el estado del Proceso',
                 text: 'Por favor comuníquese con el servicio técnico',
                 icon: 'error',
                 footer:
@@ -188,7 +186,7 @@ export class UbicacionComponent {
         Swal.fire(
           `No se ${
             estado === 'ACTIVO' ? 'Desactivo' : 'Activo'
-          } el estado de la Ubicación!`,
+          } el estado del Proceso!`,
           '',
           'info'
         );
