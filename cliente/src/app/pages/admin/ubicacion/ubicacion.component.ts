@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { DataMetadata } from 'src/app/core/models/metadata';
 import Swal from 'sweetalert2';
 import { ModalService } from 'src/app/core/services/modal.service';
-import { DoctoresService } from 'src/app/core/services/doctores.service';
-import { DataTypeDoctores } from 'src/app/core/models/doctores';
+import { UbicacionService } from 'src/app/core/services/ubicacion.service';
+import { DataTypeUbicacion } from 'src/app/core/models/ubicacion';
 
 @Component({
-  selector: 'app-doctores',
-  templateUrl: './doctores.component.html',
-  styleUrls: ['./doctores.component.css'],
+  selector: 'app-ubicacion',
+  templateUrl: './ubicacion.component.html',
+  styleUrls: ['./ubicacion.component.css']
 })
-export class DoctoresComponent {
+export class UbicacionComponent {
 
   private destroy$ = new Subject<any>();
 
@@ -26,8 +26,7 @@ export class DoctoresComponent {
     title: string;
   } = { formulario: '', title: '' };
 
-  paciente: DataTypeDoctores[] = [];
-
+  ubicacion: DataTypeUbicacion[] = [];
   arrFiltros: any = [
   
     {
@@ -36,27 +35,18 @@ export class DoctoresComponent {
       filter: false,
       description: 'Activo',
       kind: [
-        { name: 'Nombre', parameter: 'str_per_nombre' },
+        { name: 'Nombre', parameter: 'str_ubi_nombre' },
         {
-          name: 'Apellido',
-          parameter: 'str_per_apellido',
-        },
-        {
-          name: 'Número de Cédula ',
-          parameter: 'str_per_cedula',
-        },
-        {
-          name: 'Correo Electrónico',
-          parameter: 'str_per_correo',
-        },
-        { name: 'Número de Teléfono', parameter: 'str_per_telefono' },
+          name: 'Descripción',
+          parameter: 'str_ubi_descripcion',
+        }
       ],
     },
     {
       name: 'Estado',
       type: 'status',
       filter: false,
-      parameter: 'str_per_estado',
+      parameter: 'str_ubi_estado',
       kind: [
         { name: 'Activo', parameter: 'ACTIVO' },
         { name: 'Inactivo', parameter: 'INACTIVO' },
@@ -65,9 +55,11 @@ export class DoctoresComponent {
   ];
 
   constructor(
-    public srvDoctores: DoctoresService,
+    public srvUbicacion: UbicacionService,
     private srvModal: ModalService
-  ){}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     Swal.fire({
@@ -80,52 +72,51 @@ export class DoctoresComponent {
       this.loading = false;
     }, 400);
 
-    this.srvDoctores.obtenerDoctor({
-      order: [{ parameter: 'id_per_persona', direction: 'DESC' }],
+    this.srvUbicacion.obternerUbicaciones({
+      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
     });
 
-    this.srvDoctores.selectedDoctor$
+    this.srvUbicacion.selectedUbicacion$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.paciente = data;
+        this.ubicacion = data;
         this.request = false;
         Swal.close();
       });
 
-    this.srvDoctores.selectedMetadata$
+    this.srvUbicacion.selectedMetadata$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.metadata = data;
+        // this.loading = false;
       });
-
   }
 
   setFilters(filter: any) {
     console.log(filter);
     this.request = true;
-    this.srvDoctores.obtenerDoctor(filter);
+    this.srvUbicacion.obternerUbicaciones(filter);
   }
 
   cleanFilters() {
     this.request = true;
-    this.srvDoctores.obtenerDoctor({
-      order: [{ parameter: 'id_per_persona', direction: 'DESC' }],
+    this.srvUbicacion.obternerUbicaciones({
+      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
     });
   }
 
-  seleccionarInput(tipo: string, data: DataTypeDoctores, title: string) {
+  seleccionarInput(tipo: string, data: DataTypeUbicacion, title: string) {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
-    this.srvModal.setId(data.id_per_persona);
-    this.srvDoctores.setUpdateDoctor(data);
+    this.srvModal.setId(data.id_ubi_ubicacion);
+    this.srvUbicacion.setUpdateUbicacion(data);
     this.srvModal.openModal();
   }
 
   nextPage(page: number) {
     this.request = true;
-    this.srvDoctores.obtenerDoctor({
-      pagination: { limit: 10, page },
-      order: [{ parameter: 'id_per_persona', direction: 'DESC' }],
+    this.srvUbicacion.obternerUbicaciones({
+      order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
     });
   }
 
@@ -133,24 +124,23 @@ export class DoctoresComponent {
     Swal.fire({
       title: `Está seguro que desea ${
         estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } El Estado del Doctor?`,
+      } El Estado de la Ubicación?`,
       text: 'Este cambio puede ser revertido en cualquier momento',
       showDenyButton: true,
       confirmButtonText: `${
         estado === 'ACTIVO' ? 'Desactivar' : 'Activar'
-      } Estado Paciente`,
+      } Estado de Ubicación`,
       denyButtonText: `Cancelar`,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Cambiando estado del Doctor...',
+          title: 'Cambiando estado de la Ubicación...',
           didOpen: () => {
             Swal.showLoading();
           },
         });
         this.request = true;
-        this.srvDoctores
-          .deleteDoctor(id)
+        this.srvUbicacion.deleteUbicacion(id)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (resp: any) => {
@@ -172,15 +162,14 @@ export class DoctoresComponent {
                 });
               }
 
-              this.srvDoctores.obtenerDoctor({
-                order: [{ parameter: 'id_per_persona', direction: 'DESC' }],
+              this.srvUbicacion.obternerUbicaciones({
+                order: [{ parameter: 'id_ubi_ubicacion', order: 'DESC' }],
               });
             },
             error: (err) => {
-              console.log('ERROR CREATE RESPONSABLE', err);
               this.request = false;
               Swal.fire({
-                title: 'Error al cambiar el estado del Doctor',
+                title: 'Error al cambiar el estado de la Ubicación',
                 text: 'Por favor comuníquese con el servicio técnico',
                 icon: 'error',
                 footer:
@@ -199,7 +188,7 @@ export class DoctoresComponent {
         Swal.fire(
           `No se ${
             estado === 'ACTIVO' ? 'Desactivo' : 'Activo'
-          } el estado del Doctor!`,
+          } el estado de la Ubicación!`,
           '',
           'info'
         );

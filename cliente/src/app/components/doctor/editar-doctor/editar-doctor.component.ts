@@ -67,7 +67,7 @@ export class EditarDoctorComponent {
         telefono: doctor.str_per_telefono,
         direccion: doctor.str_per_direccion,
         tipo: doctor.str_per_tipo,
-        // especialidadId: doctor.id_esp_especialidad,
+        especialidadId: doctor.id_esp_especialidad,
       });
     });
   }

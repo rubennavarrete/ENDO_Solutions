@@ -11,6 +11,8 @@ export interface DataTypeDoctores {
     str_per_direccion: string;
     str_per_estado: string;
     str_per_tipo: string;
+    id_esp_especialidad: number;
+    str_esp_nombre: string;
 }
 
 export interface nuevoDoctor {

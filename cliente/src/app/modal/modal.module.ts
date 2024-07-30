@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { PacienteModule } from '../components/paciente/paciente.module';
 import { DoctorModule } from '../components/doctor/doctor.module';
+import { UbicacionModule } from '../components/ubicacion/ubicacion.module';
 
 @NgModule({
   declarations: [AddEditModalComponent],
@@ -14,6 +15,7 @@ import { DoctorModule } from '../components/doctor/doctor.module';
     SweetAlert2Module,
     PacienteModule,
     DoctorModule,
+    UbicacionModule,
   ],
   exports: [AddEditModalComponent],
 })

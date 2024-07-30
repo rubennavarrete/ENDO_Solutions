@@ -1,16 +1,17 @@
-<div class="doctores-contenedor mt-3">
+
+<div class="ubicacion-contenedor mt-3">
     <!-- HEADER / TITULO Y BOTONES -->
     <div style="display: grid; grid-template-columns: 1fr 1fr">
       <div class="btnAgregar d-flex justify-content-between mb-4">
         <div class="titulo">
-          <h5>Lista de <span>Doctores </span></h5>
+          <h5>Lista de <span>Ubicaciones </span></h5>
         </div>
       </div>
       <div class="contenedor-botones d-flex justify-content-end">
         <button-modal
-          [tipoModal]="'nuevoDoctor'"
-          [titleModal]="'Nuevo Doctor'"
-          [contenido]="'Nuevo Doctor'"
+          [tipoModal]="'nuevaUbicacion'"
+          [titleModal]="'Nueva Ubicación'"
+          [contenido]="'Nueva Ubicación'"
           [conIcono]="true"
           [icono]="'add'"
           [color]="'#1c1917'"
@@ -36,12 +37,8 @@
                 <th scope="col">Id</th>
                 <th scope="col"><div class="d-flex">Nombres</div></th>
                 <th scope="col">
-                  <div class="d-flex">Cédula</div>
+                  <div class="d-flex">Descripciones</div>
                 </th>
-                <th scope="col">
-                  <div class="d-flex">Telefono</div>
-                </th>
-                <th scope="col"><div class="d-flex">Email</div></th>
                 <th scope="col"><div class="d-flex">Estado</div></th>
                 <th scope="col">
                   <div class="contenedor-btn-acciones">Acción</div>
@@ -51,7 +48,7 @@
             <tbody>
               <tr
                 *ngFor="
-                  let pacientes of srvDoctores.doctor;
+                  let ubicacion of srvUbicacion.ubicacion;
                   let i = index;
                   let indice = index
                 "
@@ -59,22 +56,20 @@
                 <th>{{ indice + 1 }}</th>
                 <td>
                   {{
-                    pacientes.str_per_nombre + " " + pacientes.str_per_apellido
+                    ubicacion.str_ubi_nombre
                   }}
                 </td>
                 <td>
-                  {{ pacientes.str_per_cedula }}
+                  {{ ubicacion.str_ubi_descripcion }}
                 </td>
-                <td>{{ pacientes.str_per_telefono }}</td>
-                <td>{{ pacientes.str_per_correo }}</td>
-                <td *ngIf="pacientes.str_per_estado === 'ACTIVO'">
+                <td *ngIf="ubicacion.str_ubi_estado === 'ACTIVO'">
                   <div class="pill pill-success">
-                    {{ pacientes.str_per_estado }}
+                    {{ ubicacion.str_ubi_estado }}
                   </div>
                 </td>
-                <td *ngIf="pacientes.str_per_estado === 'INACTIVO'">
+                <td *ngIf="ubicacion.str_ubi_estado === 'INACTIVO'">
                   <span class="pill pill-danger">{{
-                    pacientes.str_per_estado
+                    ubicacion.str_ubi_estado
                   }}</span>
                 </td>
                 <td>
@@ -84,9 +79,9 @@
                       class="btnDefault editar btn btn-warning"
                       (click)="
                         seleccionarInput(
-                          'editarDoctor',
-                          pacientes,
-                          'Editar Doctor'
+                          'editarUbicacion',
+                          ubicacion,
+                          'Editar Ubicación'
                         )
                       "
                     >
@@ -98,12 +93,11 @@
                       title="Activar Cobertura"
                       type="button"
                       class="btn btn-warning btnDefault editar"
-                      *ngIf="pacientes.str_per_estado === 'INACTIVO'"
+                      *ngIf="ubicacion.str_ubi_estado === 'INACTIVO'"
                       (click)="
                         cambiarEstado(
-                          pacientes.id_per_persona,
-                          pacientes.str_per_estado
-                        )
+                          ubicacion.id_ubi_ubicacion,
+                          ubicacion.str_ubi_estado                        )
                       "
                     >
                       <i class="material-icons">cached</i>
@@ -114,11 +108,11 @@
                       title="Desactivar Cobertura"
                       type="button"
                       class="btnDefault eliminar btn btn-danger"
-                      *ngIf="pacientes.str_per_estado === 'ACTIVO'"
+                      *ngIf="ubicacion.str_ubi_estado === 'ACTIVO'"
                       (click)="
                         cambiarEstado(
-                          pacientes.id_per_persona,
-                          pacientes.str_per_estado
+                          ubicacion.id_ubi_ubicacion,
+                          ubicacion.str_ubi_estado
                         )
                       "
                     >
@@ -131,7 +125,7 @@
           </table>
         </div>
         <div
-          *ngIf="!loading && !request && paciente.length <= 0"
+          *ngIf="!loading && !request && ubicacion.length <= 0"
           class="d-flex w-100"
         >
           <div class="mx-auto" style="margin-top: 64px; margin-bottom: 64px">
@@ -151,7 +145,7 @@
         </div>
         <pagination
           [dataLength]="
-            srvDoctores.doctor && (srvDoctores.doctor.length || 0)
+            srvUbicacion.ubicacion && (srvUbicacion.ubicacion.length || 0)
           "
           [metadata]="metadata"
           [currentPage]="currentPage"
@@ -160,4 +154,3 @@
       </div>
     </div>
   </div>
-  

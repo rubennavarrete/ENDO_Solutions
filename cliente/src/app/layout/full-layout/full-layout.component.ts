@@ -18,27 +18,6 @@ export class FullLayoutComponent {
         // ],
       },
       {
-        path: '/doctores',
-        name: 'Doctores',
-        icon: 'business_center',
-        // children: [
-        //   {
-        //     path: '/compras_publicas/compras_publicas',
-        //     name: 'Proceso Precontractual',
-        //   },
-        //   { path: '/compras_publicas/subida_portal', name: 'Subida al Portal' },
-        //   {
-        //     path: '/compras_publicas/estado_contratacion',
-        //     name: 'Estado de la Contratación',
-        //   },
-        //   {
-        //     path: '/compras_publicas/tipo_contratacion',
-        //     name: 'Tipo de Contratación',
-        //   },
-        //   { path: '/compras_publicas/tipo_obra', name: 'Tipo de Obra' },
-        // ],
-      },
-      {
         path: '/agenda',
         name: 'Agenda',
         icon: 'event_note',
@@ -79,6 +58,43 @@ export class FullLayoutComponent {
         //   },
         // ],
       },
+      {
+        path: '/doctores',
+        name: 'Doctores',
+        icon: 'business_center',
+        // children: [
+        //   {
+        //     path: '/compras_publicas/compras_publicas',
+        //     name: 'Proceso Precontractual',
+        //   },
+        //   { path: '/compras_publicas/subida_portal', name: 'Subida al Portal' },
+        //   {
+        //     path: '/compras_publicas/estado_contratacion',
+        //     name: 'Estado de la Contratación',
+        //   },
+        //   {
+        //     path: '/compras_publicas/tipo_contratacion',
+        //     name: 'Tipo de Contratación',
+        //   },
+        //   { path: '/compras_publicas/tipo_obra', name: 'Tipo de Obra' },
+        // ],
+      },
+      {
+        path: '/ubicacion',
+        name: 'Ubicación',
+        icon: 'location_on',
+      },
+      {
+        path: '/procesos',
+        name: 'Procesos',
+        icon: 'work',
+      },
+      {
+        path: '/especialidades',
+        name: 'Especialidades',
+        icon: 'local_hospital',
+      }
+
     ],
   };
 }

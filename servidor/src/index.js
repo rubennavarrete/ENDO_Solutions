@@ -12,6 +12,7 @@ import './models/medico.js';
 import './models/paciente.js';
 import './models/info_medica.js';
 import './models/references.js';
+import './models/ubicacion.js';
 
 async function main(port) {
     try {

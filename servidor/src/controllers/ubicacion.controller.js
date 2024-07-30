@@ -1,34 +1,34 @@
 import { Ubicacion } from "../models/ubicacion.js";
-import { paginarDatos } from "../utils/paginacion.utils.js";
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
 
 export async function getUbicaciones(req, res) {
     try {
-        const paginationDatos = req.query;
-        if (paginationDatos.page == "undefined") {
-            const { datos, total } = await paginarDatos(1, 10, Ubicacion, '', '');
-            return res.json({
-                status: true,
-                message: 'Ubicaciones obtenidas exitosamente',
-                body: datos,
-                total,
-            });
+        const { pagination } = req.query;
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_ubicacions");
+
+        const result = await Ubicacion.sequelize.query(query, {
+            replacements: parameters,
+            type: QueryTypes.SELECT,
+        })
+        const count = await Ubicacion.count();
+        let pageToMeta = {};
+        if (pagination) {
+            pageToMeta = JSON.parse(pagination);
         }
-        const ubicaciones = await Ubicacion.findAll({ limit: 5 });
-        if (ubicaciones.lenght === 0 || !ubicaciones) {
-            return res.json({
-                status: false,
-                message: 'No se encontraron ubicaciones',
-                body: []
-            });
-        } else {
-            const { datos, total } = await paginarDatos(paginationDatos.page, paginationDatos.size, Ubicacion, paginationDatos.parameter, paginationDatos.data);
-            return res.json({
-                status: true,
-                message: 'Ubicaciones obtenidas exitosamente',
-                body: datos,
-                total,
-            });
-        }
+        const paginationMetaResult = Utils.pagination.paginate(
+            pageToMeta.page,
+            pageToMeta.limit,
+            count
+        )
+
+        res.json({
+            status: true,
+            message: "Ubicaciones obtenidas exitosamente",
+            body: result,
+            ...paginationMetaResult
+        })
+
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando las ubicaciones'
@@ -120,8 +120,8 @@ export async function deleteUbicacion(req, res) {
             });
         }
         else{
-            if(ubicacion.str_ubi_estado == 'Activo'){
-                ubicacion.str_ubi_estado = 'Inactivo';
+            if(ubicacion.str_ubi_estado == 'ACTIVO'){
+                ubicacion.str_ubi_estado = 'INACTIVO';
                 await ubicacion.save();
                 return res.json({
                     status: true,
@@ -130,7 +130,7 @@ export async function deleteUbicacion(req, res) {
                 });
             }else{
                 await ubicacion.update({
-                    str_ubi_estado: 'Activo'
+                    str_ubi_estado: 'ACTIVO'
                 });
                 await ubicacion.save();
                 return res.json({

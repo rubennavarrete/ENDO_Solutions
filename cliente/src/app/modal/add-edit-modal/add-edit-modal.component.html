@@ -33,6 +33,14 @@
             <app-editar-doctor></app-editar-doctor>
           </div>
 
+          <div *ngSwitchCase="'nuevaUbicacion'">
+            <app-agregar-ubicacion></app-agregar-ubicacion>
+          </div>
+
+          <div *ngSwitchCase="'editarUbicacion'">
+            <app-editar-ubicacion></app-editar-ubicacion>
+          </div>
+
           <div *ngSwitchCase="'clear'"></div>
         </container-element>
       </div>
