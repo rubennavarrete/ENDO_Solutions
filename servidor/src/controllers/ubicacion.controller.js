@@ -36,6 +36,33 @@ export async function getUbicaciones(req, res) {
     }
 }
 
+export async function getUbicacionesActivas(req, res) {
+    try {
+        // Definir los campos que queremos seleccionar
+        const attributes = ['id_ubi_ubicacion', 'str_ubi_nombre'];
+
+        // Consultar la base de datos usando Sequelize
+        const procesosActivos = await Ubicacion.findAll({
+            attributes: attributes,
+            where: {
+                str_ubi_estado: 'ACTIVO'
+            }
+        });
+
+        // Responder con los datos obtenidos
+        res.json({
+            status: true,
+            message: "Ubicaciones activas obtenidas exitosamente",
+            body: 
+            procesosActivos
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || 'Algo salio mal recuperando las ubicaciones'
+        });
+    }
+}
+
 export async function getUbicacionById(req, res) {
     try {
         const ubicacion = await Ubicacion.findByPk(req.params.id);

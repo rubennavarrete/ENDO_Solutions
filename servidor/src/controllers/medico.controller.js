@@ -117,7 +117,7 @@ export async function getMedicos(req, res) {
     res.json({
       status: true,
       message: "Médicos obtenidos exitosamente",
-      body: medicos
+      body:       medicos
     });
   } catch (error) {
     return res.status(500).json({

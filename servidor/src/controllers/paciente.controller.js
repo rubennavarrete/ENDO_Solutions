@@ -70,6 +70,40 @@ export const createPaciente = async (req, res) => {
     }
 }
 
+export const getPacientesActivos = async (req, res) => {
+    try {
+
+        const attributes = ['id_pac_paciente', 'str_pac_nombre','str_pac_apellido'];
+        const pacientes = await Paciente.findAll({
+            attributes: attributes,
+            where: {
+                str_pac_estado: 'ACTIVO'
+            }
+        });
+        if (pacientes) {
+            return res.json({
+                status: true,
+                message: 'Pacientes obtenidos exitosamente',
+                body: 
+                pacientes
+            });
+        }
+        else {
+            return res.json({
+                status: false,
+                message: 'No se encontraron pacientes',
+                body: []
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || 'Algo salio mal recuperando los pacientes'
+        });
+    }
+
+}
+
 // export async function createPaciente(req, res) {
 //     try {
 //         const pacienteData = req.body;

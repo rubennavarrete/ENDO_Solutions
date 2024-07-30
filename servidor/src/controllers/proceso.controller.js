@@ -35,6 +35,35 @@ export async function getProcesos(req, res) {
     }
 }
 
+export async function getProcesosActivos(req, res) {
+    try {
+        // Definir los campos que queremos seleccionar
+        const attributes = ['id_proc_proceso', 'str_proc_nombre'];
+
+        // Consultar la base de datos usando Sequelize
+        const procesosActivos = await Proceso.findAll({
+            attributes: attributes,
+            where: {
+                str_proc_estado: 'ACTIVO'
+            }
+        });
+
+        // Responder con los datos obtenidos
+        res.json({
+            status: true,
+            message: "Procesos activos obtenidos exitosamente",
+            body: 
+            procesosActivos
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || 'Algo salió mal recuperando los procesos'
+        });
+    }
+}
+
+
 export async function getProcesoById(req, res) {
     try {
         const proceso = await Proceso.findByPk(req.params.id);
@@ -92,7 +121,8 @@ export async function updateProceso(req, res) {
             return res.json({
                 status: true,
                 message: 'Proceso actualizado exitosamente',
-                body: proceso
+                body: 
+                proceso
             });
         }
         else{

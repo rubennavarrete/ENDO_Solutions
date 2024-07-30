@@ -115,6 +115,7 @@ export async function getAgendaById(req, res) {
 
 export async function createAgenda(req, res) {
     try {
+        console.log("Crear agenda-------------------", req.body)
         const agenda = await Agenda.create(req.body);
         if(agenda){
             return res.json({
