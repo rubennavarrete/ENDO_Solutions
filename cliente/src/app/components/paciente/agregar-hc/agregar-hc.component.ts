@@ -39,7 +39,6 @@ export class AgregarHCComponent implements OnInit, OnDestroy{
 
       this.srvHistorialConsulta.getMedicos().subscribe((data: any) => {
         this.doctores = data.body;
-        console.log('DOCTORES', this.doctores);
       }
       );
 
