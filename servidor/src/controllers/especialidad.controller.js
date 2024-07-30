@@ -38,6 +38,34 @@ export async function getEspecialidades(req, res) {
   }
 }
 
+export async function getEspecialidadesActivas(req, res) {
+  try {
+    const especialidades = await Especialidad.findAll({
+      where: {
+        str_esp_estado: 'ACTIVO'
+      }
+    });
+    if(especialidades.lenght === 0 || !especialidades){
+      return res.json({
+        status: false,
+        message: 'No se encontraron especialidades',
+        body: []
+      });
+    }else{
+      return res.json({
+        status: true,
+        message: 'Especialidades obtenidas exitosamente',
+        body: especialidades
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || 'Algo salio mal recuperando las especialidades'
+  });
+  }
+
+}
+
 export async function getEspecialidadById(req, res) {
   try {
     const especialidad = await Especialidad.findByPk(req.params.id);
@@ -69,7 +97,7 @@ export async function createEspecialidad(req, res) {
     let newEspecialidad = await Especialidad.create({
       str_esp_nombre,
       str_esp_descripcion,
-      str_esp_estado : 'Activo'
+      str_esp_estado : 'ACTIVO'
     }, {
       fields: ['str_esp_nombre', 'str_esp_descripcion', 'str_esp_estado']
     });
@@ -136,9 +164,9 @@ export async function deleteEspecialidad(req, res) {
       });
     }
     else{
-      if(especialidad.str_esp_estado == 'Activo'){
+      if(especialidad.str_esp_estado == 'ACTIVO'){
         await especialidad.update({
-          str_esp_estado: 'Inactivo'
+          str_esp_estado: 'INACTIVO'
         });
         await especialidad.save();
         return res.json({
@@ -148,7 +176,7 @@ export async function deleteEspecialidad(req, res) {
         });
       }else{
         await especialidad.update({
-          str_esp_estado: 'Activo'
+          str_esp_estado: 'ACTIVO'
         });
         await especialidad.save();
         return res.json({
