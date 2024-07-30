@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,  AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { PacientesService } from 'src/app/core/services/pacientes.service';
@@ -15,6 +15,8 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
 
   loading = false;
   request = false;
+  today: string = new Date().toISOString().split('T')[0];
+
 
   private destroy$ = new Subject<any>();
 
@@ -35,7 +37,7 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
       str_pac_nombre_familia: [null, Validators.required],
       str_pac_telefono_familia: [null, Validators.required],
       str_pac_relacion_familia: [null, Validators.required],
-      dt_pac_fecha_nacimiento: [null, Validators.required],
+      dt_pac_fecha_nacimiento: ['', [Validators.required, this.futureDateValidator]],
       str_pac_direccion: [null, Validators.required],
     });
   }
@@ -50,7 +52,18 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.myForm.patchValue(data);
         this.idPaciente = data.id_pac_paciente;
+        this.srvModal.setNombrePaciente(data.str_pac_nombre + ' ' + data.str_pac_apellido);
       });
+  }
+
+   // Validador personalizado para fechas futuras
+   futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const inputDate = new Date(control.value);
+    const currentDate = new Date();
+    if (inputDate > currentDate) {
+      return { futureDate: true };
+    }
+    return null;
   }
 
   actualizarPaciente() {
@@ -81,6 +94,8 @@ export class EditarPacienteComponent implements OnInit, OnDestroy {
                   showDenyButton: false,
                   confirmButtonText: 'Aceptar',
                 });
+                this.srvModal.setNombrePaciente(resp.body.str_pac_nombre + ' ' + resp.body.str_pac_apellido);
+
               } else {
                 Swal.close();
                 Swal.fire({

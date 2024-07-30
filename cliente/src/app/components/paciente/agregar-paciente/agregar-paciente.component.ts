@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { PacientesService } from 'src/app/core/services/pacientes.service';
@@ -14,6 +14,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
   loading = false;
   request = false;
   myForm!: FormGroup;
+  today: string = new Date().toISOString().split('T')[0];
 
   private destroy$ = new Subject<any>();
 
@@ -32,19 +33,29 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
       str_pac_nombre_familia: [null, Validators.required],
       str_pac_telefono_familia: [null, Validators.required],
       str_pac_relacion_familia: [null, Validators.required],
-      dt_pac_fecha_nacimiento: [null, Validators.required],
+      dt_pac_fecha_nacimiento: ['', [Validators.required, this.futureDateValidator]],
       str_pac_direccion: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {
+    console.log('Entro a agregar paciente');
     setTimeout(() => {
       this.loading = false;
     }, 400);
   }
 
+  // Validador personalizado para fechas futuras
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const inputDate = new Date(control.value);
+    const currentDate = new Date();
+    if (inputDate > currentDate) {
+      return { futureDate: true };
+    }
+    return null;
+  }
+
   agregarPaciente() {
-    console.time('agregarPaciente');
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Estás a punto de agregar un nuevo paciente',
@@ -64,6 +75,9 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
         this.srvPacientes.agregarPaciente(this.myForm.value).subscribe({
           next: (resp: any) => {
             if (resp.status) {
+              // console.log('Id del paciente recien creado', resp.body.id_pac_paciente);
+              this.srvModal.setId(resp.body.id_pac_paciente);
+              this.srvModal.setNombrePaciente(resp.body.str_pac_nombre + ' ' + resp.body.str_pac_apellido);
               Swal.close();
               Swal.fire({
                 icon: 'success',
@@ -86,7 +100,6 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
             });
             // this.myForm.reset();
             // this.srvModal.closeModal();
-            console.timeEnd('agregarPaciente');
 
           },
           error: (err) => {
@@ -103,7 +116,6 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
               showDenyButton: false,
               confirmButtonText: 'Aceptar',
             });
-            console.timeEnd('agregarPaciente');
           },
           complete: () => {
             this.request = false;
@@ -111,7 +123,6 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
         });
       } else if (result.isDenied) {
         Swal.fire('Los cambios no se guardaron', '', 'info');
-        console.timeEnd('agregarPaciente');
 
       }
     });

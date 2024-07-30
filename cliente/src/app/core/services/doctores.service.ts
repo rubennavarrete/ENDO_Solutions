@@ -17,6 +17,8 @@ const initDoctor: DataTypeDoctores = {
   str_per_direccion: '',
   str_per_estado: '',
   str_per_tipo: '',
+  id_esp_especialidad: 0,
+  str_esp_nombre: '',
 };
 
 @Injectable({
@@ -25,6 +27,7 @@ const initDoctor: DataTypeDoctores = {
 export class DoctoresService {
   private destroy$ = new Subject<any>();
   private URL_API = config.URL_API_BASE + '/medico';
+  private URL_API_ESPECIALIDAD = config.URL_API_BASE + '/especialidad/activos';
 
   doctor!: DataTypeDoctores[];
   metadata!: DataMetadata;
@@ -75,7 +78,7 @@ export class DoctoresService {
     });
   }
 
-  putPaciente(id: number, data: nuevoDoctor) {
+  putDoctor(id: number, data: nuevoDoctor) {
     // return this.http.put<DoctorModel>(`${this.URL_API}/${id}`, data, {
     //   withCredentials: true,
     // });
@@ -107,6 +110,12 @@ export class DoctoresService {
       error: (err) => {
         console.error(err);
       }
+    });
+  }
+
+  getEspecialidades(){
+    return this.http.get(this.URL_API_ESPECIALIDAD, {
+      withCredentials: true,
     });
   }
 

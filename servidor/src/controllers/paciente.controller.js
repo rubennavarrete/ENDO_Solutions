@@ -9,6 +9,22 @@ export const createPaciente = async (req, res) => {
     // const { str_pac_nombre,  } = req.body;
     try {
         // const paciente = await Paciente.create(req.body);
+
+        //validar si existe el paciente
+        const pacienteExistente = await Paciente.findOne({
+            where: {
+                str_pac_cedula: req.body.str_pac_cedula
+            }
+        });
+
+        if (pacienteExistente) {
+            return res.json({
+                status: false,
+                message: 'Ya existe un paciente con la cédula ingresada',
+                body: {}
+            });
+        }
+
         const { str_pac_nombre, str_pac_apellido, str_pac_cedula,
             str_pac_correo,
             str_pac_sexo,
@@ -52,6 +68,40 @@ export const createPaciente = async (req, res) => {
             message: error.message || 'Algo salio mal creando el paciente'
         });
     }
+}
+
+export const getPacientesActivos = async (req, res) => {
+    try {
+
+        const attributes = ['id_pac_paciente', 'str_pac_nombre','str_pac_apellido'];
+        const pacientes = await Paciente.findAll({
+            attributes: attributes,
+            where: {
+                str_pac_estado: 'ACTIVO'
+            }
+        });
+        if (pacientes) {
+            return res.json({
+                status: true,
+                message: 'Pacientes obtenidos exitosamente',
+                body: 
+                pacientes
+            });
+        }
+        else {
+            return res.json({
+                status: false,
+                message: 'No se encontraron pacientes',
+                body: []
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || 'Algo salio mal recuperando los pacientes'
+        });
+    }
+
 }
 
 // export async function createPaciente(req, res) {
@@ -117,6 +167,7 @@ export async function getPacientes(req, res) {
             replacements: parameters,
             type: QueryTypes.SELECT,
         })
+        console.log('query: -------------', query);
         const count = await Paciente.count();
         let pageToMeta = {};
         if (pagination) {

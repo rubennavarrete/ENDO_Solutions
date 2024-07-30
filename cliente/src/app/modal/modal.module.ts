@@ -5,7 +5,10 @@ import { RouterModule } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { PacienteModule } from '../components/paciente/paciente.module';
 import { DoctorModule } from '../components/doctor/doctor.module';
-
+import { UbicacionModule } from '../components/ubicacion/ubicacion.module';
+import { ProcesosModule } from '../components/procesos/procesos.module';
+import { EspecialidadesModule } from '../components/especialidades/especialidades.module';
+import { AgendaModule } from '../components/agenda/agenda.module';
 @NgModule({
   declarations: [AddEditModalComponent],
   imports: [
@@ -14,6 +17,10 @@ import { DoctorModule } from '../components/doctor/doctor.module';
     SweetAlert2Module,
     PacienteModule,
     DoctorModule,
+    UbicacionModule,
+    ProcesosModule,
+    EspecialidadesModule,
+    AgendaModule,
   ],
   exports: [AddEditModalComponent],
 })

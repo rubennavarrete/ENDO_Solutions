@@ -92,13 +92,15 @@
     <div class="col-6 pe-2 mt-4 contentenedor-control">
       <div class="form-group col">
         <label>Sexo del Paciente </label>
-        <input
-          type="text"
+        <select
           class="form-control"
           id="sexo"
-          placeholder="Sexo"
           formControlName="str_pac_sexo"
-        />
+        >
+        <option [selected]="true" placeholder="Seleccione una Opción" select disabled >Seleccione una Opción</option>
+        <option value="F">F</option>
+          <option value="M">M</option>
+        </select>
         <div
           class="alert alert-danger mt-2 control-error"
           *ngIf="
@@ -110,6 +112,7 @@
         </div>
       </div>
     </div>
+    
 
     <div class="col-6 ps-2 mt-4 contentenedor-control">
       <div class="form-group col">
@@ -179,9 +182,9 @@
       </div>
     </div>
 
-    <div class="col-6 pe-2 mt-4 contentenedor-control">
+    <!-- <div class="col-6 pe-2 mt-4 contentenedor-control">
       <div class="form-group col">
-        <label>Relacion con el Paciente </label>
+        <label>Relación con el Paciente </label>
         <input
           type="text"
           class="form-control"
@@ -199,9 +202,56 @@
           Este campo es requerido.
         </div>
       </div>
+    </div> -->
+    <div class="col-6 pe-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Relación con el Paciente</label>
+        <select
+          class="form-control"
+          id="relacion"
+          formControlName="str_pac_relacion_familia"
+        >
+          <option value="" [selected]="true" disabled selected>Seleccione</option>
+          <option value="padre">Padre</option>
+          <option value="madre">Madre</option>
+          <option value="hijo">Hijo</option>
+          <option value="hija">Hija</option>
+          <option value="hermano">Hermano</option>
+          <option value="hermana">Hermana</option>
+          <option value="abuelo">Abuelo</option>
+          <option value="abuela">Abuela</option>
+          <option value="nieto">Nieto</option>
+          <option value="nieta">Nieta</option>
+          <option value="tío">Tío</option>
+          <option value="tía">Tía</option>
+          <option value="sobrino">Sobrino</option>
+          <option value="sobrina">Sobrina</option>
+          <option value="primo">Primo</option>
+          <option value="prima">Prima</option>
+          <option value="esposo">Esposo</option>
+          <option value="esposa">Esposa</option>
+          <option value="cuñado">Cuñado</option>
+          <option value="cuñada">Cuñada</option>
+          <option value="suegro">Suegro</option>
+          <option value="suegra">Suegra</option>
+          <option value="yerno">Yerno</option>
+          <option value="nuera">Nuera</option>
+          <option value="otro">Otro</option>
+        </select>
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('str_pac_relacion_familia')!.hasError('required') &&
+            myForm.get('str_pac_relacion_familia')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+      </div>
     </div>
+    
 
-    <div class="col-6 ps-2 mt-4 contentenedor-control">
+    <!-- <div class="col-6 ps-2 mt-4 contentenedor-control">
       <div class="form-group col">
         <label>Fecha de nacimiento del Paciente </label>
         <input
@@ -210,6 +260,8 @@
           id="nacimiento"
           placeholder="Fecha de nacimiento"
           formControlName="dt_pac_fecha_nacimiento"
+          [max]="today"
+
         />
         <div
           class="alert alert-danger mt-2 control-error"
@@ -220,8 +272,50 @@
         >
           Este campo es requerido.
         </div>
+        <div
+      class="alert alert-danger mt-2 control-error"
+      *ngIf="
+        myForm.get('dt_pac_fecha_nacimiento')!.hasError('futureDate') &&
+        myForm.get('dt_pac_fecha_nacimiento')!.touched
+      "
+    >
+      La fecha no puede ser futura.
+    </div>
+      </div>
+    </div> -->
+
+    <div class="col-6 ps-2 mt-4 contentenedor-control">
+      <div class="form-group col">
+        <label>Fecha de nacimiento del Paciente</label>
+        <input
+          type="date"
+          class="form-control"
+          id="nacimiento"
+          placeholder="Fecha de nacimiento"
+          formControlName="dt_pac_fecha_nacimiento"
+          [max]="today"
+        />
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('dt_pac_fecha_nacimiento')!.hasError('required') &&
+            myForm.get('dt_pac_fecha_nacimiento')!.touched
+          "
+        >
+          Este campo es requerido.
+        </div>
+        <div
+          class="alert alert-danger mt-2 control-error"
+          *ngIf="
+            myForm.get('dt_pac_fecha_nacimiento')!.hasError('futureDate') &&
+            myForm.get('dt_pac_fecha_nacimiento')!.touched
+          "
+        >
+          La fecha no puede ser futura.
+        </div>
       </div>
     </div>
+    
 
     <div class="col-6 pe-2 mt-4 contentenedor-control">
       <div class="form-group col">

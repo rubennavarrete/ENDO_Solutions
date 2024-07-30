@@ -1,34 +1,42 @@
 import { Consulta } from "../models/consulta.js";
-import { paginarDatos } from "../utils/paginacion.utils.js";
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
 
 export async function getConsultas(req, res) {
     try {
-        const paginationDatos = req.query;
-        if(paginationDatos.page == "undefined"){
-            const {datos, total} = await paginarDatos(1, 10, Consulta, '', '');
-            return res.json({
-                status: true,
-                message: 'Consultas obtenidas exitosamente',
-                body: datos,
-                total,
-            });
+    
+        const { pagination, id_con_paciente } = req.query;
+        // console.log("ID----------------------------",id_con_paciente);
+        // console.log(req.query);
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_consulta", id_con_paciente);
+    
+        // console.log("QUERY----------------------------",query);
+        // console.log("PARAMETERS----------------------------",parameters);
+        const result = await Consulta.sequelize.query(query, {
+            replacements: parameters,
+            type: QueryTypes.SELECT,
+        })
+        // console.log("RESULT----------------------------",result);
+        // console.log("COUNT----------------------------",await Consulta.count());
+        const count = await Consulta.count();
+        let pageToMeta = {};
+        if (pagination) {
+            pageToMeta = JSON.parse(pagination);
         }
-        const consultas = await Consulta.findAll({limit:5});
-        if(consultas.lenght === 0 || !consultas){
-            return res.json({
-                status: false,
-                message: 'No se encontraron consultas',
-                body: []
-            });
-        }else{
-            const {datos, total} = await paginarDatos(paginationDatos.page, paginationDatos.size, Consulta, paginationDatos.parameter, paginationDatos.data);
-            return res.json({
-                status: true,
-                message: 'Consultas obtenidas exitosamente',
-                body: datos,
-                total,
-            });
-        }
+        const paginationMetaResult = Utils.pagination.paginate(
+            pageToMeta.page,
+            pageToMeta.limit,
+            count
+        )
+        // console.log("PAGINATION----------------------------",paginationMetaResult);
+        
+        res.json({
+            status: true,
+            message: "Consultas obtenidas exitosamente",
+            body: result,
+            ...paginationMetaResult
+        })
+
     } catch (error) {
         return res.status(500).json({
             message: error.message || 'Algo salio mal recuperando las consultas'
@@ -122,8 +130,8 @@ export async function deleteConsulta(req, res) {
             });
         }
         else{
-            if(consulta.str_con_estado === 'Activo'){
-                await consulta.update({str_con_estado: 'Inactivo'});
+            if(consulta.str_con_estado === 'ACTIVO'){
+                await consulta.update({str_con_estado: 'INACTIVO'});
                 await consulta.save();
                 return res.json({
                     status: true,
@@ -132,7 +140,7 @@ export async function deleteConsulta(req, res) {
                 });
             }
             else{
-                await consulta.update({str_con_estado: 'Activo'});
+                await consulta.update({str_con_estado: 'ACTIVO'});
                 await consulta.save();
                 return res.json({
                     status: true,

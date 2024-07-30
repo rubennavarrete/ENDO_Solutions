@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,  AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ModalService } from 'src/app/core/services/modal.service';
 import Swal from 'sweetalert2';
@@ -14,6 +14,8 @@ export class AgregarDoctorComponent {
   loading = false;
   request = false;
   myForm!: FormGroup;
+  especialidades: { id_esp_especialidad: number; str_esp_nombre: string; }[] = [];
+  showPassword: boolean = false;
 
   private destroy$ = new Subject<any>();
 
@@ -26,13 +28,12 @@ export class AgregarDoctorComponent {
     this.myForm = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
-      cedula: [null, Validators.required],
+      cedula: ['', [Validators.required, this.tenDigitsValidator()]],
       email: [null, Validators.required],
       contrasenia: [null, Validators.required],
-      telefono: [null, Validators.required],
+      telefono: [null, [Validators.required, this.tenDigitsValidator()]],
       direccion: [null, Validators.required],
-      estado: [null, Validators.required],
-      tipo: [null, Validators.required],
+      tipo: ["Médico", Validators.required],
       especialidadId: [null, Validators.required],
     });
   }
@@ -41,9 +42,25 @@ export class AgregarDoctorComponent {
     setTimeout(() => {
       this.loading = false;
     }, 400);
+
+    this.srvDoctores.getEspecialidades().subscribe((data: any) => {
+      this.especialidades = data.body;
+      console.log('ESPECIALIDADES', data);
+    });
   }
 
-  agregarPaciente() {
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  tenDigitsValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid = /^\d{10}$/.test(control.value);
+      return valid ? null : { tenDigits: true };
+    };
+  }
+
+  agregarDoctor() {
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Estás a punto de agregar un nuevo doctor',
@@ -54,7 +71,7 @@ export class AgregarDoctorComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: 'Creando Paciente...',
+          title: 'Creando Doctor...',
           didOpen: () => {
             Swal.showLoading();
           },

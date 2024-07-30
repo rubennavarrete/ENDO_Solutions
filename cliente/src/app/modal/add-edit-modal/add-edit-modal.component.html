@@ -21,9 +21,49 @@
             <app-agregar-doctor></app-agregar-doctor>
           </div>
 
-          <!-- <div *ngSwitchCase="'editarDoctor'">
+          <div *ngSwitchCase="'nuevoHistorial'">
+            <app-agregar-hc></app-agregar-hc>
+          </div>
+
+          <div *ngSwitchCase="'editarHistorial'">
+            <app-editar-hc></app-editar-hc> 
+          </div>
+
+          <div *ngSwitchCase="'editarDoctor'">
             <app-editar-doctor></app-editar-doctor>
-          </div> -->
+          </div>
+
+          <div *ngSwitchCase="'nuevaUbicacion'">
+            <app-agregar-ubicacion></app-agregar-ubicacion>
+          </div>
+
+          <div *ngSwitchCase="'editarUbicacion'">
+            <app-editar-ubicacion></app-editar-ubicacion>
+          </div>
+
+          <div *ngSwitchCase="'nuevoProceso'">
+            <app-agregar-proceso></app-agregar-proceso> 
+          </div>
+
+          <div *ngSwitchCase="'editarProceso'">
+            <app-editar-proceso></app-editar-proceso>
+          </div>
+
+          <div *ngSwitchCase="'nuevaEspecialidad'">
+            <app-agregar-espe></app-agregar-espe>
+          </div>
+
+          <div *ngSwitchCase="'editarEspecialidad'">
+            <app-editar-espe></app-editar-espe>
+          </div>
+
+          <div *ngSwitchCase="'nuevaCita'">
+            <app-agregar-cita></app-agregar-cita>
+          </div>
+
+          <div *ngSwitchCase="'editarCita'">
+            <app-editar-cita></app-editar-cita>
+          </div>
 
           <div *ngSwitchCase="'clear'"></div>
         </container-element>

@@ -13,6 +13,8 @@ export class ModalService {
   //Behaviors Subjects
 
   private FormModal$ = new BehaviorSubject<any>(initModal);
+  private id$ = new BehaviorSubject<number>(0);
+  private nombrePaciente$ = new BehaviorSubject<string>('');
 
   // Funciones para emitir los cambios Contratacion
   setFormModal(data: any) {
@@ -23,6 +25,24 @@ export class ModalService {
   // Funciones para recibir los cambios Contratacion
   get selectFormModal$(): Observable<any> {
     return this.FormModal$.asObservable();
+  }
+
+  setId( id: number) {
+    console.log('id en serviced => ', id);
+    this.id$.next(id);
+  }
+
+  get selectId$(): Observable<number> {
+    return this.id$.asObservable();
+  }
+
+  setNombrePaciente( nombre: string) {
+    console.log('nombre en serviced => ', nombre);
+    this.nombrePaciente$.next(nombre);
+  }
+
+  get selectNombrePaciente$(): Observable<string> {
+    return this.nombrePaciente$.asObservable();
   }
 
   //Funciones Modal

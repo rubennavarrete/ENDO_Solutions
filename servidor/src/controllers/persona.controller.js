@@ -1,14 +1,13 @@
 import { Persona } from "../models/persona.js";
 import { Medico } from "../models/medico.js";
 import { Especialidad } from "../models/especialidad.js";
-import { paginarDatos } from "../utils/paginacion.utils.js";
 import Utils from "../utils/index.util.js"
 import { QueryTypes } from "sequelize"
 
 export const getPersonas = async (req, res) => {
     try{
         const { pagination } = req.query;
-        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_personas");
+        const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_personas", "Médico");
         const result = await Persona.sequelize.query(query, {
             replacements: parameters,
             type: QueryTypes.SELECT,
@@ -63,6 +62,7 @@ export const getPersonaById = async (req, res) => {
 
 
 export const createPersona = async (req, res) => {
+    console.log("crear persona medico -------- ",req.body);
     try {
         const { nombre, apellido, cedula, email, contrasenia, telefono, direccion, tipo, especialidadId } = req.body;
         // Verificar si ya existe una persona con el mismo correo

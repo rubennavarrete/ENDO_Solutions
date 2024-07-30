@@ -6,7 +6,7 @@
         <div class="btnAgregar d-flex justify-content-between mb-4">
           <div class="titulo">
             <h5>Lista de <span>Pacientes </span></h5>
-            <h6>Datos Estadisticos Globales</h6>
+            <h6>Datos Estadísticos Globales</h6>
           </div>
         </div>
         <div class="contenedor-botones d-flex justify-content-end">
@@ -32,8 +32,9 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr">
         <div class="btnAgregar d-flex justify-content-between mb-4">
           <div class="titulo">
-            <h5>Gestion de <span>Pacientes</span></h5>
-            <h6>{{ titleModal }}</h6>
+            <h5>Gestión de <span>Pacientes</span></h5>
+            <!-- <h6>{{ titleModal }}</h6> -->
+            <h6>{{ srvModal.selectNombrePaciente$ | async }}</h6>
           </div>
         </div>
         <div
@@ -72,7 +73,7 @@
             id="nav-vencer-tab"
             type="button"
           >
-            Informacion Médica
+            Información Médica
           </button>
 
           <button
@@ -102,11 +103,13 @@
       </div>
 
       <div *ngIf="this.menuTabsSelected === 1">
-        <h1>Informacion medica</h1>
+        <!-- <h1>Información médica</h1> -->
+        <app-info-medica></app-info-medica>
       </div>
 
       <div *ngIf="this.menuTabsSelected === 2">
-        <h1>Historial de consultas</h1>
+        <!-- <h1>Historial de consultas</h1> -->
+         <app-mostrar-hc></app-mostrar-hc>
       </div>
     </div>
   </div>

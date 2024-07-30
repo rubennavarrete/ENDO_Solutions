@@ -33,16 +33,40 @@ const getPreviousPage = (page) => {
   return page - 1
 }
 
-function getFilterAndPaginationQuery(params, from) {
+function getFilterAndPaginationQuery(params, from, dato = null) {
   const { filter, order, pagination } = params
   let query = "SELECT * FROM " + from
   let queryToParse = query
   const parameters = {}
 
+  let whereAdded = false;
+
+  if (from === "public.tb_consulta" && dato) {
+    query += " WHERE id_con_paciente =" + dato;
+    queryToParse += " WHERE id_con_paciente =" + dato;
+    parameters.dato = dato;
+    whereAdded = true;
+  }
+
+  if (from === "public.tb_personas" && dato) {
+    // query += " WHERE str_per_tipo = 'Médico'";
+    // queryToParse += " WHERE str_per_tipo = 'Médico'";
+    query = "SELECT p.id_per_persona, p.str_per_nombre, p.str_per_apellido, p.str_per_cedula, p.str_per_correo, p.str_per_contrasenia, p.str_per_telefono, p.str_per_direccion, p.str_per_estado, p.str_per_tipo, e.id_esp_especialidad, e.str_esp_nombre FROM public.tb_personas p inner join public.tb_medicos m on p.id_per_persona = m.id_med_medico inner join public.tb_especialidad e on m.id_med_especialidad= e.id_esp_especialidad  WHERE str_per_tipo = 'Médico'";
+    queryToParse = " SELECT p.id_per_persona, p.str_per_nombre, p.str_per_apellido, p.str_per_cedula, p.str_per_correo, p.str_per_contrasenia, p.str_per_telefono, p.str_per_direccion, p.str_per_estado, p.str_per_tipo, e.id_esp_especialidad, e.str_esp_nombre FROM public.tb_personas p inner join public.tb_medicos m on p.id_per_persona = m.id_med_medico inner join public.tb_especialidad e on m.id_med_especialidad= e.id_esp_especialidad  WHERE str_per_tipo = 'Médico'";
+    parameters.dato = dato;
+    whereAdded = true;
+  }
+
   if (filter) {
-    const joinFilter = JSON.parse(filter)
-    query = query + " WHERE "
-    queryToParse = queryToParse + " WHERE "
+    // const joinFilter = JSON.parse(filter)
+    // query = query + " WHERE "
+    // queryToParse = queryToParse + " WHERE "
+
+    const joinFilter = JSON.parse(filter);
+    query += whereAdded ? " AND " : " WHERE ";
+    queryToParse += whereAdded ? " AND " : " WHERE ";
+    whereAdded = true;
+
     if (joinFilter.date) {
       query =
         query +

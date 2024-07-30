@@ -8,12 +8,20 @@ import { PlaceholdersModule } from '../placeholders/placeholders.module';
 import { PaginacionModule } from 'src/app/shared/paginacion/paginacion.module';
 import { AgregarPacienteComponent } from './agregar-paciente/agregar-paciente.component';
 import { MostrarPacienteComponent } from './mostrar-paciente/mostrar-paciente.component';
+import { InfoMedicaComponent } from './info-medica/info-medica.component';
+import { MostrarHCComponent } from './mostrar-hc/mostrar-hc.component';
+import { AgregarHCComponent } from './agregar-hc/agregar-hc.component';
+import { EditarHCComponent } from './editar-hc/editar-hc.component';
 
 @NgModule({
   declarations: [
     AgregarPacienteComponent,
     EditarPacienteComponent,
     MostrarPacienteComponent,
+    InfoMedicaComponent,
+    MostrarHCComponent,
+    AgregarHCComponent,
+    EditarHCComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +36,10 @@ import { MostrarPacienteComponent } from './mostrar-paciente/mostrar-paciente.co
     AgregarPacienteComponent,
     EditarPacienteComponent,
     MostrarPacienteComponent,
+    InfoMedicaComponent,
+    MostrarHCComponent,
+    AgregarHCComponent,
+    EditarHCComponent,
   ],
 })
 export class PacienteModule {}

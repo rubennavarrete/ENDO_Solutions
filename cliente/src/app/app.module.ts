@@ -11,7 +11,7 @@ import { LayoutModule } from './layout/layout.module';
 // import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     LayoutModule,

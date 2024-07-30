@@ -1,0 +1,200 @@
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Nombre del Paciente </label>
+                <select class="form-control" id="nombre" formControlName="id_con_paciente">
+                    <option [selected]="true" select disabled>{{nombrePaciente}}</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Doctor encargado </label>
+                <select class="form-control" id="doctor" formControlName="id_con_medico">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled >Seleccione una Opción</option>
+                
+                    <!-- <option let doctor of doctores [value]="doctor.id_per_persona">{{doctor.str_per_nombre}}</option> -->
+                     <option *ngFor="let doctor of doctores" [value]="doctor.id_per_persona">{{doctor.str_per_nombre}} {{doctor.str_per_apellido}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Motivo </label>
+                <input type="text" class="form-control" id="motivo" placeholder="Motivo de la consulta"
+                    formControlName="str_con_motivo" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_motivo')!.hasError('required') &&
+              myForm.get('str_con_motivo')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Examen General </label>
+                <input type="text" class="form-control" id="exam_general" placeholder="Examen general del paciente"
+                    formControlName="str_con_exam_general" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_exam_general')!.hasError('required') &&
+              myForm.get('str_con_exam_general')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Examen Específico </label>
+                <input type="text" class="form-control" id="exam_especifico" placeholder="Examen específico del paciente"
+                    formControlName="str_con_exam_especifico" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_exam_especifico')!.hasError('required') &&
+              myForm.get('str_con_exam_especifico')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Diagnóstico </label>
+                <input type="text" class="form-control" id="diagnostico" placeholder="Diagnóstico del Paciente"
+                    formControlName="str_con_diagnostico" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_diagnostico')!.hasError('required') &&
+              myForm.get('str_con_diagnostico')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Tratamiento</label>
+                <input type="text" class="form-control" id="tratamiento" placeholder="Tratamiento del paciente"
+                    formControlName="str_con_tratamiento" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_tratamiento')!.hasError('required') &&
+              myForm.get('str_con_tratamiento')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Recomendaciones </label>
+                <input type="text" class="form-control" id="recomendaciones" placeholder="Recomendaciones"
+                    formControlName="str_con_recomendaciones" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_recomendaciones')!.hasError('required') &&
+              myForm.get('str_con_recomendaciones')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Observaciones </label>
+                <input type="text" class="form-control" id="exam_general" placeholder="Observaciones"
+                    formControlName="str_con_observaciones" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_con_observaciones')!.hasError('required') &&
+              myForm.get('str_con_observaciones')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Fecha de Consulta</label>
+                <input type="date" class="form-control" id="fecha" placeholder="Fecha de la consulta"
+                    formControlName="dt_con_fecha" [max]="today" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('dt_con_fecha')!.hasError('required') &&
+              myForm.get('dt_con_fecha')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('dt_con_fecha')!.hasError('futureDate') &&
+              myForm.get('dt_con_fecha')!.touched
+            ">
+                    La fecha no puede ser futura.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+              <label>Hora de Inicio </label>
+              <input type="time" class="form-control" id="horaInit" placeholder="Hora de inicio"
+                     formControlName="tm_con_hora_inicio" />
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_con_hora_inicio')!.hasError('required') &&
+                myForm.get('tm_con_hora_inicio')!.touched
+              ">
+                Este campo es requerido.
+              </div>
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_con_hora_inicio')!.hasError('outOfRange') &&
+                myForm.get('tm_con_hora_inicio')!.touched
+              ">
+                La hora debe estar entre 07:00 y 19:00.
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+              <label>Hora de Finalización </label>
+              <input type="time" class="form-control" id="horaFin" placeholder="Hora de fin"
+                     formControlName="tm_con_hora_fin" />
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_con_hora_fin')!.hasError('required') &&
+                myForm.get('tm_con_hora_fin')!.touched
+              ">
+                Este campo es requerido.
+              </div>
+              <div class="col-12 mt-4 contentenedor-control">
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                  myForm.hasError('endTimeBeforeStartTime') && myForm.get('tm_con_hora_inicio')!.touched && myForm.get('tm_con_hora_fin')!.touched
+                ">
+                  La hora de finalización debe ser mayor que la hora de inicio.
+                </div>
+              </div>
+            </div>
+          </div>
+                 
+
+        <div class="d-flex justify-content-center contendor-botones">
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="agregarHC()">
+                Agregar Consulta
+            </button>
+        </div>
+    </div>
+</form>

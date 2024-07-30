@@ -54,7 +54,7 @@ export class FilterComponent {
       this.setFilters.emit({
         filter: {
           date: {
-            parameter: 'dt_pac_fecha_nacimiento',
+            parameter: 'dt_con_fecha',
             data: {
               date_start: new Date(),
               date_end: today,
@@ -73,7 +73,7 @@ export class FilterComponent {
       this.setFilters.emit({
         filter: {
           date: {
-            parameter: 'dt_pac_fecha_nacimiento',
+            parameter: 'dt_con_fecha',
             data: {
               date_start: dFinal,
               date_end: dFinal, //dFinal.setDate(dFinal.getDate()),
@@ -94,7 +94,7 @@ export class FilterComponent {
       this.setFilters.emit({
         filter: {
           date: {
-            parameter: 'dt_pac_fecha_nacimiento',
+            parameter: 'dt_con_fecha',
             data: {
               date_start: dFinal,
               date_end: finMes, //dFinal.setDate(dFinal.getDate()),
@@ -122,7 +122,7 @@ export class FilterComponent {
       this.setFilters.emit({
         filter: {
           date: {
-            parameter: 'dt_pac_fecha_nacimiento',
+            parameter: 'dt_con_fecha',
             data: {
               date_start: startDay,
               date_end: endDay, //dFinal.setDate(dFinal.getDate()),

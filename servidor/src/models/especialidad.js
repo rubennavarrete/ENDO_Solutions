@@ -19,16 +19,7 @@ export const Especialidad = sequelize.define('tb_especialidad', {
         type: DataTypes.STRING(20),
         allowNull: false
     },
-    // dt_esp_fecha_registro:{
-    //     type: DataTypes.DATE,
-    //     allowNull: false
-    // },
-    // dt_esp_fecha_modificacion:{
-    //     type: DataTypes.DATE,
-    //     allowNull: false  //
-    // }
 
 }, {
-    // timestamps: false,
     freezeTableName: true
 });

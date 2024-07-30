@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../database/database.js";
 
 
-export const Proceso = sequelize.define('tb_proceso', {
+export const Proceso = sequelize.define('tb_procesos', {
     id_proc_proceso: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -20,8 +20,12 @@ export const Proceso = sequelize.define('tb_proceso', {
         type: DataTypes.STRING(20),
         allowNull: false
     },
+    // num_proc_costo: {
+    //     type: DataTypes.BIGINT,
+    //     allowNull: false
+    // },
     num_proc_costo: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
 

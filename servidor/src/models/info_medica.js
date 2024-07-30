@@ -53,6 +53,6 @@ export const InfoMedica = sequelize.define('tb_info_medica', {
     },
     str_inf_estado: {
         type: DataTypes.STRING(20),
-        allowNull: false
+        defaultValue: 'ACTIVO'
     },
 })

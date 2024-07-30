@@ -29,8 +29,7 @@ export class DoctoresComponent {
   paciente: DataTypeDoctores[] = [];
 
   arrFiltros: any = [
-    
-
+  
     {
       type: 'search',
       name: 'Buscar',
@@ -81,8 +80,6 @@ export class DoctoresComponent {
       this.loading = false;
     }, 400);
 
-    console.log('DoctoresComponent ', this.srvDoctores.doctor);
-
     this.srvDoctores.obtenerDoctor({
       order: [{ parameter: 'id_per_persona', direction: 'DESC' }],
     });
@@ -119,6 +116,7 @@ export class DoctoresComponent {
   seleccionarInput(tipo: string, data: DataTypeDoctores, title: string) {
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
+    this.srvModal.setId(data.id_per_persona);
     this.srvDoctores.setUpdateDoctor(data);
     this.srvModal.openModal();
   }
@@ -182,7 +180,7 @@ export class DoctoresComponent {
               console.log('ERROR CREATE RESPONSABLE', err);
               this.request = false;
               Swal.fire({
-                title: 'Error al cambiar el estado del Responsable',
+                title: 'Error al cambiar el estado del Doctor',
                 text: 'Por favor comuníquese con el servicio técnico',
                 icon: 'error',
                 footer:
@@ -207,5 +205,10 @@ export class DoctoresComponent {
         );
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next({});
+    this.destroy$.complete();
   }
 }

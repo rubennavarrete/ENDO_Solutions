@@ -1,0 +1,138 @@
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Nombre del Doctor </label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre"
+                    formControlName="nombre" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('nombre')!.hasError('required') &&
+              myForm.get('nombre')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Apellido del Doctor </label>
+                <input type="text" class="form-control" id="apellido" placeholder="Apellido"
+                    formControlName="apellido" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('apellido')!.hasError('required') &&
+              myForm.get('apellido')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+              <label>Cédula del Doctor</label>
+              <input type="text" class="form-control" id="cedula" placeholder="Cédula"
+                     formControlName="cedula" pattern="^\d{10}$" />
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('cedula')!.hasError('required') && myForm.get('cedula')!.touched
+              ">
+                Este campo es requerido.
+              </div>
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('cedula')!.hasError('pattern') && myForm.get('cedula')!.touched
+              ">
+                La cédula debe tener exactamente 10 dígitos.
+              </div>
+            </div>
+        </div>
+          
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Correo del Doctor</label>
+                <input type="text" class="form-control" id="email" placeholder="Correo Electrónico"
+                    formControlName="email" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('email')!.hasError('required') &&
+              myForm.get('email')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+              <label>Contraseña del Doctor </label>
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="contrasenia" placeholder="Contraseña"
+                       formControlName="contrasenia" />
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                  {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+                </button>
+              </div>
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('contrasenia')!.hasError('required') &&
+                myForm.get('contrasenia')!.touched
+              ">
+                Este campo es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+              <label>Teléfono del Doctor</label>
+              <input type="text" class="form-control" id="telefono" placeholder="Teléfono"
+                     formControlName="telefono" pattern="^\d{10}$" />
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('telefono')!.hasError('required') && myForm.get('telefono')!.touched
+              ">
+                Este campo es requerido.
+              </div>
+              <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('telefono')!.hasError('pattern') && myForm.get('telefono')!.touched
+              ">
+            El teléfono debe tener exactamente 10 dígitos.
+              </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Dirección del Doctor</label>
+                <input type="text" class="form-control" id="direccion" placeholder="Dirección"
+                    formControlName="direccion" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('direccion')!.hasError('required') &&
+              myForm.get('direccion')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Especialidad del Doctor</label>
+                <select class="form-control" id="especialidad" formControlName="especialidadId">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled >Seleccione una Opción</option>
+                
+                    <!-- <option let doctor of doctores [value]="doctor.id_per_persona">{{doctor.str_per_nombre}}</option> -->
+                     <option *ngFor="let especialidad of especialidades" [value]="especialidad.id_esp_especialidad">{{especialidad.str_esp_nombre}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center contendor-botones">
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="editarDoctor()">
+                Editar Doctor
+            </button>
+        </div>
+    </div>
+</form>

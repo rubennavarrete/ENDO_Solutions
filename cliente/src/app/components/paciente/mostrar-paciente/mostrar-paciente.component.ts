@@ -28,13 +28,13 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
   paciente: DataTypePacientes[] = [];
 
   arrFiltros: any = [
-    {
-      name: 'Fecha de Nacimiento',
-      type: 'date',
-      filter: false,
-      description: 'Activo',
-      kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
-    },
+    // {
+    //   name: 'Fecha de Nacimiento',
+    //   type: 'date',
+    //   filter: false,
+    //   description: 'Activo',
+    //   kind: ['En los proximos ', 'Igual a ', 'Mes ', 'Entre '],
+    // },
 
     {
       type: 'search',
@@ -200,8 +200,10 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
   }
 
   seleccionarInput(tipo: string, data: DataTypePacientes, title: any) {
+    this.srvModal.setNombrePaciente(data.str_pac_nombre+' '+data.str_pac_apellido);
     this.elementForm = { formulario: tipo, title };
     this.srvModal.setFormModal(this.elementForm);
+    this.srvModal.setId(data.id_pac_paciente);
     this.srvPacientes.setUpdatePaciente(data);
   }
 
