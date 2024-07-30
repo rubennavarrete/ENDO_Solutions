@@ -1,4 +1,28 @@
+
+<div style="display: grid; grid-template-columns: 1fr 1fr">
+  <div class="btnAgregar d-flex justify-content-between mb-4">
+    <div class="titulo">
+      <h5>Calendario de <span>Citas </span></h5>
+    </div>
+  </div>
+  <div class="contenedor-botones d-flex justify-content-end">
+    <button-modal
+      [tipoModal]="'nuevaCita'"
+      [titleModal]="'Nueva Cita'"
+      [contenido]="'Nueva Cita'"
+      [conIcono]="true"
+      [icono]="'add'"
+      [color]="'#1c1917'"
+    >
+    </button-modal>
+  </div>
+</div>
+<hr />
+
+
+
 <div class="row text-center">
+  
     <div class="col-md-4">
       <div class="btn-group">
         <div
@@ -63,6 +87,7 @@
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
     [events]="events"
+    
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
@@ -90,17 +115,15 @@
     </mwl-calendar-day-view>
   </div>
   
+
+
+
+
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
   
-  <!-- <br /><br /><br />
+  <!-- <br /><br /><br /> -->
   
-  <h3>
-    Edit events
-    <button class="btn btn-primary float-end" (click)="addEvent()">
-      Add new
-    </button>
-    <div class="clearfix"></div>
-  </h3> -->
+  
   
    <!-- <div class="table-responsive">
     <table class="table table-bordered">
@@ -187,27 +210,5 @@
     </table>
   </div>  -->
   
-  <!-- <ng-template #modalContent let-close="close">
-    <div class="modal-header">
-      <h5 class="modal-title">Event action occurred</h5>
-      <button type="button" class="close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
-      </div>
-      <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="close()">
-        OK
-      </button>
-    </div>
-  </ng-template> -->
+
   

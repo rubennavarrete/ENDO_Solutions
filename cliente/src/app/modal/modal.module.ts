@@ -8,7 +8,7 @@ import { DoctorModule } from '../components/doctor/doctor.module';
 import { UbicacionModule } from '../components/ubicacion/ubicacion.module';
 import { ProcesosModule } from '../components/procesos/procesos.module';
 import { EspecialidadesModule } from '../components/especialidades/especialidades.module';
-
+import { AgendaModule } from '../components/agenda/agenda.module';
 @NgModule({
   declarations: [AddEditModalComponent],
   imports: [
@@ -19,7 +19,8 @@ import { EspecialidadesModule } from '../components/especialidades/especialidade
     DoctorModule,
     UbicacionModule,
     ProcesosModule,
-    EspecialidadesModule
+    EspecialidadesModule,
+    AgendaModule,
   ],
   exports: [AddEditModalComponent],
 })

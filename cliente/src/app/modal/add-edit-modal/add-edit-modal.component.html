@@ -57,6 +57,14 @@
             <app-editar-espe></app-editar-espe>
           </div>
 
+          <div *ngSwitchCase="'nuevaCita'">
+            <app-agregar-cita></app-agregar-cita>
+          </div>
+
+          <div *ngSwitchCase="'editarCita'">
+            <app-editar-cita></app-editar-cita>
+          </div>
+
           <div *ngSwitchCase="'clear'"></div>
         </container-element>
       </div>
