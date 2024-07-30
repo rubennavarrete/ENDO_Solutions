@@ -49,6 +49,14 @@
             <app-editar-proceso></app-editar-proceso>
           </div>
 
+          <div *ngSwitchCase="'nuevaEspecialidad'">
+            <app-agregar-espe></app-agregar-espe>
+          </div>
+
+          <div *ngSwitchCase="'editarEspecialidad'">
+            <app-editar-espe></app-editar-espe>
+          </div>
+
           <div *ngSwitchCase="'clear'"></div>
         </container-element>
       </div>

@@ -1,17 +1,17 @@
 
-<div class="proceso-contenedor mt-3">
+<div class="ubicacion-contenedor mt-3">
     <!-- HEADER / TITULO Y BOTONES -->
     <div style="display: grid; grid-template-columns: 1fr 1fr">
       <div class="btnAgregar d-flex justify-content-between mb-4">
         <div class="titulo">
-          <h5>Lista de <span>Procesos </span></h5>
+          <h5>Lista de <span>Especialidades </span></h5>
         </div>
       </div>
       <div class="contenedor-botones d-flex justify-content-end">
         <button-modal
-          [tipoModal]="'nuevoProceso'"
-          [titleModal]="'Nuevo Proceso'"
-          [contenido]="'Nuevo Proceso'"
+          [tipoModal]="'nuevaEspecialidad'"
+          [titleModal]="'Nueva Especialidad'"
+          [contenido]="'Nueva Especialidad'"
           [conIcono]="true"
           [icono]="'add'"
           [color]="'#1c1917'"
@@ -39,7 +39,6 @@
                 <th scope="col">
                   <div class="d-flex">Descripciones</div>
                 </th>
-                <th scope="col"><div class="d-flex">Costo</div></th>
                 <th scope="col"><div class="d-flex">Estado</div></th>
                 <th scope="col">
                   <div class="contenedor-btn-acciones">Acción</div>
@@ -49,7 +48,7 @@
             <tbody>
               <tr
                 *ngFor="
-                  let proceso of srvProcesos.proceso;
+                  let espe of srvEspecialidad.especialidad;
                   let i = index;
                   let indice = index
                 "
@@ -57,23 +56,20 @@
                 <th>{{ indice + 1 }}</th>
                 <td>
                   {{
-                    proceso.str_proc_nombre
+                    espe.str_esp_nombre
                   }}
                 </td>
                 <td>
-                  {{ proceso.str_proc_descripcion }}
+                  {{ espe.str_esp_descripcion }}
                 </td>
-                <td>
-                    {{ proceso.num_proc_costo }}
-                  </td>
-                <td *ngIf="proceso.str_proc_estado === 'ACTIVO'">
+                <td *ngIf="espe.str_esp_estado === 'ACTIVO'">
                   <div class="pill pill-success">
-                    {{ proceso.str_proc_estado }}
+                    {{ espe.str_esp_estado }}
                   </div>
                 </td>
-                <td *ngIf="proceso.str_proc_estado === 'INACTIVO'">
+                <td *ngIf="espe.str_esp_estado === 'INACTIVO'">
                   <span class="pill pill-danger">{{
-                    proceso.str_proc_estado
+                    espe.str_esp_estado
                   }}</span>
                 </td>
                 <td>
@@ -83,9 +79,9 @@
                       class="btnDefault editar btn btn-warning"
                       (click)="
                         seleccionarInput(
-                          'editarProceso',
-                          proceso,
-                          'Editar Proceso'
+                          'editarEspecialidad',
+                          espe,
+                          'Editar Especialidad'
                         )
                       "
                     >
@@ -94,14 +90,14 @@
                     <button
                       data-bs-toggle="tooltip"
                       data-bs-placement="left"
-                      title="Activar Cobertura"
+                      title="Activar"
                       type="button"
                       class="btn btn-warning btnDefault editar"
-                      *ngIf="proceso.str_proc_estado === 'INACTIVO'"
+                      *ngIf="espe.str_esp_estado === 'INACTIVO'"
                       (click)="
                         cambiarEstado(
-                            proceso.id_proc_proceso,
-                            proceso.str_proc_estado                        )
+                            espe.id_esp_especialidad,
+                            espe.str_esp_estado                        )
                       "
                     >
                       <i class="material-icons">cached</i>
@@ -109,14 +105,14 @@
                     <button
                       data-bs-toggle="tooltip"
                       data-bs-placement="left"
-                      title="Desactivar Cobertura"
+                      title="Desactivar"
                       type="button"
                       class="btnDefault eliminar btn btn-danger"
-                      *ngIf="proceso.str_proc_estado === 'ACTIVO'"
+                      *ngIf="espe.str_esp_estado === 'ACTIVO'"
                       (click)="
                         cambiarEstado(
-                            proceso.id_proc_proceso,
-                            proceso.str_proc_estado
+                            espe.id_esp_especialidad,
+                            espe.str_esp_estado
                         )
                       "
                     >
@@ -129,7 +125,7 @@
           </table>
         </div>
         <div
-          *ngIf="!loading && !request && proceso.length <= 0"
+          *ngIf="!loading && !request && especialidad.length <= 0"
           class="d-flex w-100"
         >
           <div class="mx-auto" style="margin-top: 64px; margin-bottom: 64px">
@@ -149,7 +145,7 @@
         </div>
         <pagination
           [dataLength]="
-          srvProcesos.proceso && (srvProcesos.proceso.length || 0)
+          srvEspecialidad.especialidad && (srvEspecialidad.especialidad.length || 0)
           "
           [metadata]="metadata"
           [currentPage]="currentPage"

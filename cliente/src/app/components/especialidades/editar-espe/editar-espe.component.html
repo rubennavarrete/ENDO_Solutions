@@ -1,0 +1,35 @@
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Nombre </label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="str_esp_nombre" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                  myForm.get('str_esp_nombre')!.hasError('required') &&
+                  myForm.get('str_esp_nombre')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Descripción </label>
+                <input type="text" class="form-control" id="descripcion" placeholder="Descripción" formControlName="str_esp_descripcion" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                  myForm.get('str_esp_descripcion')!.hasError('required') &&
+                  myForm.get('str_esp_descripcion')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+            
+        </div>
+        <div class="d-flex justify-content-center contendor-botones mt-4">
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="editarEspecialidad()">
+                Actualizar Especialidad
+            </button>
+        </div>
+    </div>
+</form>

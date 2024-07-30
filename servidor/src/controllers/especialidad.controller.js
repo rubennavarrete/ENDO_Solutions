@@ -1,36 +1,34 @@
-import e from "express";
 import { Especialidad } from "../models/especialidad.js";
-import { paginarDatos } from "../utils/paginacion.utils.js";
-
+import Utils from "../utils/index.util.js"
+import { QueryTypes } from "sequelize"
 
 export async function getEspecialidades(req, res) {
   try {
-    const paginationDatos = req.query;
-    if(paginationDatos.page == "undefined"){
-      const {datos, total} = await paginarDatos(1, 10, Especialidad, '', '');
-      return res.json({
-        status: true,
-        message: 'Especialidades obtenidas exitosamente',
-        body: datos,
-        total,
-      });
+    const { pagination } = req.query;
+    const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_especialidad");
+
+    const result = await Especialidad.sequelize.query(query, {
+        replacements: parameters,
+        type: QueryTypes.SELECT,
+    })
+    const count = await Especialidad.count();
+    let pageToMeta = {};
+    if (pagination) {
+        pageToMeta = JSON.parse(pagination);
     }
-    const especialidades = await Especialidad.findAll({limit:5});
-    if(especialidades.lenght === 0 || !especialidades){
-      return res.json({
-        status: false,
-        message: 'No se encontraron especialidades',
-        body: []
-      });
-    }else{
-      const {datos, total} = await paginarDatos(paginationDatos.page, paginationDatos.size, Especialidad, paginationDatos.parameter, paginationDatos.data);
-      return res.json({
+    const paginationMetaResult = Utils.pagination.paginate(
+        pageToMeta.page,
+        pageToMeta.limit,
+        count
+    )
+
+    res.json({
         status: true,
-        message: 'Especialidades obtenidas exitosamente',
-        body: datos,
-        total,
-      });
-    }
+        message: "Especialidades obtenidas exitosamente",
+        body: result,
+        ...paginationMetaResult
+    })
+    
   } catch (error) {
     return res.status(500).json({
       message: error.message || 'Algo salio mal recuperando las especialidades'

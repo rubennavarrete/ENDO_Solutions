@@ -90,7 +90,7 @@ export class FullLayoutComponent {
         icon: 'work',
       },
       {
-        path: '/especialidades',
+        path: '/especialidad',
         name: 'Especialidades',
         icon: 'local_hospital',
       }
