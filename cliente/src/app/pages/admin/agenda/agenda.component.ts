@@ -23,6 +23,7 @@ import {
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { AgendaService } from 'src/app/core/services/agenda.service';
+import { ModalService } from 'src/app/core/services/modal.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -52,6 +53,10 @@ const colors: Record<string, EventColor> = {
 
 export class AgendaComponent {
 
+  elementForm: {
+    formulario: string;
+    title: string;
+  } = { formulario: '', title: '' };
 
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
@@ -135,7 +140,8 @@ export class AgendaComponent {
   // ];
 
   constructor(
-    private srvAgenda: AgendaService
+    private srvAgenda: AgendaService,
+    private srvModal: ModalService
   ) {}
 
   
@@ -143,6 +149,8 @@ export class AgendaComponent {
     this.srvAgenda.getAgendas().subscribe((events: any[]) => {
       if (Array.isArray(events)) {
         this.events = events.map(event => ({
+          // this.srvAgenda.eventos = events.map(event => ({
+
           ...event,
           start: new Date(event.start),
           end: event.end ? new Date(event.end) : null,
@@ -150,24 +158,8 @@ export class AgendaComponent {
             primary: event.color?.primary ?? '#1e90ff',
             secondary: event.color?.secondary ?? '#D1E8FF'
           },
-          // actions: this.actions,
-          actions: [
-            {
-              label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-              a11yLabel: 'Edit',
-              onClick: ({ event }: { event: CalendarEvent }): void => {
-                this.handleEvent('Edited', event);
-              },
-            },
-            {
-              label: '<i class="fas fa-fw fa-trash-alt"></i>',
-              a11yLabel: 'Delete',
-              onClick: ({ event }: { event: CalendarEvent }): void => {
-                this.events = this.events.filter((iEvent) => iEvent !== event);
-                this.handleEvent('Deleted', event);
-              },
-            },
-          ],
+          actions: this.actions,
+          
         }));
         this.refresh.next();
       } else {
@@ -211,18 +203,25 @@ export class AgendaComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    console.log('Evento:', event);
-    console.log('Acción:', action);
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-    if (action === 'Edited') {
-      // Lógica para editar el evento
-      console.log('Editar evento:', event);
-    } else if (action === 'Deleted') {
-      // Lógica para eliminar el evento
-      console.log('Eliminar evento:', event);
-      this.deleteEvent(event);
-    }
+    // console.log('Evento:', event);
+    // console.log('Acción:', action);
+    // // this.modalData = { event, action };
+    // // this.modal.open(this.modalContent, { size: 'lg' });
+    // if (action === 'Edited') {
+    //   // Lógica para editar el evento
+    //   console.log('Editar evento:', event);
+    // } else if (action === 'Deleted') {
+    //   // Lógica para eliminar el evento
+    //   console.log('Eliminar evento:', event);
+    //   this.deleteEvent(event);
+    // }
+  console.log('Evento:', event.id);
+  const id = event.id;  
+    this.elementForm = {formulario: 'editarCita', title: 'Editar Cita'}
+    this.srvModal.setFormModal(this.elementForm);
+//obtener el id de la cita
+    this.srvModal.setId(Number(id));
+    // this.srvModal.openModal();
   }
 
   addEvent(): void {

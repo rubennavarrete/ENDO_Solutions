@@ -1,1 +1,125 @@
-<p>editar-cita works!</p>
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Doctor encargado</label>
+                <select class="form-control" id="doctor" formControlName="id_age_medico">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled>Seleccione una Opción</option>
+                    <option *ngFor="let doctor of doctores" [value]="doctor.id_per_persona">{{doctor.str_per_nombre}} {{doctor.str_per_apellido}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Proceso a Realizar</label>
+                <select class="form-control" id="proceso" formControlName="id_age_proceso">
+                    <!-- <option value="" disabled [selected]="true">Seleccione una Opción</option> -->
+                    <!-- <option [selected]="true" placeholder="Seleccione una opción" select disabled >Seleccione una Opción</option> -->
+                    <option value="default" selected hidden>Seleccione una Opción</option>
+
+                    <option *ngFor="let proceso of procesos" [value]="proceso.id_proc_proceso">{{proceso.str_proc_nombre}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Ubicación de cita</label>
+                <select class="form-control" id="ubicacion" formControlName="id_age_ubicacion">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled>Seleccione una Opción</option>
+                    <option *ngFor="let ubi of ubicaciones" [value]="ubi.id_ubi_ubicacion">{{ubi.str_ubi_nombre}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Paciente a atender</label>
+                <select class="form-control" id="paciente" formControlName="id_age_paciente">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled>Seleccione una Opción</option>
+                    <option *ngFor="let pac of pacientes" [value]="pac.id_pac_paciente">{{pac.str_pac_nombre}} {{pac.str_pac_apellido}}</option>
+                </select>
+            </div>
+        </div>
+        
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Fecha de la cita</label>
+                <input type="date" class="form-control" id="fecha" placeholder="Fecha de la consulta"
+                    formControlName="dt_age_fecha" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('dt_age_fecha')!.hasError('required') &&
+              myForm.get('dt_age_fecha')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Hora de Inicio </label>
+                <input type="time" class="form-control" id="horaInit" placeholder="Hora de inicio"
+                    formControlName="tm_age_hora_inicio" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_age_hora_inicio')!.hasError('required') &&
+                myForm.get('tm_age_hora_inicio')!.touched
+              ">
+                    Este campo es requerido.
+                </div>
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_age_hora_inicio')!.hasError('outOfRange') &&
+                myForm.get('tm_age_hora_inicio')!.touched
+              ">
+                    La hora debe estar entre 07:00 y 19:00.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Hora de Finalización </label>
+                <input type="time" class="form-control" id="horaFin" placeholder="Hora de fin"
+                    formControlName="tm_age_hora_fin" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                myForm.get('tm_age_hora_fin')!.hasError('required') &&
+                myForm.get('tm_age_hora_fin')!.touched
+              ">
+                    Este campo es requerido.
+                </div>
+                <div class="col-12 mt-4 contentenedor-control">
+                    <div class="alert alert-danger mt-2 control-error" *ngIf="
+                  myForm.hasError('endTimeBeforeStartTime') && myForm.get('tm_age_hora_inicio')!.touched && myForm.get('tm_age_hora_fin')!.touched
+                ">
+                        La hora de finalización debe ser mayor que la hora de inicio.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Color</label>
+                <input type="color" class="form-control" id="color" placeholder="Color"
+                    formControlName="str_age_color" />
+
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+              myForm.get('str_age_color')!.hasError('required') &&
+              myForm.get('str_age_color')!.touched
+            ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="d-flex justify-content-center contendor-botones">
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="EditarCita()">
+                Editar Cita
+            </button>
+        </div>
+    </div>
+</form>
