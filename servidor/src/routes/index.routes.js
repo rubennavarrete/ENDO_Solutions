@@ -9,6 +9,7 @@ import procesoRouter from "./proceso.routes.js";
 import ubicacionRouter from "./ubicacion.routes.js";
 import agendaRouter from "./agenda.routes.js";
 import consultaRouter from "./consulta.routes.js";
+import loginRouter from "./login.routes.js";
 
 
 const router = Router();
