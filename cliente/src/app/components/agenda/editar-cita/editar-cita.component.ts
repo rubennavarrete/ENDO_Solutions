@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { ModalService } from 'src/app/core/services/modal.service';
 import Swal from 'sweetalert2';
 import { AgendaService } from 'src/app/core/services/agenda.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-editar-cita',
@@ -17,6 +17,7 @@ export class EditarCitaComponent {
   ubicaciones: { id_ubi_ubicacion: number; str_ubi_nombre: string; }[] = [];
   pacientes: { id_pac_paciente: number; str_pac_nombre: string; str_pac_apellido: string; }[] = [];
   doctores: { id_per_persona: number; str_per_nombre: string; str_per_apellido: string; }[] = [];
+  idCita: number = -1;
 
   private destroy$ = new Subject<any>();
   refresh = new Subject<void>();
@@ -27,6 +28,8 @@ export class EditarCitaComponent {
     public fb: FormBuilder
   ) {
 
+
+
     this.myForm = this.fb.group({
       id_age_medico: [null, Validators.required],
       id_age_proceso: [null, Validators.required],
@@ -36,7 +39,7 @@ export class EditarCitaComponent {
       tm_age_hora_inicio: [null, [Validators.required, this.timeRangeValidator]],
       tm_age_hora_fin: [null, Validators.required],
       str_age_color: ["#000000", Validators.required],
-      str_age_estado: ["ACTIVO", Validators.required],
+      str_age_estado: ["", Validators.required],
     }, { validators: this.endTimeAfterStartTimeValidator });
   }
 
@@ -45,8 +48,25 @@ export class EditarCitaComponent {
     this.loadUbicaciones();
     this.loadPacientes();
     this.loadDoctores();
+    this.loadCita();
   }
 
+  loadCita(){
+    console.log('ID CITA', this.idCita);
+
+    
+    this.srvModal.selectId$.pipe().subscribe((id) => {
+      this.idCita = id;
+      console.log('ID idCita', this.idCita);
+    });
+    this.srvAgenda.getAgenda(this.idCita).subscribe((data: any) => {
+      this.myForm.patchValue(data.body);
+      console.log('DATA', data);
+      console.log('FORM', this.myForm.value);
+    }
+    );
+
+  }
   loadProcesos(): void {
     this.srvAgenda.getProcesos().subscribe((data: any) => {
       this.procesos = data.body;
@@ -107,78 +127,226 @@ export class EditarCitaComponent {
   }
 
   EditarCita(){
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Estás a punto de EDITAR esta cita médica',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, editar',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Editando cita...',
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        console.log('FORM', this.myForm.value);
-        // this.request = true;
-        this.srvAgenda.editarAgenda(this.myForm.value).subscribe({
-          next: (resp: any) => {
-            if (resp.status) {
-              // this.idHC = resp.body.id_con_consulta;
-              Swal.close();
+    if(this.myForm.value.str_age_estado =="INACTIVO"){
+      console.log('ESTADO DESACTIVADO');
+      this.myForm.value.str_age_color = "#FFFFFF";
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Estás a punto de DESACTIVAR esta cita médica',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, desactivar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Cambiando estado del Paciente...',
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          this.srvAgenda.editarAgenda(this.myForm.value, this.idCita).subscribe({
+            next: (resp: any) => {
+              if (resp.status) {
+                // this.idHC = resp.body.id_con_consulta;
+                Swal.close();
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Cita se ha desactivado correctamente',
+                  showDenyButton: false,
+                  confirmButtonText: 'Aceptar',
+                });
+              } else {
+                Swal.close();
+                Swal.fire({
+                  icon: 'error',
+                  title: resp.message,
+                  text: 'Algo salió mal',
+                });
+                // this.request = false;
+              }
+  
+              this.myForm.reset();
+              this.srvModal.closeModal();
+  
+            },
+            error: (err) => {
+              console.log('ERROR AL EDITAR LA CITA', err);
+              // this.request = false;
               Swal.fire({
-                icon: 'success',
-                title: resp.message,
+                title: 'ERROR: al editar la cita',
+                text: 'Por favor comuníquese con el servicio técnico',
+                icon: 'error',
+                footer:
+                  err.error.message +
+                  '\n' +
+                  (err.error.errores ? JSON.stringify(err.error.errores) : ''),
                 showDenyButton: false,
                 confirmButtonText: 'Aceptar',
               });
-            } else {
-              Swal.close();
-              Swal.fire({
-                icon: 'error',
-                title: resp.message,
-                text: 'Algo salió mal',
-              });
+            },
+            complete: () => {
+              // this.srvModal.setId(-1);
+              //cambiar el titulo del modal
               // this.request = false;
-            }
+              document.location.reload();
+  
+            },
+          });
+        }
+      });
 
-            this.myForm.reset();
-            this.srvModal.closeModal();
-
-          },
-          error: (err) => {
-            console.log('ERROR AL EDITAR LA CITA', err);
-            // this.request = false;
-            Swal.fire({
-              title: 'ERROR: al editar la cita',
-              text: 'Por favor comuníquese con el servicio técnico',
-              icon: 'error',
-              footer:
-                err.error.message +
-                '\n' +
-                (err.error.errores ? JSON.stringify(err.error.errores) : ''),
-              showDenyButton: false,
-              confirmButtonText: 'Aceptar',
+    }else{
+      Swal.fire({
+              title: '¿Estás seguro?',
+              text: 'Estás a punto de EDITAR esta cita médica',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, editar',
+              cancelButtonText: 'Cancelar',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                //si el estado es desactivado, mostrar swal de avisar que se desactivara la cita
+                
+                Swal.fire({
+                  title: 'Editando cita...',
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+                });
+                console.log('FORM', this.myForm.value);
+                console.log('ID CITA', this.idCita);
+                // this.request = true;
+                this.srvAgenda.editarAgenda(this.myForm.value, this.idCita).subscribe({
+                  next: (resp: any) => {
+                    if (resp.status) {
+                      // this.idHC = resp.body.id_con_consulta;
+                      Swal.close();
+                      Swal.fire({
+                        icon: 'success',
+                        title: resp.message,
+                        showDenyButton: false,
+                        confirmButtonText: 'Aceptar',
+                      });
+                    } else {
+                      Swal.close();
+                      Swal.fire({
+                        icon: 'error',
+                        title: resp.message,
+                        text: 'Algo salió mal',
+                      });
+                      // this.request = false;
+                    }
+        
+                    this.myForm.reset();
+                    this.srvModal.closeModal();
+        
+                  },
+                  error: (err) => {
+                    console.log('ERROR AL EDITAR LA CITA', err);
+                    // this.request = false;
+                    Swal.fire({
+                      title: 'ERROR: al editar la cita',
+                      text: 'Por favor comuníquese con el servicio técnico',
+                      icon: 'error',
+                      footer:
+                        err.error.message +
+                        '\n' +
+                        (err.error.errores ? JSON.stringify(err.error.errores) : ''),
+                      showDenyButton: false,
+                      confirmButtonText: 'Aceptar',
+                    });
+                  },
+                  complete: () => {
+                    // this.srvModal.setId(-1);
+                    //cambiar el titulo del modal
+                    // this.request = false;
+                    document.location.reload();
+        
+                  },
+                });
+              } else if (result.isDenied) {
+                Swal.fire('Los cambios no se guardaron', '', 'info');
+        //recargar la pagina
+        
+              }
             });
-          },
-          complete: () => {
-            // this.srvModal.setId(-1);
-            //cambiar el titulo del modal
-            // this.request = false;
-            document.location.reload();
+    }
+//     Swal.fire({
+//       title: '¿Estás seguro?',
+//       text: 'Estás a punto de EDITAR esta cita médica',
+//       icon: 'question',
+//       showCancelButton: true,
+//       confirmButtonText: 'Sí, editar',
+//       cancelButtonText: 'Cancelar',
+//     }).then((result) => {
+//       if (result.isConfirmed) {
+//         //si el estado es desactivado, mostrar swal de avisar que se desactivara la cita
+        
+//         Swal.fire({
+//           title: 'Editando cita...',
+//           didOpen: () => {
+//             Swal.showLoading();
+//           },
+//         });
+//         console.log('FORM', this.myForm.value);
+//         console.log('ID CITA', this.idCita);
+//         // this.request = true;
+//         this.srvAgenda.editarAgenda(this.myForm.value, this.idCita).subscribe({
+//           next: (resp: any) => {
+//             if (resp.status) {
+//               // this.idHC = resp.body.id_con_consulta;
+//               Swal.close();
+//               Swal.fire({
+//                 icon: 'success',
+//                 title: resp.message,
+//                 showDenyButton: false,
+//                 confirmButtonText: 'Aceptar',
+//               });
+//             } else {
+//               Swal.close();
+//               Swal.fire({
+//                 icon: 'error',
+//                 title: resp.message,
+//                 text: 'Algo salió mal',
+//               });
+//               // this.request = false;
+//             }
 
-          },
-        });
-      } else if (result.isDenied) {
-        Swal.fire('Los cambios no se guardaron', '', 'info');
-//recargar la pagina
+//             this.myForm.reset();
+//             this.srvModal.closeModal();
 
-      }
-    });
-    
+//           },
+//           error: (err) => {
+//             console.log('ERROR AL EDITAR LA CITA', err);
+//             // this.request = false;
+//             Swal.fire({
+//               title: 'ERROR: al editar la cita',
+//               text: 'Por favor comuníquese con el servicio técnico',
+//               icon: 'error',
+//               footer:
+//                 err.error.message +
+//                 '\n' +
+//                 (err.error.errores ? JSON.stringify(err.error.errores) : ''),
+//               showDenyButton: false,
+//               confirmButtonText: 'Aceptar',
+//             });
+//           },
+//           complete: () => {
+//             // this.srvModal.setId(-1);
+//             //cambiar el titulo del modal
+//             // this.request = false;
+//             document.location.reload();
+
+//           },
+//         });
+//       } else if (result.isDenied) {
+//         Swal.fire('Los cambios no se guardaron', '', 'info');
+// //recargar la pagina
+
+//       }
+//     });
+  
   }
 
   ngOnDestroy(): void {

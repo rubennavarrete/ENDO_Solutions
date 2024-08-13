@@ -197,10 +197,11 @@ export class MostrarHCComponent implements OnInit, OnDestroy {
 
   setFilters(filter: any) {
     //agregar el id del paciente
+    console.time('BuscarHistorialConsulta');
     filter.id_con_paciente = this.idPaciente;
-    console.log(filter);
     this.request = true;
     this.srvHistorialConsulta.getHConsulta(filter);
+    console.timeEnd('BuscarHistorialConsulta');
   }
 
   cleanFilters() {

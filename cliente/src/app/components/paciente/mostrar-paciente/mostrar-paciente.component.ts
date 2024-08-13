@@ -187,9 +187,9 @@ export class MostrarPacienteComponent implements OnInit, OnDestroy {
 
   setFilters(filter: any) {
     // console.time('BuscarPaciente');
-    console.log(filter);
     this.request = true;
     this.srvPacientes.obtenerPaciente(filter);
+    // console.timeEnd('BuscarPaciente');
   }
 
   cleanFilters() {

@@ -65,6 +65,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
+        console.time('agregarPaciente');
         Swal.fire({
           title: 'Creando Paciente...',
           didOpen: () => {
@@ -119,6 +120,7 @@ export class AgregarPacienteComponent implements OnInit, OnDestroy {
           },
           complete: () => {
             this.request = false;
+            console.timeEnd('agregarPaciente');
           },
         });
       } else if (result.isDenied) {

@@ -29,8 +29,15 @@ export class AgendaService {
     });
   }
 
-  editarAgenda(data: AgendaModel){
-    return this.http.put<AgendaModel>(this.URL_API, data, {
+  editarAgenda(data: AgendaModel, id: number){
+    console.log('data en service => ', data, id);
+    return this.http.put<AgendaModel>(`${this.URL_API}/${id}`, data, {
+      withCredentials: true,
+    });
+  }
+
+  getAgenda(id: number){
+    return this.http.get<AgendaModel>(`${this.URL_API}/${id}`, {
       withCredentials: true,
     });
   }

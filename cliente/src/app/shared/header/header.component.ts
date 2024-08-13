@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   baseUrl: string = config.URL_BASE_PATH;
 
-  userData: any = 'nayeli.secaira@espoch.edu.ec';
+  userData: any = 'endosolutiolns@gmail.com';
   @Input() rolActive: any = {};
   roles: any = {};
 
