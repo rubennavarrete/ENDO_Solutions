@@ -114,6 +114,17 @@
             </div>
         </div>
 
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Estado de la cita</label>
+                <select class="form-control" id="paciente" formControlName="str_age_estado">
+                    <option [selected]="true" placeholder="Seleccione una Opción" select disabled>Seleccione una Opción</option>
+                    <option value="ACTIVO">Activado</option>
+                    <option value="INACTIVO">Desactivado</option>
+                </select>
+            </div>
+        </div>
+
 
 
         <div class="d-flex justify-content-center contendor-botones">

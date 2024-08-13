@@ -159,6 +159,8 @@ getEvents(){
                 showDenyButton: false,
                 confirmButtonText: 'Aceptar',
               });
+              document.location.reload();
+
             } else {
               Swal.close();
               Swal.fire({
@@ -200,7 +202,6 @@ getEvents(){
             // this.srvModal.setId(-1);
             //cambiar el titulo del modal
             // this.request = false;
-            document.location.reload();
 
           },
         });

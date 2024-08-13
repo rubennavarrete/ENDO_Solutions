@@ -1,0 +1,108 @@
+<form autocomplete="off" novalidate>
+    <div class="row">
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" required />
+                <div class="alert alert-danger mt-2 control-error" id="nombre-error" style="display: none;">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Apellido</label>
+                <input type="text" class="form-control" id="apellido" placeholder="Apellido" required />
+                <div class="alert alert-danger mt-2 control-error" id="apellido-error" style="display: none;">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="Correo Electrónico" required />
+                <div class="alert alert-danger mt-2 control-error" id="email-error" style="display: none;">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Contraseña</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" required />
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">
+                        Mostrar
+                    </button>
+                </div>
+                <div class="alert alert-danger mt-2 control-error" id="contrasenia-error" style="display: none;">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Teléfono</label>
+                <input type="text" class="form-control" id="telefono" placeholder="Teléfono" pattern="^\d{10}$" required />
+                <div class="alert alert-danger mt-2 control-error" id="telefono-error" style="display: none;">
+                    El teléfono debe tener exactamente 10 dígitos.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Dirección</label>
+                <input type="text" class="form-control" id="direccion" placeholder="Dirección" required />
+                <div class="alert alert-danger mt-2 control-error" id="direccion-error" style="display: none;">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center contendor-botones mt-4">
+            <button class="btn btn-primary" type="submit">
+                Guardar Perfil
+            </button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('contrasenia');
+        const passwordButton = event.target;
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordButton.textContent = 'Ocultar';
+        } else {
+            passwordInput.type = 'password';
+            passwordButton.textContent = 'Mostrar';
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const requiredFields = ['nombre', 'apellido', 'email', 'contrasenia', 'telefono', 'direccion'];
+        let formIsValid = true;
+
+        requiredFields.forEach(function(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            if (!field.value) {
+                errorDiv.style.display = 'block';
+                formIsValid = false;
+            } else {
+                errorDiv.style.display = 'none';
+            }
+        });
+
+        if (!formIsValid) {
+            event.preventDefault();
+        }
+    });
+</script>

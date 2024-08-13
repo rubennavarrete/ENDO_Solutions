@@ -3,7 +3,7 @@ import sequelize from "../database/database.js";
 
 export const Agenda = sequelize.define('tb_agenda', {
     id_age_agenda: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },

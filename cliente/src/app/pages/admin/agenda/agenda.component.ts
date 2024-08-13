@@ -215,13 +215,14 @@ export class AgendaComponent {
     //   console.log('Eliminar evento:', event);
     //   this.deleteEvent(event);
     // }
-  console.log('Evento:', event.id);
+//   console.log('Evento:', event.id);
   const id = event.id;  
     this.elementForm = {formulario: 'editarCita', title: 'Editar Cita'}
+    // console.log('FORM', this.elementForm);
     this.srvModal.setFormModal(this.elementForm);
 //obtener el id de la cita
     this.srvModal.setId(Number(id));
-    // this.srvModal.openModal();
+    this.srvModal.openModal();
   }
 
   addEvent(): void {

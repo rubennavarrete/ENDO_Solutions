@@ -119,6 +119,7 @@ export class AgregarHCComponent implements OnInit, OnDestroy{
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
+        console.time('agregarHistorialConsulta');
         Swal.fire({
           title: 'Creando Historial de consulta...',
           didOpen: () => {
@@ -182,7 +183,7 @@ export class AgregarHCComponent implements OnInit, OnDestroy{
             // this.srvModal.setId(-1);
             //cambiar el titulo del modal
             this.request = false;
-
+            console.timeEnd('agregarHistorialConsulta');
           },
         });
       } else if (result.isDenied) {

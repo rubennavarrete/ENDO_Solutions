@@ -71,6 +71,7 @@ export class InfoMedicaComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
+        console.time('agregarInfoMedica');
         Swal.fire({
           title: 'Creando Información Médica...',
           didOpen: () => {
@@ -127,6 +128,7 @@ export class InfoMedicaComponent implements OnInit, OnDestroy {
           complete: () => {
             // this.srvModal.setId(-1);
             this.request = false;
+            console.timeEnd('agregarInfoMedica');
 
           },
         });
