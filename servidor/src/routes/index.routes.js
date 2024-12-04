@@ -10,7 +10,7 @@ import ubicacionRouter from "./ubicacion.routes.js";
 import agendaRouter from "./agenda.routes.js";
 import consultaRouter from "./consulta.routes.js";
 import loginRouter from "./login.routes.js";
-
+import odontogramaRouter from "./odontograma.routes.js"
 
 const router = Router();
 
@@ -32,5 +32,6 @@ router.use("/proceso", procesoRouter);
 router.use("/ubicacion", ubicacionRouter);
 router.use("/agenda", agendaRouter);
 router.use("/consulta", consultaRouter);
+router.use("/odontograma", odontogramaRouter);
 
 export default router;
