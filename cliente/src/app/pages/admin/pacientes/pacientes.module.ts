@@ -35,6 +35,13 @@ const routes: Routes = [
             (m) => m.PacientesRoutingModule
           ),
       },
+      {
+        path: 'odontograma',
+        loadChildren: () =>
+          import('./pacientes-routing.module').then(
+            (m) => m.PacientesRoutingModule
+          ),
+      },
     ],
   },
 ];

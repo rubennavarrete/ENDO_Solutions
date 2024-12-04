@@ -84,6 +84,16 @@
           >
             Historial de Consulta
           </button>
+
+          <!-- Nuevo botón para Odontograma -->
+          <button
+          [routerLink]="'/' + baseUrl + '/pacientes/odontograma'"
+          class="nav-link {{ this.menuTabsSelected === 3 ? 'active' : '' }}"
+          id="nav-odontograma-tab"
+          type="button"
+        >
+          Odontograma
+        </button>
         </div>
       </nav>
 
@@ -110,6 +120,10 @@
       <div *ngIf="this.menuTabsSelected === 2">
         <!-- <h1>Historial de consultas</h1> -->
          <app-mostrar-hc></app-mostrar-hc>
+      </div>
+
+      <div *ngIf="this.menuTabsSelected === 3">
+        <app-odontograma></app-odontograma>
       </div>
     </div>
   </div>

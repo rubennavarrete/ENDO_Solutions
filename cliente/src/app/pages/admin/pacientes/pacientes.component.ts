@@ -43,6 +43,8 @@ export class PacientesComponent implements OnInit, OnDestroy {
     INFO_PERSONAL: 0,
     INFO_MEDICA: 1,
     HISTORIAL_CONSULTA: 2,
+    ODONTOGRAMA: 3, // Nuevo estado
+
   };
 
   ngOnInit(): void {

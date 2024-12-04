@@ -65,6 +65,14 @@
             <app-editar-cita></app-editar-cita>
           </div>
 
+          <div *ngSwitchCase="'editarOdonto'">
+            <app-editar-odonto></app-editar-odonto>
+          </div>
+
+          <div *ngSwitchCase="'agregarOdonto'">
+            <app-agregar-odonto></app-agregar-odonto>
+          </div>
+
           <div *ngSwitchCase="'clear'"></div>
         </container-element>
       </div>

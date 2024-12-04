@@ -1,0 +1,53 @@
+.odontograma-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 5%;
+
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .spacer {
+    height: 20px;
+  }
+  
+  .tooth {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: white;
+  }
+  
+  .tooth.selected {
+    border-color: #007bff;
+    background-color: #cce5ff;
+  }
+  
+  .details-panel {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
