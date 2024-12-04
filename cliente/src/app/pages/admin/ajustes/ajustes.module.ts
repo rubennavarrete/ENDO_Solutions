@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AjustesComponent } from './ajustes.component';
 import { AjustesRoutingModule } from './ajustes-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,9 @@ import { AjustesRoutingModule } from './ajustes-routing.module';
   ],
   imports: [
     CommonModule,
-    AjustesRoutingModule
+    AjustesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AjustesModule { }

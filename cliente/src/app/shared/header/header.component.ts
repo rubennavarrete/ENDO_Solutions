@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import config from 'config/config';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/core/services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +12,23 @@ import { Subject } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   baseUrl: string = config.URL_BASE_PATH;
 
-  userData: any = 'endosolutiolns@gmail.com';
+  userData: any = '';
   @Input() rolActive: any = {};
   roles: any = {};
 
   private destroy$ = new Subject<any>();
 
+  constructor(
+    private srvLogin: LoginService,
+    private router: Router
+
+  ) {
+  }
   ngOnInit(): void {
+    const user = this.srvLogin.getCurrentUser();
+    if (user && user.correo) {
+      this.userData = user.correo; // Asignar el correo a userData
+    }
     // boton de correo
     // this.roles = configRoles;
 
@@ -69,9 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Cerrar sesión
   cerrarSeccion() {
-    // this.casclient.Logout();
-    //me redirige a la pagina de login
-    
+    this.srvLogin.logout();
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   cambiarRol(idRol: number) {

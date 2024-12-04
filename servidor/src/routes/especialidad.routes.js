@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import { getEspecialidades, getEspecialidadesActivas, getEspecialidadById, createEspecialidad, updateEspecialidad, deleteEspecialidad } from '../controllers/especialidad.controller.js';
+import validateToken from './validate-token.js';
 
 const router = Router();
 

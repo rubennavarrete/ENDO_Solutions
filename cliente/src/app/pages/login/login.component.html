@@ -1,1 +1,49 @@
-<p>login works!</p>
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="logo-container">
+        <img class="logo" src="../../../assets/images/ENDO_RGB-01.jpg" alt="Logo ENDO Solutions">
+      </div>
+      <h2>Iniciar Sesión</h2>
+  
+      <div class="form-group">
+        <label for="correo">Correo Electrónico</label>
+        <input
+          type="email"
+          id="correo"
+          formControlName="correo"
+          placeholder="Ingrese su correo"
+        />
+        <!-- Mostrar error de validación -->
+        <div *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched" class="error-message">
+          Por favor, ingrese un correo válido.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <input
+          type="password"
+          id="contrasena"
+          formControlName="contrasena"
+          placeholder="Ingrese su contraseña"
+        />
+        <!-- Mostrar error de validación -->
+        <div *ngIf="loginForm.get('contrasena')?.invalid && loginForm.get('contrasena')?.touched" class="error-message">
+          La contraseña debe tener al menos 6 caracteres.
+        </div>
+      </div>
+  
+      <!-- Botón de envío -->
+      <button type="submit" class="btn-login" [disabled]="isLoading">
+        {{ isLoading ? 'Cargando...' : 'Iniciar Sesión' }}
+      </button>
+  
+      <!-- Mostrar error global -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  
+      <div class="login-footer">
+        <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+      </div>
+    </form>
+  </div>
+  

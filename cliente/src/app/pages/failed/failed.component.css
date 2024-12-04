@@ -1,0 +1,20 @@
+.unauthorized-container {
+    text-align: center;
+    margin: 50px auto;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: red;
+  }
+  
+  p {
+    font-size: 1.2rem;
+  }
+  
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  

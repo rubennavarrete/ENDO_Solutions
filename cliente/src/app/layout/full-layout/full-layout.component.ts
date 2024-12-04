@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/core/services/login.service';
 @Component({
   selector: 'app-full-layout',
   templateUrl: './full-layout.component.html',
@@ -103,4 +103,31 @@ export class FullLayoutComponent {
 
     ],
   };
+
+  menuFiltrado: any[] = [];
+  userRole: number = 0; // Rol del usuario (1: Admin, 2: Médico, etc.)
+
+  constructor(private authService: LoginService) {
+  }
+
+  ngOnInit(): void {
+    // Obtén el rol desde el token o servicio
+    const user = this.authService.getCurrentUser();
+    this.userRole = user?.rol || 0; // Ajusta según la lógica de roles
+    // Filtra las rutas según el rol
+    this.menuFiltrado = this.filtrarMenuPorRol();
+  }
+
+  filtrarMenuPorRol(): any[] {
+    if (this.userRole === 1) {
+      // Rol 1: acceso a todas las rutas
+      return this.rolActive.representarMenu;
+    } else if (this.userRole === 2) {
+      // Rol 2: acceso limitado
+      return this.rolActive.representarMenu.filter(
+        (item: any) => item.path === '/pacientes' || item.path === '/agenda'
+      );
+    }
+    return [];
+  }
 }

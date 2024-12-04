@@ -22,6 +22,7 @@ router.get("/info", (req, res, next) => {
     });
   });
 
+router.use("/login", loginRouter);
 router.use("/persona", personaRouter);
 router.use("/especialidad", especialidadRouter);
 router.use("/medico", medicoRouter);

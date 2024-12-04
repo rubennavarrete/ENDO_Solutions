@@ -35,6 +35,7 @@ export class AgregarDoctorComponent {
       direccion: [null, Validators.required],
       tipo: ["Médico", Validators.required],
       especialidadId: [null, Validators.required],
+      rol: [2, Validators.required]
     });
   }
 

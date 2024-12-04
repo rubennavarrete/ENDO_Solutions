@@ -64,7 +64,7 @@ export const getPersonaById = async (req, res) => {
 export const createPersona = async (req, res) => {
     console.log("crear persona medico -------- ",req.body);
     try {
-        const { nombre, apellido, cedula, email, contrasenia, telefono, direccion, tipo, especialidadId } = req.body;
+        const { nombre, apellido, cedula, email, contrasenia, telefono, direccion, tipo, especialidadId, rol } = req.body;
         // Verificar si ya existe una persona con el mismo correo
         const personaExistenteCorreo = await Persona.findOne({
             where: {
@@ -139,6 +139,7 @@ export const createPersona = async (req, res) => {
             str_per_direccion: direccion,
             str_per_estado: 'ACTIVO', // Predeterminado
             str_per_tipo: tipo,
+            int_per_rol: rol
         });
 
         if (persona) {
@@ -161,6 +162,7 @@ export const createPersona = async (req, res) => {
                     telefono: persona.str_per_telefono,
                     direccion: persona.str_per_direccion,
                     tipo: persona.str_per_tipo,
+                    rol: persona.int_per_rol,
                     id_med_medico: createdMedico ? createdMedico.id_med_medico : null,
                     id_med_especialidad: createdMedico ? createdMedico.id_med_especialidad : null,
                 };
@@ -253,7 +255,7 @@ const validarPersona = async (req, res) => {
 
 
 export const updatePersona = async (req, res) => {
-    const { nombre, apellido, cedula, email, contrasenia, telefono, direccion, estado, tipo, especialidadId } = req.body;
+    const { nombre, apellido, cedula, email, contrasenia, telefono, direccion, estado, tipo, especialidadId, rol } = req.body;
     let responseBody;
 
     try {
@@ -271,6 +273,7 @@ export const updatePersona = async (req, res) => {
                 str_per_direccion: direccion,
                 str_per_estado: estado,
                 str_per_tipo: tipo,
+                int_per_rol: rol
             });
             // Actualizar registros relacionados (por ejemplo, Medico)
             if (tipo === 'Médico') {
@@ -293,6 +296,7 @@ export const updatePersona = async (req, res) => {
                         direccion: persona.str_per_direccion,
                         estado: persona.str_per_estado,
                         tipo: persona.str_per_tipo,
+                        rol: persona.int_per_rol,
                         id_med_especialidad: medico.id_med_especialidad,
                         id_med_medico: medico.id_med_medico,
                     };

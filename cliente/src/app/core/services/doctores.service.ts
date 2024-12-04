@@ -19,6 +19,7 @@ const initDoctor: DataTypeDoctores = {
   str_per_tipo: '',
   id_esp_especialidad: 0,
   str_esp_nombre: '',
+  int_per_rol: 0
 };
 
 @Injectable({
