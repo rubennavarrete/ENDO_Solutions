@@ -97,15 +97,15 @@ export const getOdontogramaByPaciente = async (req, res) => {
 
     try {
         const { pagination, id_odo_paciente } = req.query;
+        console.log(req.query);
 
-    const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_odontograma", id_odo_paciente);
+    const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_odontogramas", id_odo_paciente);
 
-    const result = await Consulta.sequelize.query(query, {
+    const result = await Odontograma.sequelize.query(query, {
         replacements: parameters,
         type: QueryTypes.SELECT,
     })
-
-    const count = await Consulta.count();
+    const count = await Odontograma.count();
         let pageToMeta = {};
         if (pagination) {
             pageToMeta = JSON.parse(pagination);

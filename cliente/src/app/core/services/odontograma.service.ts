@@ -67,7 +67,7 @@ export class OdontogramaService {
 
   getOdontograma(filter: any) {
     const query = GetFiltersQuery(filter);
-    console.log('Query en servicio', query);
+    console.log('Query en GetFiltersQuery', query);
     return this.http.get<OdontogramaModel>(this.URL_API + query, {
       withCredentials: true,
     });

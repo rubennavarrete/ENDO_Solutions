@@ -6,7 +6,11 @@ export default function GetFiltersQuery(filters: any) {
     newFilter += `pagination={"page":1,"limit":10}`;
   }
   if (filters.id_con_paciente){
+
     newFilter += `&id_con_paciente=${filters.id_con_paciente}`;
+  }
+  if (filters.id_odo_paciente){
+    newFilter += `&id_odo_paciente=${filters.id_odo_paciente}`;
   }
   if (filters.filter) {
     if (filters.filter.status?.parameter === 'str_parroquia_nombre') {

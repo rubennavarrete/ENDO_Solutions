@@ -14,6 +14,10 @@ import { DataTypeOdontograma } from 'src/app/core/models/odontograma';
 export class OdontogramaComponent {
 
   private destroy$ = new Subject<any>();
+  elementForm: {
+    formulario: string;
+    title: string;
+  } = { formulario: '', title: '' };
 
   teethUpper: string[] = [
     '18', '17', '16', '15', '14', '13', '12', '11',
@@ -27,6 +31,13 @@ export class OdontogramaComponent {
   toothStatus: { [key: string]: string } = {};
 
   selectTooth(tooth: string): void {
+    this.elementForm = { formulario: 'agregarOdonto', title: 'Diente '+tooth};
+    this.srvModal.setFormModal(this.elementForm);
+    this.srvModal.setId(this.idPaciente);
+    this.srvModal.openModal();
+
+
+    console.log("se abre")
     this.selectedTooth = tooth;
   }
 
@@ -49,10 +60,7 @@ export class OdontogramaComponent {
   metadata!: DataMetadata;
   idPaciente: number = -1;
 
-  elementForm: {
-    formulario: string;
-    title: string;
-  } = { formulario: '', title: '' };
+  
 
   odontograma: DataTypeOdontograma[] = [];
 

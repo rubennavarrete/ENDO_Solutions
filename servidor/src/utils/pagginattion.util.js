@@ -48,6 +48,13 @@ function getFilterAndPaginationQuery(params, from, dato = null) {
     whereAdded = true;
   }
 
+  if (from === "public.tb_odontograma" && dato) {
+    query += " WHERE id_odo_paciente =" + dato;
+    queryToParse += " WHERE id_odo_paciente =" + dato;
+    parameters.dato = dato;
+    whereAdded = true;
+  }
+
   if (from === "public.tb_personas" && dato) {
     // query += " WHERE str_per_tipo = 'Médico'";
     // queryToParse += " WHERE str_per_tipo = 'Médico'";

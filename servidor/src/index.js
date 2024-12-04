@@ -17,7 +17,7 @@ import './models/ubicacion.js';
 async function main(port) {
     try {
         // Comprobacion y alerta de la conexion con la base de datos.
-        await sequelize.sync({ force: true, logging: false, alter: true });
+        await sequelize.sync({ force: false, logging: false, alter: true });
         sequelize
             .authenticate()
             .then(() => {
