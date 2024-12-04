@@ -12,6 +12,9 @@ import { InfoMedicaComponent } from './info-medica/info-medica.component';
 import { MostrarHCComponent } from './mostrar-hc/mostrar-hc.component';
 import { AgregarHCComponent } from './agregar-hc/agregar-hc.component';
 import { EditarHCComponent } from './editar-hc/editar-hc.component';
+import { OdontogramaComponent } from './odontograma/odontograma.component';
+import { EditarOdontoComponent } from './editar-odonto/editar-odonto.component';
+import { AgregarOdontoComponent } from './agregar-odonto/agregar-odonto.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { EditarHCComponent } from './editar-hc/editar-hc.component';
     MostrarHCComponent,
     AgregarHCComponent,
     EditarHCComponent,
+    OdontogramaComponent,
+    EditarOdontoComponent,
+    AgregarOdontoComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +46,9 @@ import { EditarHCComponent } from './editar-hc/editar-hc.component';
     MostrarHCComponent,
     AgregarHCComponent,
     EditarHCComponent,
+    OdontogramaComponent,
+    EditarOdontoComponent,
+    AgregarOdontoComponent
   ],
 })
 export class PacienteModule {}
