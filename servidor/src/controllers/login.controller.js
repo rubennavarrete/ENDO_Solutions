@@ -5,12 +5,14 @@ import nodemailer from 'nodemailer'
 export async function login(req, res) {
     try {
         const { correo, contrasena } = req.body;
+
         const user = await Persona.findOne({
             where: {
                 str_per_correo: correo,
                 str_per_contrasenia: contrasena
             }
         });
+
         if (!user) {
             return res.status(400).json({
                 message: `Usuario o contraseña incorrectos`,
