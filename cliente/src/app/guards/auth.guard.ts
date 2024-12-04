@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate {
 
       // Lógica de acceso por rol
       const allowedRoutes: { [key: string]: string[] } = {
-        1: ['/', '/pacientes', '/agenda', '/doctores', '/ubicacion', '/procesos', '/especialidad','/ajustes'],
+        1: ['/', '/pacientes', '/agenda', '/doctores', '/ubicacion', '/procesos', '/especialidad','/ajustes','/notificaciones'],
         2: ['/pacientes', '/agenda','/ajustes'],
       };
 

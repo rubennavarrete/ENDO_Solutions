@@ -14,6 +14,7 @@ import { DataTypeProcesos } from 'src/app/core/models/procesos';
 export class ProcesosComponent {
 
   private destroy$ = new Subject<any>();
+  
 
   request = true;
   loading = true;
