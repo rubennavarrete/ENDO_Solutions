@@ -1,1 +1,88 @@
-<p>agregar-odonto trBjp!</p>
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+      <!-- Campo: Nombre del Paciente -->
+      <!-- <div class="col-6 pe-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>ID del Paciente</label>
+          <select class="form-control" id="nombre" formControlName="id_odo_paciente">
+            <option [selected]="true" disabled>{{ idPaciente }}</option>
+          </select>
+        </div>
+      </div> -->
+  
+      <!-- Campo: Diente -->
+      <!-- <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Número de Diente</label>
+          <input type="number" class="form-control" id="diente" placeholder="Número de diente" formControlName="int_odo_diente" />
+          <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('int_odo_diente')!.hasError('required') && myForm.get('int_odo_diente')!.touched
+          ">
+            Este campo es requerido.
+          </div>
+        </div>
+      </div> -->
+  
+      <!-- Campo: Cara -->
+      <div class="col-6 pe-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Cara del Diente</label>
+          <select class="form-control" id="cara" formControlName="str_odo_cara">
+            <option [selected]="true" select disabled>Seleccione una opción</option>
+            <option value="Mesial">Mesial</option>
+            <option value="Distal">Distal</option>
+            <option value="Oclusal">Oclusal</option>
+            <option value="Lingual">Lingual</option>
+            <option value="Vestibular">Vestibular</option>
+          </select>
+          <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('str_odo_cara')!.hasError('required') && myForm.get('str_odo_cara')!.touched
+          ">
+            Este campo es requerido.
+          </div>
+        </div>
+      </div>
+  
+      <!-- Campo: Diagnóstico -->
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Diagnóstico</label>
+          <input type="text" class="form-control" id="diagnostico" placeholder="Diagnóstico" formControlName="str_odo_diagnostico" />
+          <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('str_odo_diagnostico')!.hasError('required') && myForm.get('str_odo_diagnostico')!.touched
+          ">
+            Este campo es requerido.
+          </div>
+        </div>
+      </div>
+  
+      <!-- Campo: Fecha de Registro -->
+      <div class="col-6 ps-2 mt-4 contentenedor-control">
+        <div class="form-group col">
+          <label>Fecha de Registro</label>
+          <input type="date" class="form-control" id="fechaRegistro" formControlName="dt_odo_fecha_registro" [max]="today" />
+          <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('dt_odo_fecha_registro')!.hasError('required') && myForm.get('dt_odo_fecha_registro')!.touched
+          ">
+            Este campo es requerido.
+          </div>
+          <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('dt_odo_fecha_registro')!.hasError('futureDate') && myForm.get('dt_odo_fecha_registro')!.touched
+          ">
+            La fecha no puede ser futura.
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botón: Agregar Odontograma -->
+      <!-- <div class="d-flex justify-content-center contendor-botones">
+        <button class="btn btn-primary" [disabled]="!myForm.valid" (click)="agregarHC()">Agregar Odontograma</button>
+      </div> -->
+      <div class="d-flex justify-content-center contendor-botones">
+        <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="agregarHC()">
+            Agregar Odontograma
+        </button>
+    </div>
+    </div>
+  </form>
+  

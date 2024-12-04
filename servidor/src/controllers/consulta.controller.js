@@ -10,14 +10,14 @@ export async function getConsultas(req, res) {
         // console.log(req.query);
         const { query, parameters } = Utils.pagination.getFilterAndPaginationQuery(req.query, "public.tb_consulta", id_con_paciente);
     
-        // console.log("QUERY----------------------------",query);
+        console.log("QUERY----------------------------",query);
         // console.log("PARAMETERS----------------------------",parameters);
         const result = await Consulta.sequelize.query(query, {
             replacements: parameters,
             type: QueryTypes.SELECT,
         })
-        // console.log("RESULT----------------------------",result);
-        // console.log("COUNT----------------------------",await Consulta.count());
+        console.log("RESULT----------------------------",result);
+        console.log("COUNT----------------------------",await Consulta.count());
         const count = await Consulta.count();
         let pageToMeta = {};
         if (pagination) {

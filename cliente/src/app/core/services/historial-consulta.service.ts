@@ -77,7 +77,7 @@ export class HistorialConsultaService {
 
   getHistorialConsulta(filter: any) {
     const query = GetFiltersQuery(filter);
-    console.log('Query en servicio', query);
+    console.log('Query en GetFiltersQuery', query);
     return this.http.get<HistorialConsultaModel>(this.URL_API + query, {
       withCredentials: true,
     });
