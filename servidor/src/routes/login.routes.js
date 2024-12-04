@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { login } from "../controllers/login.controller.js";
+import { login, forgotPassword } from "../controllers/login.controller.js";
 
 const router = Router();
 
 
-router.get('/', login);
+router.post('/', login);
+router.post('/recuperar', forgotPassword);
 
 export default router;

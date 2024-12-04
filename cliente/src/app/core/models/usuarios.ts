@@ -1,6 +1,6 @@
 import { DataMetadata } from './metadata';
 
-export interface DataTypeDoctores {
+export interface DataTypeUsuarios {
     id_per_persona: number;
     str_per_nombre: string;
     str_per_apellido: string;
@@ -11,12 +11,10 @@ export interface DataTypeDoctores {
     str_per_direccion: string;
     str_per_estado: string;
     str_per_tipo: string;
-    id_esp_especialidad: number;
-    str_esp_nombre: string;
     int_per_rol: number
 }
 
-export interface nuevoDoctor {
+export interface nuevoUsuario {
     nombre: string;
     apellido: string;
     cedula: string;
@@ -29,9 +27,9 @@ export interface nuevoDoctor {
     rol: number;
 }
 
-export interface DoctorModel {
+export interface UsuarioModel {
     status: boolean;
-    body: DataTypeDoctores[];
+    body: DataTypeUsuarios;
     message: string;
     metadata: DataMetadata;
 }

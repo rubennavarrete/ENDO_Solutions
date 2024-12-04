@@ -45,6 +45,10 @@ export const Persona = sequelize.define('tb_persona', {
         type: DataTypes.STRING(20),
         allowNull: false
     },
+    int_per_rol: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
 }, {
 });
 

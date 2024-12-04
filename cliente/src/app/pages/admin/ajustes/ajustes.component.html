@@ -1,4 +1,4 @@
-<form autocomplete="off" novalidate>
+<!-- <form autocomplete="off" novalidate>
     <div class="row">
         <div class="col-6 pe-2 mt-4 contentenedor-control">
             <div class="form-group col">
@@ -67,7 +67,7 @@
 
         <div class="d-flex justify-content-center contendor-botones mt-4">
             <button class="btn btn-primary" type="submit">
-                Guardar Perfil
+                Guardar
             </button>
         </div>
     </div>
@@ -105,4 +105,177 @@
             event.preventDefault();
         }
     });
-</script>
+</script> -->
+
+<form autocomplete="off" [formGroup]="myForm" novalidate>
+    <div class="row">
+        <!-- Nombre -->
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Nombre del Usuario</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre"
+                    formControlName="nombre" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('nombre')!.hasError('required') &&
+                    myForm.get('nombre')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <!-- Apellido -->
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Apellido del Usuario</label>
+                <input type="text" class="form-control" id="apellido" placeholder="Apellido"
+                    formControlName="apellido" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('apellido')!.hasError('required') &&
+                    myForm.get('apellido')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cédula -->
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Cédula del Usuario</label>
+                <input type="text" class="form-control" id="cedula" placeholder="Cédula"
+                    formControlName="cedula" pattern="^\d{10}$" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('cedula')!.hasError('required') && myForm.get('cedula')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('cedula')!.hasError('pattern') && myForm.get('cedula')!.touched
+                ">
+                    La cédula debe tener exactamente 10 dígitos.
+                </div>
+            </div>
+        </div>
+
+        <!-- Correo Electrónico -->
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Correo Electrónico</label>
+                <input type="text" class="form-control" id="email" placeholder="Correo Electrónico"
+                    formControlName="email" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('email')!.hasError('required') &&
+                    myForm.get('email')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Contraseña</label>
+                <div class="input-group">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="contrasenia" placeholder="Contraseña"
+                        formControlName="contrasenia" />
+                    <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+                        {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+                    </button>
+                </div>
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('contrasenia')!.hasError('required') &&
+                    myForm.get('contrasenia')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Teléfono del Usuario</label>
+                <input type="text" class="form-control" id="telefono" placeholder="Teléfono"
+                    formControlName="telefono" pattern="^\d{10}$" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('telefono')!.hasError('required') && myForm.get('telefono')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('telefono')!.hasError('pattern') && myForm.get('telefono')!.touched
+                ">
+                    El teléfono debe tener exactamente 10 dígitos.
+                </div>
+            </div>
+        </div>
+
+        <!-- Dirección -->
+        <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Dirección del Usuario</label>
+                <input type="text" class="form-control" id="direccion" placeholder="Dirección"
+                    formControlName="direccion" />
+                <div class="alert alert-danger mt-2 control-error" *ngIf="
+                    myForm.get('direccion')!.hasError('required') &&
+                    myForm.get('direccion')!.touched
+                ">
+                    Este campo es requerido.
+                </div>
+            </div>
+        </div>
+
+        <!-- Estado -->
+        <!-- <div class="col-6 pe-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Estado del Usuario</label>
+                <input type="text" class="form-control" id="estado" placeholder="Estado"
+                    formControlName="estado" />
+            </div>
+        </div> -->
+        <!-- Estado -->
+<div class="col-6 pe-2 mt-4 contentenedor-control">
+    <div class="form-group col">
+        <label>Estado del Usuario</label>
+        <select class="form-control" id="estado" formControlName="estado">
+            <option value="" disabled selected>Seleccione el estado</option>
+            <option value="ACTIVO">ACTIVO</option>
+            <option value="INACTIVO">INACTIVO</option>
+        </select>
+        <div class="alert alert-danger mt-2 control-error" *ngIf="
+            myForm.get('estado')!.hasError('required') && myForm.get('estado')!.touched
+        ">
+            Este campo es requerido.
+        </div>
+    </div>
+</div>
+
+
+        <!-- Tipo -->
+        <!-- <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Tipo del Usuario</label>
+                <input type="text" class="form-control" id="tipo" placeholder="Tipo"
+                    formControlName="tipo" />
+            </div>
+        </div> -->
+
+        <!-- Rol -->
+        <!-- <div class="col-6 ps-2 mt-4 contentenedor-control">
+            <div class="form-group col">
+                <label>Rol del Usuario</label>
+                <input type="text" class="form-control" id="rol" placeholder="Rol"
+                    formControlName="rol" />
+            </div>
+        </div> -->
+
+        <!-- Botón de guardar -->
+        <div class="d-flex justify-content-center contendor-botones">
+            <button class="btn-continuar btn btn-h" [disabled]="!myForm.valid" (click)="editarUsuario()">
+                Editar Usuario
+            </button>
+        </div>
+    </div>
+</form>
