@@ -94,11 +94,11 @@ export class FullLayoutComponent {
         name: 'Especialidades',
         icon: 'local_hospital',
       },
-      // {
-      //   path: '/notificaciones',
-      //   name: 'Notificaciones',
-      //   icon: 'notifications_active',
-      // }
+      {
+        path: '/notificaciones',
+        name: 'Notificaciones',
+        icon: 'notifications_active',
+      }
 
 
     ],
